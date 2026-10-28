@@ -6,11 +6,61 @@
   'use strict';
 
   const DATA = window.ODOO_DOCS;
+  const IS_ES = (DATA?.locale || document.documentElement.lang || 'en').toLowerCase().startsWith('es');
   if (!DATA) {
-    document.getElementById('article').innerHTML =
-      '<div class="mermaid-error">Documentation data not found. Run <code>node build.mjs</code> first.</div>';
+    document.getElementById('article').innerHTML = IS_ES
+      ? '<div class="mermaid-error">No se encontraron los datos de la documentación. Ejecuta <code>node build.mjs</code> primero.</div>'
+      : '<div class="mermaid-error">Documentation data not found. Run <code>node build.mjs</code> first.</div>';
     return;
   }
+
+  const T = IS_ES ? {
+    searchPlaceholder: 'Buscar en el manual…  /',
+    searchAria: 'Buscar en el manual',
+    tocTitle: 'En esta página',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    minRead: 'min de lectura',
+    words: 'palabras',
+    sections: 'secciones',
+    copy: 'Copiar',
+    copied: 'Copiado',
+    copyFailed: 'Error',
+    noResults: (query) => `No hay resultados para “${query}”. Prueba un término más amplio o un nombre de modelo como <code>stock.move</code>.`,
+    results: (count) => `${count} resultado${count === 1 ? '' : 's'}`,
+    returnHome: 'Volver a la introducción',
+    notFound: 'No encontrado',
+    notFoundTitle: 'Página no encontrada',
+    notFoundDesc: (slug) => `Ningún documento coincide con <code>${slug}</code>. Puede que se haya renombrado o que aún no se haya compilado.`,
+    markdownFailed: 'Error al renderizar Markdown',
+    diagramError: 'Mermaid no pudo renderizar el diagrama. El código fuente se conserva a continuación.',
+    themeLight: 'Cambiar al tema claro',
+    themeDark: 'Cambiar al tema oscuro',
+    backToTop: 'Volver arriba',
+  } : {
+    searchPlaceholder: 'Search the manual…  /',
+    searchAria: 'Search the manual',
+    tocTitle: 'On this page',
+    previous: 'Previous',
+    next: 'Next',
+    minRead: 'min read',
+    words: 'words',
+    sections: 'sections',
+    copy: 'Copy',
+    copied: 'Copied',
+    copyFailed: 'Failed',
+    noResults: (query) => `No matches for “${query}”. Try a broader term or a model name such as <code>stock.move</code>.`,
+    results: (count) => `${count} result${count === 1 ? '' : 's'}`,
+    returnHome: 'Return to the introduction',
+    notFound: 'Not found',
+    notFoundTitle: 'Page not found',
+    notFoundDesc: (slug) => `No document matches <code>${slug}</code>. It may have been renamed or not yet built.`,
+    markdownFailed: 'Markdown render failed',
+    diagramError: 'Diagram could not be rendered by Mermaid. The source is preserved below.',
+    themeLight: 'Switch to light theme',
+    themeDark: 'Switch to dark theme',
+    backToTop: 'Back to top',
+  };
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -52,11 +102,29 @@
   let mermaidTheme = null;
   let pendingAnchor = '';
 
+  function applyStaticUi() {
+    els.search.placeholder = T.searchPlaceholder;
+    els.search.setAttribute('aria-label', T.searchAria);
+    $('.toc-title')?.replaceChildren(T.tocTitle);
+    els.backTop?.setAttribute('aria-label', T.backToTop);
+    els.backTop?.setAttribute('title', T.backToTop);
+  }
+  applyStaticUi();
+
+  const localeSwitch = $('#localeSwitch');
+  localeSwitch?.addEventListener('click', (ev) => {
+    const target = localeSwitch.dataset.target || localeSwitch.getAttribute('href');
+    if (!target) return;
+    ev.preventDefault();
+    location.href = target + location.hash;
+  });
+
   /* ---------- theme ---------- */
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
     try { localStorage.setItem('odoo-docs-theme', theme); } catch (_) {}
-    els.themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    els.themeToggle?.setAttribute('aria-label', theme === 'dark' ? T.themeLight : T.themeDark);
+    els.themeToggle?.setAttribute('title', theme === 'dark' ? T.themeLight : T.themeDark);
   }
   function initTheme() {
     let theme = null;
@@ -234,20 +302,20 @@
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'copy-btn';
-      btn.textContent = 'Copy';
+      btn.textContent = T.copy;
       btn.addEventListener('click', async () => {
         const code = pre.querySelector('code');
         const text = code ? code.textContent : pre.textContent;
         try {
           await navigator.clipboard.writeText(text);
-          btn.textContent = 'Copied';
+          btn.textContent = T.copied;
         } catch (_) {
           const ta = document.createElement('textarea');
           ta.value = text; document.body.appendChild(ta); ta.select();
-          try { document.execCommand('copy'); btn.textContent = 'Copied'; } catch (_) { btn.textContent = 'Failed'; }
+          try { document.execCommand('copy'); btn.textContent = T.copied; } catch (_) { btn.textContent = T.copyFailed; }
           ta.remove();
         }
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1400);
+        setTimeout(() => { btn.textContent = T.copy; }, 1400);
       });
       pre.appendChild(btn);
     });
@@ -264,7 +332,11 @@
         a.addEventListener('click', ev => {
           ev.preventDefault();
           const target = resolveMdLink(href);
-          if (target) go(target.slug, target.anchor);
+          if (target?.external) {
+            location.href = target.external + location.hash;
+          } else if (target) {
+            go(target.slug, target.anchor);
+          }
         });
       }
     });
@@ -276,13 +348,18 @@
     let raw = href;
     let anchor = '';
     if (raw.includes('#')) [raw, anchor] = raw.split('#');
-    if (/^README\.md$/i.test(raw) || /\/README\.md$/i.test(raw)) return { slug: 'intro', anchor };
+    if (/^(?:\.\/)?README\.es\.md$/i.test(raw)) {
+      return IS_ES ? { slug: 'intro', anchor } : { external: 'index.es.html' };
+    }
+    if (/^(?:\.\/)?README\.md$/i.test(raw)) {
+      return IS_ES ? { external: 'index.html' } : { slug: 'intro', anchor };
+    }
     try {
       const base = 'https://local.invalid/' + currentSlug + '.md';
       const url = new URL(raw, base);
       let path = decodeURIComponent(url.pathname.replace(/^\//, '')).replace(/\.md$/i, '');
-      // README links use repository-relative paths (docs/...), while page slugs omit "docs/"
-      path = path.replace(/^docs\//i, '');
+      // README links use repository-relative paths (docs/..., docs/es/...), while page slugs omit prefixes
+      path = path.replace(/^docs\/es\//i, '').replace(/^docs\//i, '');
       if (path === 'README') return { slug: 'intro', anchor };
       if (pageBySlug.has(path)) return { slug: path, anchor };
       // also try section-relative
@@ -357,7 +434,7 @@
           const text = node.textContent.trim();
           const err = document.createElement('div');
           err.className = 'mermaid-error';
-          err.innerHTML = 'Diagram could not be rendered by Mermaid. The source is preserved below.<br><code></code>';
+          err.innerHTML = `${T.diagramError}<br><code></code>`;
           err.querySelector('code').textContent = text;
           node.replaceWith(err);
         }
@@ -375,11 +452,11 @@
     const main = document.getElementById('article');
     main.innerHTML = `
       <div class="page-head">
-        <div class="page-kicker"><span class="pill">404</span> Not found</div>
-        <h1>Page not found</h1>
-        <p class="page-desc">No document matches <code>${escapeHtml(slug)}</code>. It may have been renamed or not yet built.</p>
+        <div class="page-kicker"><span class="pill">404</span> ${T.notFound}</div>
+        <h1>${T.notFoundTitle}</h1>
+        <p class="page-desc">${T.notFoundDesc(escapeHtml(slug))}</p>
       </div>
-      <p><a href="#/intro">Return to the introduction</a></p>`;
+      <p><a href="#/intro">${T.returnHome}</a></p>`;
     els.tocNav.innerHTML = '';
     els.pager.innerHTML = '';
   }
@@ -398,7 +475,7 @@
     try {
       html = window.marked ? window.marked.parse(md) : `<pre>${escapeHtml(md)}</pre>`;
     } catch (err) {
-      html = `<div class="mermaid-error">Markdown render failed: ${escapeHtml(err.message)}</div>`;
+      html = `<div class="mermaid-error">${T.markdownFailed}: ${escapeHtml(err.message)}</div>`;
     }
 
     const section = sectionById.get(page.section);
@@ -411,9 +488,9 @@
         <h1>${escapeHtml(page.title)}</h1>
         <p class="page-desc">${escapeHtml(page.description || '')}</p>
         <div class="page-meta">
-          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${page.minutes} min read</span>
-          <span><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h6"/></svg>${page.words.toLocaleString()} words</span>
-          <span><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>${page.headings?.length || 0} sections</span>
+          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${page.minutes} ${T.minRead}</span>
+          <span><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h6"/></svg>${page.words.toLocaleString()} ${T.words}</span>
+          <span><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>${page.headings?.length || 0} ${T.sections}</span>
         </div>
       </header>`;
 
@@ -435,8 +512,8 @@
 
     // update document title
     document.title = page.slug === 'intro'
-      ? 'Odoo Internals Field Manual'
-      : `${page.title} · Odoo Internals Field Manual`;
+      ? DATA.title
+      : `${page.title} · ${DATA.title}`;
 
     // scroll behaviour
     if (opts.keepScroll) {
@@ -477,7 +554,7 @@
       const a = document.createElement('a');
       a.href = `#/${page.slug}`;
       a.className = dir;
-      a.innerHTML = `<span class="dir">${dir === 'prev' ? 'Previous' : 'Next'}</span><span class="ttl">${escapeHtml(page.title)}</span>`;
+      a.innerHTML = `<span class="dir">${dir === 'prev' ? T.previous : T.next}</span><span class="ttl">${escapeHtml(page.title)}</span>`;
       a.addEventListener('click', ev => { ev.preventDefault(); go(page.slug); });
       return a;
     };
@@ -577,14 +654,14 @@
     scored.sort((a, b) => b.score - a.score || a.page.title.localeCompare(b.page.title));
     const top = scored.slice(0, 18);
     if (!top.length) {
-      els.results.innerHTML = `<div class="search-empty">No matches for “${escapeHtml(query)}”. Try a broader term or a model name such as <code>stock.move</code>.</div>`;
+      els.results.innerHTML = `<div class="search-empty">${T.noResults(escapeHtml(query))}</div>`;
       els.results.hidden = false;
       return;
     }
     const frag = document.createDocumentFragment();
     const head = document.createElement('div');
     head.className = 'sr-head';
-    head.textContent = `${scored.length} result${scored.length === 1 ? '' : 's'}`;
+    head.textContent = T.results(scored.length);
     frag.appendChild(head);
     top.forEach(({ page }) => {
       const a = document.createElement('a');

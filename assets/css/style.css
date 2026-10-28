@@ -136,6 +136,13 @@ code, pre, kbd { font-family: var(--mono); }
 }
 .icon-btn:hover { background: var(--bg-soft); color: var(--ink); text-decoration: none; }
 .icon-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.locale-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 8px; border-radius: 8px;
+  border: 1px solid transparent; color: var(--ink-2);
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+}
+.locale-btn:hover { background: var(--bg-soft); color: var(--ink); text-decoration: none; }
 .menu-toggle { display: none; }
 .icon-moon { display: none; }
 [data-theme="dark"] .icon-sun { display: none; }

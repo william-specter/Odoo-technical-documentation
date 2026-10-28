@@ -4,7 +4,9 @@
 
 Independent analysis of the `odoo-19.0+e.20260826` Enterprise source tree, cross-checked against the Odoo 20.0 documentation. **47 chapters · 9 volumes · 77 Mermaid diagrams · 80,000+ words.**
 
-> **Read it in the browser:** open [`index.html`](index.html) directly, or run `python3 serve.py` and visit <http://127.0.0.1:9000>.
+**Languages:** [English](README.md) · [Español](README.es.md)
+
+> **Read it in the browser:** open [`index.html`](index.html) (English) or [`index.es.html`](index.es.html) (Spanish), or run `python3 serve.py` and visit <http://127.0.0.1:9000>.
 
 ---
 
@@ -32,6 +34,7 @@ The manual is organised as nine volumes. It starts with the process model and OR
 | **Secondary reference** | Official Odoo documentation snapshot `20.0` |
 | **Modules analysed** | 1,469 (656 Community + 813 Enterprise), 3,234 dependency edges, 0 manifest cycles |
 | **Content** | 47 chapters, 77 Mermaid diagrams, 80,000+ words |
+| **Languages** | English and Spanish (full translation) |
 | **Audience** | Architects, backend developers, data engineers, QA leads, ERP programme managers |
 | **Reader** | Static, offline-first HTML with search, table of contents, deep links, Mermaid, and dark mode |
 
@@ -83,6 +86,8 @@ Code-level chapters state the version they describe, and version-sensitive behav
 | **7 — Project Management** | [Delivery Lifecycle](docs/07-project-management/01-delivery-lifecycle.md)<br>[Estimation and Budgeting](docs/07-project-management/02-estimation.md)<br>[Team Structure and Roles](docs/07-project-management/03-team-and-roles.md)<br>[Quality Gates and Definition of Done](docs/07-project-management/04-quality-gates.md)<br>[Environments, CI/CD, and Operations](docs/07-project-management/05-environments-ci.md)<br>[Risk Register](docs/07-project-management/06-risk-register.md)<br>[Implementation Playbook](docs/07-project-management/07-implementation-playbook.md)<br>[Document Templates](docs/07-project-management/08-templates.md) | Lifecycle, effort drivers, RACI, gates, operations, risks, templates |
 | **8 — Appendix** | [Source Code Map](docs/08-appendix/01-code-map.md)<br>[SQL Cookbook](docs/08-appendix/02-sql-cookbook.md)<br>[Debugging and Incident Playbook](docs/08-appendix/03-debug-playbook.md)<br>[Checklists](docs/08-appendix/04-checklists.md)<br>[Sources, Evidence, and Version Matrix](docs/08-appendix/05-sources.md) | File map, diagnostic SQL, incident response, review checklists, evidence |
 
+Every chapter is available in English under `docs/` and in Spanish under `docs/es/`. The web reader mirrors this with `index.html` and `index.es.html`.
+
 ---
 
 ## Selected findings
@@ -125,7 +130,7 @@ The server binds to localhost only. Alternatively use the standard library serve
 python3 -m http.server 9000
 ```
 
-Running `python -m http.server` from your home directory will list your home directory instead. You can also open `index.html` directly in a browser.
+Running `python -m http.server` from your home directory will list your home directory instead. You can also open `index.html` (English) or `index.es.html` (Spanish) directly in a browser.
 
 ### Rebuild the content index after editing Markdown
 
@@ -133,12 +138,14 @@ Running `python -m http.server` from your home directory will list your home dir
 node build.mjs
 ```
 
-`build.mjs` scans `docs/**/*.md`, derives titles and section metadata, and writes:
+`build.mjs` scans `docs/**/*.md` (English) and `docs/es/**/*.md` (Spanish), derives titles and section metadata, and writes:
 
-- `assets/js/docs-data.js` — the embedded content used by the offline reader;
-- `docs/manifest.json` — navigation metadata for tooling.
+- `assets/js/docs-data.js` — embedded English content for the offline reader;
+- `assets/js/docs-data.es.js` — embedded Spanish content for the offline reader;
+- `docs/manifest.json` — English navigation metadata for tooling;
+- `docs/manifest.es.json` — Spanish navigation metadata for tooling.
 
-No `npm install` is required. Commit both generated files together with the Markdown change, otherwise the browser will keep serving the previous content.
+No `npm install` is required. Commit all four generated files together with the Markdown change, otherwise the browser will keep serving the previous content.
 
 The site is fully static, so the repository root can also be published with GitHub Pages.
 
@@ -148,12 +155,15 @@ The site is fully static, so the repository root can also be published with GitH
 
 ```text
 .
-├── README.md                  # this file; also the "Start Here" page
-├── index.html                 # static reader shell
+├── README.md                  # this file; also the English "Start Here" page
+├── README.es.md               # Spanish edition of this file
+├── index.html                 # English static reader shell
+├── index.es.html              # Spanish static reader shell
 ├── serve.py                   # local server (default 127.0.0.1:9000)
-├── build.mjs                  # regenerates docs-data.js and manifest.json
+├── build.mjs                  # regenerates both docs-data files and manifests
+├── LICENSE                    # GNU GPL v3.0
 ├── docs/
-│   ├── 00-overview/           # 47 chapters across 9 volumes
+│   ├── 00-overview/           # 47 English chapters across 9 volumes
 │   ├── 01-business-logic/
 │   ├── 02-flows/
 │   ├── 03-database/
@@ -162,11 +172,14 @@ The site is fully static, so the repository root can also be published with GitH
 │   ├── 06-engineering/
 │   ├── 07-project-management/
 │   ├── 08-appendix/
-│   └── manifest.json          # generated navigation metadata
+│   ├── es/                    # Spanish translations, same structure
+│   ├── manifest.json          # generated English navigation metadata
+│   └── manifest.es.json       # generated Spanish navigation metadata
 └── assets/
     ├── css/style.css
-    ├── js/app.js              # search, routing, TOC, theme, diagrams
-    ├── js/docs-data.js        # generated; embeds all Markdown
+    ├── js/app.js              # search, routing, TOC, theme, diagrams, UI locale
+    ├── js/docs-data.js        # generated; embeds all English Markdown
+    ├── js/docs-data.es.js     # generated; embeds all Spanish Markdown
     ├── img/favicon.svg
     └── vendor/                # marked 12.0.2 + Mermaid 10.9.1 (MIT)
 ```
@@ -269,11 +282,13 @@ The module statistics were produced by parsing every `__manifest__.py` in the tr
 3. **Record the source version** in the chapter header when behaviour is version-sensitive.
 4. **Test diagrams after editing.** Mermaid fails silently on invalid labels.
 5. **Do not paste Enterprise source.** Use ≤15-line illustrative fragments and cite the file.
-6. **Rebuild after Markdown changes.** Run `node build.mjs` and commit `assets/js/docs-data.js` plus `docs/manifest.json`.
+6. **Rebuild after Markdown changes.** Run `node build.mjs` and commit `assets/js/docs-data.js`, `assets/js/docs-data.es.js`, `docs/manifest.json`, and `docs/manifest.es.json` together with the source change.
 
 ---
 
 ## Licence and attribution
+
+This manual's original text and code are licensed under the **GNU General Public License v3.0**. See [`LICENSE`](LICENSE) for the full text.
 
 Odoo Community code is LGPL-3. Odoo Enterprise code is covered by the Odoo Enterprise Edition Licence (`OEEL-1`) or the Odoo Partnership Licence (`OPL-1`). This manual is an independent analysis; it does not redistribute the source. Odoo is a registered trademark of Odoo S.A.
 

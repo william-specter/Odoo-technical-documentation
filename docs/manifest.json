@@ -1,6 +1,9 @@
 {
-  "generated": "2026-10-28T16:31:27.528Z",
+  "generated": "2026-10-28T17:02:50.875Z",
   "version": "19.0+e.20260826",
+  "locale": "en",
+  "title": "Odoo Internals Field Manual",
+  "subtitle": "Business logic, flows, schema, modules, scope, engineering and delivery",
   "sections": [
     {
       "id": "start",
@@ -235,8 +238,8 @@
           "id": "licence-and-attribution"
         }
       ],
-      "words": 2397,
-      "minutes": 11
+      "words": 2544,
+      "minutes": 12
     },
     {
       "slug": "00-overview/01-architecture",

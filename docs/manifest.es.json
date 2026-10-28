@@ -1,0 +1,7002 @@
+{
+  "generated": "2026-10-28T17:02:50.885Z",
+  "version": "19.0+e.20260826",
+  "locale": "es",
+  "title": "Manual de campo de Odoo Internals",
+  "subtitle": "Lógica de negocio, flujos, esquema, módulos, alcance, ingeniería y entrega",
+  "sections": [
+    {
+      "id": "start",
+      "title": "Empieza aquí",
+      "short": "Inicio",
+      "icon": "★",
+      "pages": [
+        "intro"
+      ]
+    },
+    {
+      "id": "00-overview",
+      "title": "Orientación",
+      "short": "Orientación",
+      "icon": "00",
+      "pages": [
+        "00-overview/01-architecture",
+        "00-overview/02-glossary"
+      ]
+    },
+    {
+      "id": "01-business-logic",
+      "title": "Capa de lógica de negocio",
+      "short": "Lógica de negocio",
+      "icon": "01",
+      "pages": [
+        "01-business-logic/01-orm-runtime",
+        "01-business-logic/02-transactions",
+        "01-business-logic/03-service-layer",
+        "01-business-logic/04-business-rules-events",
+        "01-business-logic/05-security"
+      ]
+    },
+    {
+      "id": "02-flows",
+      "title": "Flujos de extremo a extremo",
+      "short": "Flujos",
+      "icon": "02",
+      "pages": [
+        "02-flows/01-sales",
+        "02-flows/02-purchase",
+        "02-flows/03-inventory",
+        "02-flows/04-accounting",
+        "02-flows/05-manufacturing",
+        "02-flows/06-cross-module"
+      ]
+    },
+    {
+      "id": "03-database",
+      "title": "Diseño de base de datos",
+      "short": "Base de datos",
+      "icon": "03",
+      "pages": [
+        "03-database/01-conventions",
+        "03-database/02-inheritance",
+        "03-database/03-er-model",
+        "03-database/04-indexes-performance",
+        "03-database/05-migrations"
+      ]
+    },
+    {
+      "id": "04-modules",
+      "title": "Relaciones entre módulos",
+      "short": "Módulos",
+      "icon": "04",
+      "pages": [
+        "04-modules/01-dependency-system",
+        "04-modules/02-module-map",
+        "04-modules/03-extension-points",
+        "04-modules/04-circular-dependencies",
+        "04-modules/05-upgrade-compat"
+      ]
+    },
+    {
+      "id": "05-scope",
+      "title": "Límites del alcance ERP",
+      "short": "Alcance",
+      "icon": "05",
+      "pages": [
+        "05-scope/01-coverage",
+        "05-scope/02-gaps",
+        "05-scope/03-performance",
+        "05-scope/04-doc-gaps"
+      ]
+    },
+    {
+      "id": "06-engineering",
+      "title": "Ingeniería de software",
+      "short": "Ingeniería",
+      "icon": "06",
+      "pages": [
+        "06-engineering/01-use-cases",
+        "06-engineering/02-domain-model",
+        "06-engineering/03-sequence-diagrams",
+        "06-engineering/04-activity-diagrams",
+        "06-engineering/05-state-machines",
+        "06-engineering/06-nfr",
+        "06-engineering/07-testing-strategy"
+      ]
+    },
+    {
+      "id": "07-project-management",
+      "title": "Gestión de proyectos",
+      "short": "Gestión",
+      "icon": "07",
+      "pages": [
+        "07-project-management/01-delivery-lifecycle",
+        "07-project-management/02-estimation",
+        "07-project-management/03-team-and-roles",
+        "07-project-management/04-quality-gates",
+        "07-project-management/05-environments-ci",
+        "07-project-management/06-risk-register",
+        "07-project-management/07-implementation-playbook",
+        "07-project-management/08-templates"
+      ]
+    },
+    {
+      "id": "08-appendix",
+      "title": "Apéndice",
+      "short": "Apéndice",
+      "icon": "08",
+      "pages": [
+        "08-appendix/01-code-map",
+        "08-appendix/02-sql-cookbook",
+        "08-appendix/03-debug-playbook",
+        "08-appendix/04-checklists",
+        "08-appendix/05-sources"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "slug": "intro",
+      "section": "start",
+      "sectionTitle": "Empieza aquí",
+      "title": "Manual de campo de Odoo Internals",
+      "description": "Una referencia técnica orientada a desarrolladores sobre las mecánicas que la documentación oficial no explica.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "Resumen",
+          "id": "resumen"
+        },
+        {
+          "level": 3,
+          "text": "De un vistazo",
+          "id": "de-un-vistazo"
+        },
+        {
+          "level": 2,
+          "text": "Advertencia crítica sobre la versión",
+          "id": "advertencia-crítica-sobre-la-versión"
+        },
+        {
+          "level": 2,
+          "text": "Qué contiene",
+          "id": "qué-contiene"
+        },
+        {
+          "level": 2,
+          "text": "Mapa de la documentación",
+          "id": "mapa-de-la-documentación"
+        },
+        {
+          "level": 2,
+          "text": "Hallazgos seleccionados",
+          "id": "hallazgos-seleccionados"
+        },
+        {
+          "level": 2,
+          "text": "Rutas de lectura",
+          "id": "rutas-de-lectura"
+        },
+        {
+          "level": 2,
+          "text": "Ejecutar el lector web",
+          "id": "ejecutar-el-lector-web"
+        },
+        {
+          "level": 3,
+          "text": "Reconstruir el índice de contenido después de editar Markdown",
+          "id": "reconstruir-el-índice-de-contenido-después-de-editar-markdown"
+        },
+        {
+          "level": 2,
+          "text": "Estructura del repositorio",
+          "id": "estructura-del-repositorio"
+        },
+        {
+          "level": 2,
+          "text": "Notación y convenciones",
+          "id": "notación-y-convenciones"
+        },
+        {
+          "level": 3,
+          "text": "Notación de secuencias de llamadas",
+          "id": "notación-de-secuencias-de-llamadas"
+        },
+        {
+          "level": 3,
+          "text": "Notación de estados",
+          "id": "notación-de-estados"
+        },
+        {
+          "level": 3,
+          "text": "Marcadores de gravedad",
+          "id": "marcadores-de-gravedad"
+        },
+        {
+          "level": 3,
+          "text": "Referencias de código",
+          "id": "referencias-de-código"
+        },
+        {
+          "level": 2,
+          "text": "Base de evidencias y metodología",
+          "id": "base-de-evidencias-y-metodología"
+        },
+        {
+          "level": 2,
+          "text": "Qué es este manual — y qué no es",
+          "id": "qué-es-este-manual-y-qué-no-es"
+        },
+        {
+          "level": 2,
+          "text": "Reglas de mantenimiento",
+          "id": "reglas-de-mantenimiento"
+        },
+        {
+          "level": 2,
+          "text": "Licencia y atribución",
+          "id": "licencia-y-atribución"
+        }
+      ],
+      "words": 3187,
+      "minutes": 14
+    },
+    {
+      "slug": "00-overview/01-architecture",
+      "section": "00-overview",
+      "sectionTitle": "Orientación",
+      "title": "Arquitectura y modelo de ejecución",
+      "description": "Modelo de procesos, ciclo de vida de peticiones, registro, entorno, cursor, carga de módulos, maquinaria asíncrona e invariantes de arquitectura.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Resumen ejecutivo",
+          "id": "1-resumen-ejecutivo"
+        },
+        {
+          "level": 2,
+          "text": "2. Topología de procesos y despliegue",
+          "id": "2-topología-de-procesos-y-despliegue"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Procesos de ejecución",
+          "id": "21-procesos-de-ejecución"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Ciclo de vida de una petición (HTTP)",
+          "id": "22-ciclo-de-vida-de-una-petición-http"
+        },
+        {
+          "level": 3,
+          "text": "2.3 La ruta rápida de solo lectura [V19]",
+          "id": "23-la-ruta-rápida-de-solo-lectura-v19"
+        },
+        {
+          "level": 2,
+          "text": "3. El registro",
+          "id": "3-el-registro"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Qué es",
+          "id": "31-qué-es"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Ensamblaje de clases de modelo [INTERNAL pero esencial]",
+          "id": "32-ensamblaje-de-clases-de-modelo-internal-pero-esencial"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Eventos del ciclo de vida del registro",
+          "id": "33-eventos-del-ciclo-de-vida-del-registro"
+        },
+        {
+          "level": 2,
+          "text": "4. Entorno, cursor y transacción",
+          "id": "4-entorno-cursor-y-transacción"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Composición del entorno",
+          "id": "41-composición-del-entorno"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Objeto de transacción",
+          "id": "42-objeto-de-transacción"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Reglas de entorno y transacción",
+          "id": "43-reglas-de-entorno-y-transacción"
+        },
+        {
+          "level": 2,
+          "text": "5. El ORM como entorno de ejecución de la lógica de negocio",
+          "id": "5-el-orm-como-entorno-de-ejecución-de-la-lógica-de-negocio"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Los conjuntos de registros son la unidad de trabajo",
+          "id": "51-los-conjuntos-de-registros-son-la-unidad-de-trabajo"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Mecánica de campos",
+          "id": "52-mecánica-de-campos"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Cálculo, inverso y búsqueda",
+          "id": "53-cálculo-inverso-y-búsqueda"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Caché y recálculo",
+          "id": "54-caché-y-recálculo"
+        },
+        {
+          "level": 2,
+          "text": "6. Carga de módulos y sincronización del esquema",
+          "id": "6-carga-de-módulos-y-sincronización-del-esquema"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Fases de carga",
+          "id": "61-fases-de-carga"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Flujo de procesamiento por módulo",
+          "id": "62-flujo-de-procesamiento-por-módulo"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Sincronización del esquema",
+          "id": "63-sincronización-del-esquema"
+        },
+        {
+          "level": 2,
+          "text": "7. HTTP, RPC y contratos de controladores",
+          "id": "7-http-rpc-y-contratos-de-controladores"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Declaración de rutas",
+          "id": "71-declaración-de-rutas"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Contrato JSON-RPC",
+          "id": "72-contrato-json-rpc"
+        },
+        {
+          "level": 3,
+          "text": "7.3 El envoltorio retrying",
+          "id": "73-el-envoltorio-retrying"
+        },
+        {
+          "level": 2,
+          "text": "8. Mecanismos asíncronos",
+          "id": "8-mecanismos-asíncronos"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Cron",
+          "id": "81-cron"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Bus / websocket",
+          "id": "82-bus-websocket"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Correo",
+          "id": "83-correo"
+        },
+        {
+          "level": 2,
+          "text": "9. Persistencia y almacenamiento",
+          "id": "9-persistencia-y-almacenamiento"
+        },
+        {
+          "level": 3,
+          "text": "9.1 PostgreSQL",
+          "id": "91-postgresql"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Filestore",
+          "id": "92-filestore"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Columnas JSONB",
+          "id": "93-columnas-jsonb"
+        },
+        {
+          "level": 2,
+          "text": "10. Lista de verificación de invariantes arquitectónicos",
+          "id": "10-lista-de-verificación-de-invariantes-arquitectónicos"
+        },
+        {
+          "level": 2,
+          "text": "11. Dónde termina la documentación oficial",
+          "id": "11-dónde-termina-la-documentación-oficial"
+        }
+      ],
+      "words": 3800,
+      "minutes": 17
+    },
+    {
+      "slug": "00-overview/02-glossary",
+      "section": "00-overview",
+      "sectionTitle": "Orientación",
+      "title": "Glosario de aspectos internos de Odoo",
+      "description": "Significados precisos en tiempo de ejecución para los términos sobrecargados de Odoo, desde ACL y acciones hasta quants y asistentes.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "A",
+          "id": "a"
+        },
+        {
+          "level": 2,
+          "text": "B",
+          "id": "b"
+        },
+        {
+          "level": 2,
+          "text": "C",
+          "id": "c"
+        },
+        {
+          "level": 2,
+          "text": "D",
+          "id": "d"
+        },
+        {
+          "level": 2,
+          "text": "E",
+          "id": "e"
+        },
+        {
+          "level": 2,
+          "text": "F",
+          "id": "f"
+        },
+        {
+          "level": 2,
+          "text": "G",
+          "id": "g"
+        },
+        {
+          "level": 2,
+          "text": "H",
+          "id": "h"
+        },
+        {
+          "level": 2,
+          "text": "I",
+          "id": "i"
+        },
+        {
+          "level": 2,
+          "text": "J",
+          "id": "j"
+        },
+        {
+          "level": 2,
+          "text": "L",
+          "id": "l"
+        },
+        {
+          "level": 2,
+          "text": "M",
+          "id": "m"
+        },
+        {
+          "level": 2,
+          "text": "N",
+          "id": "n"
+        },
+        {
+          "level": 2,
+          "text": "O",
+          "id": "o"
+        },
+        {
+          "level": 2,
+          "text": "P",
+          "id": "p"
+        },
+        {
+          "level": 2,
+          "text": "Q",
+          "id": "q"
+        },
+        {
+          "level": 2,
+          "text": "R",
+          "id": "r"
+        },
+        {
+          "level": 2,
+          "text": "S",
+          "id": "s"
+        },
+        {
+          "level": 2,
+          "text": "T",
+          "id": "t"
+        },
+        {
+          "level": 2,
+          "text": "U",
+          "id": "u"
+        },
+        {
+          "level": 2,
+          "text": "V",
+          "id": "v"
+        },
+        {
+          "level": 2,
+          "text": "W",
+          "id": "w"
+        },
+        {
+          "level": 2,
+          "text": "X",
+          "id": "x"
+        },
+        {
+          "level": 2,
+          "text": "Z",
+          "id": "z"
+        }
+      ],
+      "words": 1935,
+      "minutes": 9
+    },
+    {
+      "slug": "01-business-logic/01-orm-runtime",
+      "section": "01-business-logic",
+      "sectionTitle": "Capa de lógica de negocio",
+      "title": "Capa de lógica de negocio I — Ejecución del ORM y semántica de modelos",
+      "description": "Semántica de conjuntos de registros, mecánica de campos, caché, recálculo, interioridades de CRUD, herencia, control de acceso y reglas de rendimiento.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El modelo mental",
+          "id": "1-el-modelo-mental"
+        },
+        {
+          "level": 2,
+          "text": "2. Conjuntos de registros",
+          "id": "2-conjuntos-de-registros"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Representación",
+          "id": "21-representación"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Álgebra de conjuntos",
+          "id": "22-álgebra-de-conjuntos"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Prefetch",
+          "id": "23-prefetch"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Registros nuevos (NewId)",
+          "id": "24-registros-nuevos-newid"
+        },
+        {
+          "level": 2,
+          "text": "3. Los campos en profundidad",
+          "id": "3-los-campos-en-profundidad"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Construcción y atributos de campos",
+          "id": "31-construcción-y-atributos-de-campos"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Almacenado frente a no almacenado",
+          "id": "32-almacenado-frente-a-no-almacenado"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Métodos de cálculo",
+          "id": "33-métodos-de-cálculo"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Métodos inversos",
+          "id": "34-métodos-inversos"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Campos relacionados",
+          "id": "35-campos-relacionados"
+        },
+        {
+          "level": 3,
+          "text": "3.6 Campos dependientes de la compañía",
+          "id": "36-campos-dependientes-de-la-compañía"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Campos traducidos",
+          "id": "37-campos-traducidos"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Campos binarios",
+          "id": "38-campos-binarios"
+        },
+        {
+          "level": 2,
+          "text": "4. Funcionamiento interno de CRUD",
+          "id": "4-funcionamiento-interno-de-crud"
+        },
+        {
+          "level": 3,
+          "text": "4.1 create()",
+          "id": "41-create"
+        },
+        {
+          "level": 3,
+          "text": "4.2 write()",
+          "id": "42-write"
+        },
+        {
+          "level": 3,
+          "text": "4.3 unlink()",
+          "id": "43-unlink"
+        },
+        {
+          "level": 3,
+          "text": "4.4 read() / searchread()",
+          "id": "44-read-searchread"
+        },
+        {
+          "level": 3,
+          "text": "4.5 search()",
+          "id": "45-search"
+        },
+        {
+          "level": 2,
+          "text": "5. Dominios y generación de SQL",
+          "id": "5-dominios-y-generación-de-sql"
+        },
+        {
+          "level": 3,
+          "text": "5.1 AST de dominios",
+          "id": "51-ast-de-dominios"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Operadores y su SQL",
+          "id": "52-operadores-y-su-sql"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Trampas de order",
+          "id": "53-trampas-de-order"
+        },
+        {
+          "level": 2,
+          "text": "6. Contexto, compañía e idioma",
+          "id": "6-contexto-compañía-e-idioma"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Claves de contexto que cambian el comportamiento",
+          "id": "61-claves-de-contexto-que-cambian-el-comportamiento"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Multicompañía",
+          "id": "62-multicompañía"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Idioma",
+          "id": "63-idioma"
+        },
+        {
+          "level": 2,
+          "text": "7. Semántica de la herencia",
+          "id": "7-semántica-de-la-herencia"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Tres mecanismos",
+          "id": "71-tres-mecanismos"
+        },
+        {
+          "level": 3,
+          "text": "7.2 inherit sin name",
+          "id": "72-inherit-sin-name"
+        },
+        {
+          "level": 3,
+          "text": "7.3 inherit con name",
+          "id": "73-inherit-con-name"
+        },
+        {
+          "level": 3,
+          "text": "7.4 inherits",
+          "id": "74-inherits"
+        },
+        {
+          "level": 3,
+          "text": "7.5 MRO y super()",
+          "id": "75-mro-y-super"
+        },
+        {
+          "level": 2,
+          "text": "8. Control de acceso en el ORM",
+          "id": "8-control-de-acceso-en-el-orm"
+        },
+        {
+          "level": 2,
+          "text": "9. Reglas prácticas para métodos de negocio",
+          "id": "9-reglas-prácticas-para-métodos-de-negocio"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Diseño de métodos",
+          "id": "91-diseño-de-métodos"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Idempotencia",
+          "id": "92-idempotencia"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Tipos de error",
+          "id": "93-tipos-de-error"
+        },
+        {
+          "level": 3,
+          "text": "9.4 Transacciones en métodos de negocio",
+          "id": "94-transacciones-en-métodos-de-negocio"
+        },
+        {
+          "level": 2,
+          "text": "10. Lista de verificación de antipatrones",
+          "id": "10-lista-de-verificación-de-antipatrones"
+        },
+        {
+          "level": 2,
+          "text": "11. Índice de evidencias",
+          "id": "11-índice-de-evidencias"
+        }
+      ],
+      "words": 3983,
+      "minutes": 18
+    },
+    {
+      "slug": "01-business-logic/02-transactions",
+      "section": "01-business-logic",
+      "sectionTitle": "Capa de lógica de negocio",
+      "title": "Capa de lógica de negocio II — Transacciones, concurrencia e integridad de datos",
+      "description": "Límites de transacción, aislamiento, puntos de guardado, reintentos, bloqueos, transacciones de cron y trampas del exactly-once.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El contrato de transacción",
+          "id": "1-el-contrato-de-transacción"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Nivel de aislamiento",
+          "id": "11-nivel-de-aislamiento"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Ciclo de vida de una transacción",
+          "id": "12-ciclo-de-vida-de-una-transacción"
+        },
+        {
+          "level": 2,
+          "text": "2. API de cursor y transacciones",
+          "id": "2-api-de-cursor-y-transacciones"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Creación de cursores",
+          "id": "21-creación-de-cursores"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Confirmación y reversión",
+          "id": "22-confirmación-y-reversión"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Puntos de guardado",
+          "id": "23-puntos-de-guardado"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Hooks previos y posteriores a la confirmación",
+          "id": "24-hooks-previos-y-posteriores-a-la-confirmación"
+        },
+        {
+          "level": 3,
+          "text": "2.5 Gestor de contexto del cursor",
+          "id": "25-gestor-de-contexto-del-cursor"
+        },
+        {
+          "level": 2,
+          "text": "3. El contenedor de reintentos",
+          "id": "3-el-contenedor-de-reintentos"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Qué se restablece entre intentos",
+          "id": "31-qué-se-restablece-entre-intentos"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Qué no se restablece",
+          "id": "32-qué-no-se-restablece"
+        },
+        {
+          "level": 2,
+          "text": "4. Bloqueos y concurrencia",
+          "id": "4-bloqueos-y-concurrencia"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Bloqueos implícitos",
+          "id": "41-bloqueos-implícitos"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Bloqueo de quants de stock [V19]",
+          "id": "42-bloqueo-de-quants-de-stock-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Bloqueo de secuencias contables",
+          "id": "43-bloqueo-de-secuencias-contables"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Patrones de interbloqueo",
+          "id": "44-patrones-de-interbloqueo"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Bloqueos advisory",
+          "id": "45-bloqueos-advisory"
+        },
+        {
+          "level": 2,
+          "text": "5. Semántica de caché y volcado del ORM",
+          "id": "5-semántica-de-caché-y-volcado-del-orm"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Sucio frente a calculado",
+          "id": "51-sucio-frente-a-calculado"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Cuándo se produce el volcado",
+          "id": "52-cuándo-se-produce-el-volcado"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Reglas para SQL directo",
+          "id": "53-reglas-para-sql-directo"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Invalidación de caché entre workers",
+          "id": "54-invalidación-de-caché-entre-workers"
+        },
+        {
+          "level": 2,
+          "text": "6. Transacciones de cron",
+          "id": "6-transacciones-de-cron"
+        },
+        {
+          "level": 2,
+          "text": "7. Hooks de transacción del bus y del correo",
+          "id": "7-hooks-de-transacción-del-bus-y-del-correo"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Bus",
+          "id": "71-bus"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Correo",
+          "id": "72-correo"
+        },
+        {
+          "level": 2,
+          "text": "8. Idempotencia y ejecución exactamente una vez",
+          "id": "8-idempotencia-y-ejecución-exactamente-una-vez"
+        },
+        {
+          "level": 2,
+          "text": "9. Antipatrones de transacción",
+          "id": "9-antipatrones-de-transacción"
+        },
+        {
+          "level": 2,
+          "text": "10. Consultas de diagnóstico",
+          "id": "10-consultas-de-diagnóstico"
+        },
+        {
+          "level": 2,
+          "text": "11. Índice de evidencia",
+          "id": "11-índice-de-evidencia"
+        }
+      ],
+      "words": 2696,
+      "minutes": 12
+    },
+    {
+      "slug": "01-business-logic/03-service-layer",
+      "section": "01-business-logic",
+      "sectionTitle": "Capa de lógica de negocio",
+      "title": "Capa de lógica de negocio III — Estructura de servicios, inyección y orquestación",
+      "description": "Cómo expresa Odoo los servicios, la inyección de dependencias, la orquestación, los asistentes, los controladores y la integración fiable.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Qué se considera un servicio en Odoo",
+          "id": "1-qué-se-considera-un-servicio-en-odoo"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Mapa de clases de servicios principales",
+          "id": "11-mapa-de-clases-de-servicios-principales"
+        },
+        {
+          "level": 3,
+          "text": "1.2 La pila de llamadas canónica",
+          "id": "12-la-pila-de-llamadas-canónica"
+        },
+        {
+          "level": 2,
+          "text": "2. Inyección de dependencias al estilo Odoo",
+          "id": "2-inyección-de-dependencias-al-estilo-odoo"
+        },
+        {
+          "level": 3,
+          "text": "2.1 El entorno es un localizador de servicios",
+          "id": "21-el-entorno-es-un-localizador-de-servicios"
+        },
+        {
+          "level": 3,
+          "text": "2.2 La herencia es el mecanismo de inyección",
+          "id": "22-la-herencia-es-el-mecanismo-de-inyección"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Mixins como inyección de capacidades",
+          "id": "23-mixins-como-inyección-de-capacidades"
+        },
+        {
+          "level": 3,
+          "text": "2.4 La configuración como inyección",
+          "id": "24-la-configuración-como-inyección"
+        },
+        {
+          "level": 3,
+          "text": "2.5 Inyección de dependencias externas",
+          "id": "25-inyección-de-dependencias-externas"
+        },
+        {
+          "level": 2,
+          "text": "3. Servicios de aplicación: asistentes",
+          "id": "3-servicios-de-aplicación-asistentes"
+        },
+        {
+          "level": 2,
+          "text": "4. Controladores como adaptadores de transporte",
+          "id": "4-controladores-como-adaptadores-de-transporte"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Idempotencia en el límite",
+          "id": "41-idempotencia-en-el-límite"
+        },
+        {
+          "level": 2,
+          "text": "5. Diseño de servicios de dominio",
+          "id": "5-diseño-de-servicios-de-dominio"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Métodos públicos frente a privados",
+          "id": "51-métodos-públicos-frente-a-privados"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Orquestación frente a cálculo",
+          "id": "52-orquestación-frente-a-cálculo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Invariantes y guardas",
+          "id": "53-invariantes-y-guardas"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Eventos de dominio",
+          "id": "54-eventos-de-dominio"
+        },
+        {
+          "level": 2,
+          "text": "6. Diseño de referencia de servicios para módulos personalizados",
+          "id": "6-diseño-de-referencia-de-servicios-para-módulos-personalizados"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Reglas de capas que funcionan con Odoo",
+          "id": "61-reglas-de-capas-que-funcionan-con-odoo"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Ejemplo: integración fiable",
+          "id": "62-ejemplo-integración-fiable"
+        },
+        {
+          "level": 2,
+          "text": "7. Pruebas a nivel de servicio",
+          "id": "7-pruebas-a-nivel-de-servicio"
+        },
+        {
+          "level": 2,
+          "text": "8. Antipatrones de la capa de servicios",
+          "id": "8-antipatrones-de-la-capa-de-servicios"
+        },
+        {
+          "level": 2,
+          "text": "9. Índice de evidencia",
+          "id": "9-índice-de-evidencia"
+        }
+      ],
+      "words": 2579,
+      "minutes": 12
+    },
+    {
+      "slug": "01-business-logic/04-business-rules-events",
+      "section": "01-business-logic",
+      "sectionTitle": "Capa de lógica de negocio",
+      "title": "Reglas de negocio, eventos y disparadores de automatización",
+      "description": "Matriz de decisión para cálculos, restricciones, onchange, seguimiento, automatización, acciones de servidor, cron y bus.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Catálogo de disparadores",
+          "id": "1-catálogo-de-disparadores"
+        },
+        {
+          "level": 2,
+          "text": "2. Los campos calculados como reglas",
+          "id": "2-los-campos-calculados-como-reglas"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Semántica",
+          "id": "21-semántica"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Completitud de las dependencias",
+          "id": "22-completitud-de-las-dependencias"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Cálculos recursivos",
+          "id": "23-cálculos-recursivos"
+        },
+        {
+          "level": 2,
+          "text": "3. Restricciones",
+          "id": "3-restricciones"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Restricciones de Python",
+          "id": "31-restricciones-de-python"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Restricciones SQL",
+          "id": "32-restricciones-sql"
+        },
+        {
+          "level": 3,
+          "text": "3.3 @api.ondelete",
+          "id": "33-apiondelete"
+        },
+        {
+          "level": 2,
+          "text": "4. Onchange: comodidad exclusiva de la interfaz",
+          "id": "4-onchange-comodidad-exclusiva-de-la-interfaz"
+        },
+        {
+          "level": 2,
+          "text": "5. Las sobrescrituras de métodos como reglas",
+          "id": "5-las-sobrescrituras-de-métodos-como-reglas"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Orden dentro de write",
+          "id": "51-orden-dentro-de-write"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Guardas de recursión",
+          "id": "52-guardas-de-recursión"
+        },
+        {
+          "level": 2,
+          "text": "6. Seguimiento con mail.thread",
+          "id": "6-seguimiento-con-mailthread"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Cómo funciona el seguimiento",
+          "id": "61-cómo-funciona-el-seguimiento"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Coste",
+          "id": "62-coste"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Subtipos y seguidores",
+          "id": "63-subtipos-y-seguidores"
+        },
+        {
+          "level": 2,
+          "text": "7. Acciones automatizadas (base.automation)",
+          "id": "7-acciones-automatizadas-baseautomation"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Tipos de disparador [V19]",
+          "id": "71-tipos-de-disparador-v19"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Modelo de ejecución",
+          "id": "72-modelo-de-ejecución"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Automatizaciones basadas en tiempo",
+          "id": "73-automatizaciones-basadas-en-tiempo"
+        },
+        {
+          "level": 2,
+          "text": "8. Acciones de servidor",
+          "id": "8-acciones-de-servidor"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Tipos",
+          "id": "81-tipos"
+        },
+        {
+          "level": 3,
+          "text": "8.2 safeeval no es un entorno aislado",
+          "id": "82-safeeval-no-es-un-entorno-aislado"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Contexto de ejecución",
+          "id": "83-contexto-de-ejecución"
+        },
+        {
+          "level": 3,
+          "text": "8.4 Webhooks",
+          "id": "84-webhooks"
+        },
+        {
+          "level": 2,
+          "text": "9. El cron como motor de reglas",
+          "id": "9-el-cron-como-motor-de-reglas"
+        },
+        {
+          "level": 2,
+          "text": "10. Eventos del bus",
+          "id": "10-eventos-del-bus"
+        },
+        {
+          "level": 2,
+          "text": "11. Elección del mecanismo adecuado",
+          "id": "11-elección-del-mecanismo-adecuado"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Reglas de decisión",
+          "id": "111-reglas-de-decisión"
+        },
+        {
+          "level": 2,
+          "text": "12. Pruebas de reglas y disparadores",
+          "id": "12-pruebas-de-reglas-y-disparadores"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencia",
+          "id": "13-índice-de-evidencia"
+        }
+      ],
+      "words": 2535,
+      "minutes": 12
+    },
+    {
+      "slug": "01-business-logic/05-security",
+      "section": "01-business-logic",
+      "sectionTitle": "Capa de lógica de negocio",
+      "title": "Modelo de seguridad — ACL, reglas de registro, campos y límites de privilegios",
+      "description": "ACL, reglas de registro, grupos de campos, sudo, multicompañía, portal y una lista de verificación de revisión de seguridad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Las cinco puertas",
+          "id": "1-las-cinco-puertas"
+        },
+        {
+          "level": 2,
+          "text": "2. ACL de modelo",
+          "id": "2-acl-de-modelo"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Estructura",
+          "id": "21-estructura"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Errores habituales",
+          "id": "22-errores-habituales"
+        },
+        {
+          "level": 2,
+          "text": "3. Reglas de registro",
+          "id": "3-reglas-de-registro"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Estructura",
+          "id": "31-estructura"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Ejemplo",
+          "id": "32-ejemplo"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Reglas en modelos heredados",
+          "id": "33-reglas-en-modelos-heredados"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Reglas y activetest",
+          "id": "34-reglas-y-activetest"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Rendimiento",
+          "id": "35-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "4. Seguridad a nivel de campo",
+          "id": "4-seguridad-a-nivel-de-campo"
+        },
+        {
+          "level": 3,
+          "text": "4.1 checkcompany",
+          "id": "41-checkcompany"
+        },
+        {
+          "level": 2,
+          "text": "5. sudo() y límites de privilegios",
+          "id": "5-sudo-y-límites-de-privilegios"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Semántica",
+          "id": "51-semántica"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Patrones peligrosos",
+          "id": "52-patrones-peligrosos"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Patrón recomendado",
+          "id": "53-patrón-recomendado"
+        },
+        {
+          "level": 2,
+          "text": "6. Usuarios de portal, públicos y de sitio web",
+          "id": "6-usuarios-de-portal-públicos-y-de-sitio-web"
+        },
+        {
+          "level": 2,
+          "text": "7. Seguridad multicompañía",
+          "id": "7-seguridad-multicompañía"
+        },
+        {
+          "level": 2,
+          "text": "8. Autenticación y sesiones",
+          "id": "8-autenticación-y-sesiones"
+        },
+        {
+          "level": 2,
+          "text": "9. Inyección SQL y SQL directo",
+          "id": "9-inyección-sql-y-sql-directo"
+        },
+        {
+          "level": 2,
+          "text": "10. Seguridad de carga de archivos y adjuntos",
+          "id": "10-seguridad-de-carga-de-archivos-y-adjuntos"
+        },
+        {
+          "level": 2,
+          "text": "11. Acciones de servidor, automatizaciones y ejecución de código",
+          "id": "11-acciones-de-servidor-automatizaciones-y-ejecución-de-código"
+        },
+        {
+          "level": 2,
+          "text": "12. Lista de verificación de revisión de seguridad",
+          "id": "12-lista-de-verificación-de-revisión-de-seguridad"
+        },
+        {
+          "level": 3,
+          "text": "Modelo",
+          "id": "modelo"
+        },
+        {
+          "level": 3,
+          "text": "Controlador",
+          "id": "controlador"
+        },
+        {
+          "level": 3,
+          "text": "Integración",
+          "id": "integración"
+        },
+        {
+          "level": 3,
+          "text": "Operaciones",
+          "id": "operaciones"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencias",
+          "id": "13-índice-de-evidencias"
+        }
+      ],
+      "words": 2255,
+      "minutes": 10
+    },
+    {
+      "slug": "02-flows/01-sales",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo — Ventas y CRM (del presupuesto al cobro)",
+      "description": "Del presupuesto al cobro: estados de ventas y CRM, aprovisionamiento, entrega, facturación, precios, anticipos y contabilidad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actores y puntos de entrada",
+          "id": "1-actores-y-puntos-de-entrada"
+        },
+        {
+          "level": 2,
+          "text": "2. Mapa de modelos",
+          "id": "2-mapa-de-modelos"
+        },
+        {
+          "level": 2,
+          "text": "3. Máquinas de estados",
+          "id": "3-máquinas-de-estados"
+        },
+        {
+          "level": 3,
+          "text": "3.1 sale.order",
+          "id": "31-saleorder"
+        },
+        {
+          "level": 3,
+          "text": "3.2 crm.lead",
+          "id": "32-crmlead"
+        },
+        {
+          "level": 3,
+          "text": "3.3 account.move (factura)",
+          "id": "33-accountmove-factura"
+        },
+        {
+          "level": 2,
+          "text": "4. Secuencia de extremo a extremo",
+          "id": "4-secuencia-de-extremo-a-extremo"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Detalle de la confirmación",
+          "id": "41-detalle-de-la-confirmación"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Aprovisionamiento en la v19 [V19]",
+          "id": "42-aprovisionamiento-en-la-v19-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Entrega",
+          "id": "43-entrega"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Facturación",
+          "id": "44-facturación"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Semántica del estado de facturación",
+          "id": "45-semántica-del-estado-de-facturación"
+        },
+        {
+          "level": 2,
+          "text": "5. Puntos de decisión y protecciones",
+          "id": "5-puntos-de-decisión-y-protecciones"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Matriz de política de facturación",
+          "id": "51-matriz-de-política-de-facturación"
+        },
+        {
+          "level": 2,
+          "text": "6. Precios, impuestos y moneda",
+          "id": "6-precios-impuestos-y-moneda"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Cadena de cálculo del precio",
+          "id": "61-cadena-de-cálculo-del-precio"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Posición fiscal",
+          "id": "62-posición-fiscal"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Multimoneda",
+          "id": "63-multimoneda"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Anticipos",
+          "id": "64-anticipos"
+        },
+        {
+          "level": 2,
+          "text": "7. Embudo de CRM",
+          "id": "7-embudo-de-crm"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Ciclo de vida del lead",
+          "id": "71-ciclo-de-vida-del-lead"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Conversión de lead a pedido de venta",
+          "id": "72-conversión-de-lead-a-pedido-de-venta"
+        },
+        {
+          "level": 2,
+          "text": "8. Impacto contable",
+          "id": "8-impacto-contable"
+        },
+        {
+          "level": 2,
+          "text": "9. Modos de fallo y resolución de problemas",
+          "id": "9-modos-de-fallo-y-resolución-de-problemas"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Fragmentos ORM de diagnóstico",
+          "id": "91-fragmentos-orm-de-diagnóstico"
+        },
+        {
+          "level": 2,
+          "text": "10. Puntos de extensión",
+          "id": "10-puntos-de-extensión"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Receta de personalización segura",
+          "id": "101-receta-de-personalización-segura"
+        },
+        {
+          "level": 2,
+          "text": "11. Escenarios de prueba",
+          "id": "11-escenarios-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencias",
+          "id": "12-índice-de-evidencias"
+        }
+      ],
+      "words": 2775,
+      "minutes": 13
+    },
+    {
+      "slug": "02-flows/02-purchase",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo — Compras (de la solicitud a las cuentas por pagar)",
+      "description": "De la solicitud a las cuentas por pagar: aprobación de SdP, recepciones, facturas de proveedor, conciliación a tres bandas, costes en destino y devoluciones.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actores y documentos",
+          "id": "1-actores-y-documentos"
+        },
+        {
+          "level": 2,
+          "text": "2. Mapa de modelos",
+          "id": "2-mapa-de-modelos"
+        },
+        {
+          "level": 2,
+          "text": "3. Máquina de estados",
+          "id": "3-máquina-de-estados"
+        },
+        {
+          "level": 3,
+          "text": "3.1 purchase.order",
+          "id": "31-purchaseorder"
+        },
+        {
+          "level": 3,
+          "text": "3.2 stock.picking (recepción)",
+          "id": "32-stockpicking-recepción"
+        },
+        {
+          "level": 2,
+          "text": "4. Secuencia de extremo a extremo",
+          "id": "4-secuencia-de-extremo-a-extremo"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Detalle de la confirmación",
+          "id": "41-detalle-de-la-confirmación"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Creación de la recepción [V19]",
+          "id": "42-creación-de-la-recepción-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Validación de la recepción",
+          "id": "43-validación-de-la-recepción"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Factura de proveedor",
+          "id": "44-factura-de-proveedor"
+        },
+        {
+          "level": 2,
+          "text": "5. Semántica de cantidades y facturación",
+          "id": "5-semántica-de-cantidades-y-facturación"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Política de control",
+          "id": "51-política-de-control"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Conciliación a tres bandas [ENTERPRISE]",
+          "id": "52-conciliación-a-tres-bandas-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "6. Puntos de decisión",
+          "id": "6-puntos-de-decisión"
+        },
+        {
+          "level": 2,
+          "text": "7. Devoluciones y correcciones",
+          "id": "7-devoluciones-y-correcciones"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Devolución de compra",
+          "id": "71-devolución-de-compra"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Diferencia de precio",
+          "id": "72-diferencia-de-precio"
+        },
+        {
+          "level": 2,
+          "text": "8. Costes en destino",
+          "id": "8-costes-en-destino"
+        },
+        {
+          "level": 2,
+          "text": "9. Impacto contable [V19]",
+          "id": "9-impacto-contable-v19"
+        },
+        {
+          "level": 2,
+          "text": "10. Modos de fallo",
+          "id": "10-modos-de-fallo"
+        },
+        {
+          "level": 2,
+          "text": "11. Puntos de extensión",
+          "id": "11-puntos-de-extensión"
+        },
+        {
+          "level": 2,
+          "text": "12. Escenarios de prueba",
+          "id": "12-escenarios-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencias",
+          "id": "13-índice-de-evidencias"
+        }
+      ],
+      "words": 2226,
+      "minutes": 10
+    },
+    {
+      "slug": "02-flows/03-inventory",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo — Inventario y valoración de stock",
+      "description": "Modelo de inventario, rutas, reserva, quants, validación, valoración v19, devoluciones, desechos y bloqueo.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El modelo de inventario en una página",
+          "id": "1-el-modelo-de-inventario-en-una-página"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Ubicaciones y tipos de uso",
+          "id": "11-ubicaciones-y-tipos-de-uso"
+        },
+        {
+          "level": 2,
+          "text": "2. Máquinas de estados",
+          "id": "2-máquinas-de-estados"
+        },
+        {
+          "level": 3,
+          "text": "2.1 stock.picking",
+          "id": "21-stockpicking"
+        },
+        {
+          "level": 3,
+          "text": "2.2 stock.quant",
+          "id": "22-stockquant"
+        },
+        {
+          "level": 2,
+          "text": "3. Aprovisionamiento: cómo la demanda se convierte en movimientos",
+          "id": "3-aprovisionamiento-cómo-la-demanda-se-convierte-en-movimientos"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Orden de resolución de reglas",
+          "id": "31-orden-de-resolución-de-reglas"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Pull frente a push",
+          "id": "32-pull-frente-a-push"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Rutas de varios pasos",
+          "id": "33-rutas-de-varios-pasos"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Reglas de reabastecimiento",
+          "id": "34-reglas-de-reabastecimiento"
+        },
+        {
+          "level": 2,
+          "text": "4. Reserva y quants",
+          "id": "4-reserva-y-quants"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Reserva",
+          "id": "41-reserva"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Actualizaciones de quants",
+          "id": "42-actualizaciones-de-quants"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Stock negativo",
+          "id": "43-stock-negativo"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Lotes y números de serie",
+          "id": "44-lotes-y-números-de-serie"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Paquetes y propietarios",
+          "id": "45-paquetes-y-propietarios"
+        },
+        {
+          "level": 2,
+          "text": "5. Validación y valoración",
+          "id": "5-validación-y-valoración"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Secuencia de buttonvalidate",
+          "id": "51-secuencia-de-buttonvalidate"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Valoración en la v19 [V19]",
+          "id": "52-valoración-en-la-v19-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Métodos de coste",
+          "id": "53-métodos-de-coste"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Asientos contables [V19]",
+          "id": "54-asientos-contables-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Métodos de coste y contabilidad",
+          "id": "55-métodos-de-coste-y-contabilidad"
+        },
+        {
+          "level": 2,
+          "text": "6. Devoluciones, desechos y ajustes",
+          "id": "6-devoluciones-desechos-y-ajustes"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Devoluciones",
+          "id": "61-devoluciones"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Desecho",
+          "id": "62-desecho"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Ajuste de inventario",
+          "id": "63-ajuste-de-inventario"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Recuento cíclico",
+          "id": "64-recuento-cíclico"
+        },
+        {
+          "level": 2,
+          "text": "7. Puntos de decisión",
+          "id": "7-puntos-de-decisión"
+        },
+        {
+          "level": 2,
+          "text": "8. Rendimiento y bloqueos",
+          "id": "8-rendimiento-y-bloqueos"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Rutas de acceso frecuente",
+          "id": "81-rutas-de-acceso-frecuente"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Evitación de interbloqueos",
+          "id": "82-evitación-de-interbloqueos"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Patrones de consulta",
+          "id": "83-patrones-de-consulta"
+        },
+        {
+          "level": 2,
+          "text": "9. Modos de fallo",
+          "id": "9-modos-de-fallo"
+        },
+        {
+          "level": 2,
+          "text": "10. Puntos de extensión",
+          "id": "10-puntos-de-extensión"
+        },
+        {
+          "level": 2,
+          "text": "11. Escenarios de prueba",
+          "id": "11-escenarios-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencias",
+          "id": "12-índice-de-evidencias"
+        }
+      ],
+      "words": 3297,
+      "minutes": 15
+    },
+    {
+      "slug": "02-flows/04-accounting",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo — Contabilidad (de la factura a los estados financieros)",
+      "description": "Ciclo de vida del asiento contable, impuestos, conciliación, pagos, activos, fechas de bloqueo, cadena de hash y contabilidad de valoración de stock.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El modelo contable",
+          "id": "1-el-modelo-contable"
+        },
+        {
+          "level": 2,
+          "text": "2. Ciclo de vida del asiento",
+          "id": "2-ciclo-de-vida-del-asiento"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Flujo de post(soft=True)",
+          "id": "21-flujo-de-postsofttrue"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Comprobación de equilibrio",
+          "id": "22-comprobación-de-equilibrio"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Inmutabilidad tras la publicación",
+          "id": "23-inmutabilidad-tras-la-publicación"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Reversión",
+          "id": "24-reversión"
+        },
+        {
+          "level": 2,
+          "text": "3. Secuencias y cadena de hash",
+          "id": "3-secuencias-y-cadena-de-hash"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Asignación de secuencias",
+          "id": "31-asignación-de-secuencias"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Cadena de hash",
+          "id": "32-cadena-de-hash"
+        },
+        {
+          "level": 2,
+          "text": "4. Impuestos",
+          "id": "4-impuestos"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Definición de impuestos",
+          "id": "41-definición-de-impuestos"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Pipeline de impuestos de Odoo 19 [V19]",
+          "id": "42-pipeline-de-impuestos-de-odoo-19-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Líneas de reparto",
+          "id": "43-líneas-de-reparto"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Impuestos con precio incluido",
+          "id": "44-impuestos-con-precio-incluido"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Criterio de caja",
+          "id": "45-criterio-de-caja"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Posiciones fiscales",
+          "id": "46-posiciones-fiscales"
+        },
+        {
+          "level": 2,
+          "text": "5. Conciliación",
+          "id": "5-conciliación"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Conciliación parcial y total",
+          "id": "51-conciliación-parcial-y-total"
+        },
+        {
+          "level": 3,
+          "text": "5.2 reconcileplan",
+          "id": "52-reconcileplan"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Diferencias de cambio",
+          "id": "53-diferencias-de-cambio"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Conciliación de pagos",
+          "id": "54-conciliación-de-pagos"
+        },
+        {
+          "level": 2,
+          "text": "6. Pagos",
+          "id": "6-pagos"
+        },
+        {
+          "level": 2,
+          "text": "7. Activos",
+          "id": "7-activos"
+        },
+        {
+          "level": 2,
+          "text": "8. Contabilidad de la valoración de stock [V19]",
+          "id": "8-contabilidad-de-la-valoración-de-stock-v19"
+        },
+        {
+          "level": 2,
+          "text": "9. Fechas de bloqueo",
+          "id": "9-fechas-de-bloqueo"
+        },
+        {
+          "level": 2,
+          "text": "10. Contabilidad analítica",
+          "id": "10-contabilidad-analítica"
+        },
+        {
+          "level": 2,
+          "text": "11. Informes y accountreports de Enterprise",
+          "id": "11-informes-y-accountreports-de-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "12. Puntos de decisión e invariantes",
+          "id": "12-puntos-de-decisión-e-invariantes"
+        },
+        {
+          "level": 2,
+          "text": "13. Modos de fallo",
+          "id": "13-modos-de-fallo"
+        },
+        {
+          "level": 2,
+          "text": "14. Escenarios de prueba",
+          "id": "14-escenarios-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "15. Índice de evidencias",
+          "id": "15-índice-de-evidencias"
+        }
+      ],
+      "words": 2991,
+      "minutes": 14
+    },
+    {
+      "slug": "02-flows/05-manufacturing",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo — Fabricación (del plan a la producción)",
+      "description": "Del plan a la producción: listas de materiales, estados de OF, órdenes de trabajo, consumo, costes, subcontratación y calidad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Mapa de modelos",
+          "id": "1-mapa-de-modelos"
+        },
+        {
+          "level": 2,
+          "text": "2. Máquina de estados",
+          "id": "2-máquina-de-estados"
+        },
+        {
+          "level": 3,
+          "text": "2.1 mrp.production",
+          "id": "21-mrpproduction"
+        },
+        {
+          "level": 3,
+          "text": "2.2 mrp.workorder",
+          "id": "22-mrpworkorder"
+        },
+        {
+          "level": 3,
+          "text": "2.3 mrp.workcenter.productivity",
+          "id": "23-mrpworkcenterproductivity"
+        },
+        {
+          "level": 2,
+          "text": "3. Lista de materiales",
+          "id": "3-lista-de-materiales"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Tipos de LdM",
+          "id": "31-tipos-de-ldm"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Algoritmo de explosión [V19]",
+          "id": "32-algoritmo-de-explosión-v19"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Cantidad de componente",
+          "id": "33-cantidad-de-componente"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Subproductos y cuota de coste",
+          "id": "34-subproductos-y-cuota-de-coste"
+        },
+        {
+          "level": 2,
+          "text": "4. Secuencia de extremo a extremo",
+          "id": "4-secuencia-de-extremo-a-extremo"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Rutas de creación",
+          "id": "41-rutas-de-creación"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Confirmación",
+          "id": "42-confirmación"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Reserva",
+          "id": "43-reserva"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Planificación",
+          "id": "44-planificación"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Producción",
+          "id": "45-producción"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Pedidos pendientes y divisiones",
+          "id": "46-pedidos-pendientes-y-divisiones"
+        },
+        {
+          "level": 2,
+          "text": "5. Valoración y coste",
+          "id": "5-valoración-y-coste"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Coste del producto terminado",
+          "id": "51-coste-del-producto-terminado"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Registro de mano de obra",
+          "id": "52-registro-de-mano-de-obra"
+        },
+        {
+          "level": 3,
+          "text": "5.3 WIP",
+          "id": "53-wip"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Desechos y subproductos",
+          "id": "54-desechos-y-subproductos"
+        },
+        {
+          "level": 2,
+          "text": "6. Subcontratación",
+          "id": "6-subcontratación"
+        },
+        {
+          "level": 2,
+          "text": "7. Integración con calidad",
+          "id": "7-integración-con-calidad"
+        },
+        {
+          "level": 2,
+          "text": "8. Puntos de decisión",
+          "id": "8-puntos-de-decisión"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Modos de consumo",
+          "id": "81-modos-de-consumo"
+        },
+        {
+          "level": 2,
+          "text": "9. Modos de fallo",
+          "id": "9-modos-de-fallo"
+        },
+        {
+          "level": 2,
+          "text": "10. Puntos de extensión",
+          "id": "10-puntos-de-extensión"
+        },
+        {
+          "level": 2,
+          "text": "11. Escenarios de prueba",
+          "id": "11-escenarios-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencias",
+          "id": "12-índice-de-evidencias"
+        }
+      ],
+      "words": 2406,
+      "minutes": 11
+    },
+    {
+      "slug": "02-flows/06-cross-module",
+      "section": "02-flows",
+      "sectionTitle": "Flujos de extremo a extremo",
+      "title": "Flujo documental entre módulos",
+      "description": "Cómo la demanda se convierte en documentos de aprovisionamiento, fabricación, logística y contabilidad entre módulos.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El grafo documental",
+          "id": "1-el-grafo-documental"
+        },
+        {
+          "level": 2,
+          "text": "2. Flujo de fabricación contra stock (MTS)",
+          "id": "2-flujo-de-fabricación-contra-stock-mts"
+        },
+        {
+          "level": 2,
+          "text": "3. Flujo de fabricación bajo pedido (MTO)",
+          "id": "3-flujo-de-fabricación-bajo-pedido-mto"
+        },
+        {
+          "level": 2,
+          "text": "4. Flujo de envío directo",
+          "id": "4-flujo-de-envío-directo"
+        },
+        {
+          "level": 2,
+          "text": "5. Flujo de subcontratación",
+          "id": "5-flujo-de-subcontratación"
+        },
+        {
+          "level": 2,
+          "text": "6. Flujo intercompañía",
+          "id": "6-flujo-intercompañía"
+        },
+        {
+          "level": 2,
+          "text": "7. Flujos de proyecto y servicios",
+          "id": "7-flujos-de-proyecto-y-servicios"
+        },
+        {
+          "level": 2,
+          "text": "8. Flujos de suscripción y alquiler",
+          "id": "8-flujos-de-suscripción-y-alquiler"
+        },
+        {
+          "level": 2,
+          "text": "9. Flujo del TPV",
+          "id": "9-flujo-del-tpv"
+        },
+        {
+          "level": 2,
+          "text": "10. Matriz de decisión: ¿qué documento para cada demanda?",
+          "id": "10-matriz-de-decisión-qué-documento-para-cada-demanda"
+        },
+        {
+          "level": 2,
+          "text": "11. Riesgos de acoplamiento",
+          "id": "11-riesgos-de-acoplamiento"
+        },
+        {
+          "level": 2,
+          "text": "12. Consultas de trazabilidad",
+          "id": "12-consultas-de-trazabilidad"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencia",
+          "id": "13-índice-de-evidencia"
+        }
+      ],
+      "words": 1563,
+      "minutes": 7
+    },
+    {
+      "slug": "03-database/01-conventions",
+      "section": "03-database",
+      "sectionTitle": "Diseño de base de datos",
+      "title": "Diseño de base de datos I — convenciones, generación de esquema y almacenamiento",
+      "description": "Convenciones de tablas y columnas, campos mágicos, tablas de relación, índices, restricciones, JSONB y filestore.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Nomenclatura de tablas",
+          "id": "1-nomenclatura-de-tablas"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Columnas mágicas",
+          "id": "11-columnas-mágicas"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Columnas de metadatos del modelo",
+          "id": "12-columnas-de-metadatos-del-modelo"
+        },
+        {
+          "level": 2,
+          "text": "2. Tipos de columna",
+          "id": "2-tipos-de-columna"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Columnas traducidas",
+          "id": "21-columnas-traducidas"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Columnas dependientes de compañía",
+          "id": "22-columnas-dependientes-de-compañía"
+        },
+        {
+          "level": 2,
+          "text": "3. Claves primarias, claves externas y restricciones",
+          "id": "3-claves-primarias-claves-externas-y-restricciones"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Claves primarias",
+          "id": "31-claves-primarias"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Claves externas",
+          "id": "32-claves-externas"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Restricciones SQL",
+          "id": "33-restricciones-sql"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Restricciones CHECK",
+          "id": "34-restricciones-check"
+        },
+        {
+          "level": 2,
+          "text": "4. Tablas de relación many2many",
+          "id": "4-tablas-de-relación-many2many"
+        },
+        {
+          "level": 2,
+          "text": "5. Esquemas de herencia",
+          "id": "5-esquemas-de-herencia"
+        },
+        {
+          "level": 3,
+          "text": "5.1 inherit (mismo modelo)",
+          "id": "51-inherit-mismo-modelo"
+        },
+        {
+          "level": 3,
+          "text": "5.2 name + inherit (prototipo)",
+          "id": "52-name-inherit-prototipo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 inherits (delegación)",
+          "id": "53-inherits-delegación"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Modelos de vista SQL",
+          "id": "54-modelos-de-vista-sql"
+        },
+        {
+          "level": 2,
+          "text": "6. Convenciones de indexación",
+          "id": "6-convenciones-de-indexación"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Índices declarados",
+          "id": "61-índices-declarados"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Nomenclatura y gestión de índices",
+          "id": "62-nomenclatura-y-gestión-de-índices"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Índices compuestos",
+          "id": "63-índices-compuestos"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Cuándo añadir un índice",
+          "id": "64-cuándo-añadir-un-índice"
+        },
+        {
+          "level": 2,
+          "text": "7. Secuencias y numeración",
+          "id": "7-secuencias-y-numeración"
+        },
+        {
+          "level": 2,
+          "text": "8. Adjuntos y filestore",
+          "id": "8-adjuntos-y-filestore"
+        },
+        {
+          "level": 2,
+          "text": "9. Comportamiento ante cambios de esquema",
+          "id": "9-comportamiento-ante-cambios-de-esquema"
+        },
+        {
+          "level": 2,
+          "text": "10. Lista de verificación de nomenclatura y diseño",
+          "id": "10-lista-de-verificación-de-nomenclatura-y-diseño"
+        },
+        {
+          "level": 2,
+          "text": "11. Consultas de diagnóstico",
+          "id": "11-consultas-de-diagnóstico"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencia",
+          "id": "12-índice-de-evidencia"
+        }
+      ],
+      "words": 2458,
+      "minutes": 11
+    },
+    {
+      "slug": "03-database/02-inheritance",
+      "section": "03-database",
+      "sectionTitle": "Diseño de base de datos",
+      "title": "Diseño de base de datos II — estrategias de herencia y efectos en el esquema",
+      "description": "Herencia de extensión, prototipo, delegación y mixin, MRO y sus consecuencias en el esquema.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Comparación",
+          "id": "1-comparación"
+        },
+        {
+          "level": 2,
+          "text": "2. Herencia por extensión (inherit)",
+          "id": "2-herencia-por-extensión-inherit"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Definición",
+          "id": "21-definición"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Efecto en el esquema",
+          "id": "22-efecto-en-el-esquema"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Ensamblaje de la clase",
+          "id": "23-ensamblaje-de-la-clase"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Redefinición de campos",
+          "id": "24-redefinición-de-campos"
+        },
+        {
+          "level": 2,
+          "text": "3. Herencia por prototipo (name + inherit)",
+          "id": "3-herencia-por-prototipo-name-inherit"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Definición",
+          "id": "31-definición"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Efecto en el esquema",
+          "id": "32-efecto-en-el-esquema"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Cuándo usarla",
+          "id": "33-cuándo-usarla"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Cuándo no usarla",
+          "id": "34-cuándo-no-usarla"
+        },
+        {
+          "level": 2,
+          "text": "4. Herencia por delegación (inherits)",
+          "id": "4-herencia-por-delegación-inherits"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Definición",
+          "id": "41-definición"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Efecto en el esquema",
+          "id": "42-efecto-en-el-esquema"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Comportamiento",
+          "id": "43-comportamiento"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Requisitos",
+          "id": "44-requisitos"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Cuándo usarla",
+          "id": "45-cuándo-usarla"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Cuándo no usarla",
+          "id": "46-cuándo-no-usarla"
+        },
+        {
+          "level": 2,
+          "text": "5. Mixins abstractos",
+          "id": "5-mixins-abstractos"
+        },
+        {
+          "level": 2,
+          "text": "6. MRO y orden de sobrescritura",
+          "id": "6-mro-y-orden-de-sobrescritura"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Orden de carga",
+          "id": "61-orden-de-carga"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Módulos hermanos",
+          "id": "62-módulos-hermanos"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Errores frecuentes con super()",
+          "id": "63-errores-frecuentes-con-super"
+        },
+        {
+          "level": 2,
+          "text": "7. Reglas de fusión del esquema",
+          "id": "7-reglas-de-fusión-del-esquema"
+        },
+        {
+          "level": 2,
+          "text": "8. Árbol de decisión de herencia",
+          "id": "8-árbol-de-decisión-de-herencia"
+        },
+        {
+          "level": 2,
+          "text": "9. Implicaciones para la migración",
+          "id": "9-implicaciones-para-la-migración"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Patrón de renombrado seguro",
+          "id": "91-patrón-de-renombrado-seguro"
+        },
+        {
+          "level": 2,
+          "text": "10. Antipatrones",
+          "id": "10-antipatrones"
+        },
+        {
+          "level": 2,
+          "text": "11. Índice de evidencia",
+          "id": "11-índice-de-evidencia"
+        }
+      ],
+      "words": 1930,
+      "minutes": 9
+    },
+    {
+      "slug": "03-database/03-er-model",
+      "section": "03-database",
+      "sectionTitle": "Diseño de base de datos",
+      "title": "Diseño de base de datos III — Modelo entidad-relación central",
+      "description": "Modelo ER central para terceros, productos, ventas, stock, contabilidad y fabricación, incluidas columnas ocultas.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Núcleo de terceros y productos",
+          "id": "1-núcleo-de-terceros-y-productos"
+        },
+        {
+          "level": 3,
+          "text": "1.1 respartner",
+          "id": "11-respartner"
+        },
+        {
+          "level": 3,
+          "text": "1.2 producttemplate / productproduct",
+          "id": "12-producttemplate-productproduct"
+        },
+        {
+          "level": 3,
+          "text": "1.3 uomuom [V19]",
+          "id": "13-uomuom-v19"
+        },
+        {
+          "level": 2,
+          "text": "2. Ventas y aprovisionamiento",
+          "id": "2-ventas-y-aprovisionamiento"
+        },
+        {
+          "level": 3,
+          "text": "2.1 saleorder",
+          "id": "21-saleorder"
+        },
+        {
+          "level": 3,
+          "text": "2.2 stockreference [V19]",
+          "id": "22-stockreference-v19"
+        },
+        {
+          "level": 3,
+          "text": "2.3 stockmove",
+          "id": "23-stockmove"
+        },
+        {
+          "level": 3,
+          "text": "2.4 stockmoveline",
+          "id": "24-stockmoveline"
+        },
+        {
+          "level": 3,
+          "text": "2.5 stockquant",
+          "id": "25-stockquant"
+        },
+        {
+          "level": 2,
+          "text": "3. Contabilidad",
+          "id": "3-contabilidad"
+        },
+        {
+          "level": 3,
+          "text": "3.1 accountmove",
+          "id": "31-accountmove"
+        },
+        {
+          "level": 3,
+          "text": "3.2 accountmoveline",
+          "id": "32-accountmoveline"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Tablas de conciliación",
+          "id": "33-tablas-de-conciliación"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Impuestos",
+          "id": "34-impuestos"
+        },
+        {
+          "level": 2,
+          "text": "4. Fabricación",
+          "id": "4-fabricación"
+        },
+        {
+          "level": 3,
+          "text": "4.1 mrpproduction",
+          "id": "41-mrpproduction"
+        },
+        {
+          "level": 3,
+          "text": "4.2 mrpworkorder",
+          "id": "42-mrpworkorder"
+        },
+        {
+          "level": 3,
+          "text": "4.3 mrpworkcenterproductivity",
+          "id": "43-mrpworkcenterproductivity"
+        },
+        {
+          "level": 2,
+          "text": "5. Tablas transversales del sistema",
+          "id": "5-tablas-transversales-del-sistema"
+        },
+        {
+          "level": 2,
+          "text": "6. Columnas ocultas y heredadas",
+          "id": "6-columnas-ocultas-y-heredadas"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Eliminadas o renombradas en la v19",
+          "id": "61-eliminadas-o-renombradas-en-la-v19"
+        },
+        {
+          "level": 2,
+          "text": "7. Patrones de unión para informes",
+          "id": "7-patrones-de-unión-para-informes"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Margen de ventas",
+          "id": "71-margen-de-ventas"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Stock disponible por ubicación",
+          "id": "72-stock-disponible-por-ubicación"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Balance de sumas y saldos",
+          "id": "73-balance-de-sumas-y-saldos"
+        },
+        {
+          "level": 2,
+          "text": "8. Índice de evidencias",
+          "id": "8-índice-de-evidencias"
+        }
+      ],
+      "words": 2931,
+      "minutes": 13
+    },
+    {
+      "slug": "03-database/04-indexes-performance",
+      "section": "03-database",
+      "sectionTitle": "Diseño de base de datos",
+      "title": "Diseño de base de datos IV — Indexación, rendimiento de consultas y escalado",
+      "description": "Modelo de coste de consultas, indexación, N+1, prefetch, bloqueos, autovacuum, dimensionamiento de workers y perfilado.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. El modelo de costes",
+          "id": "1-el-modelo-de-costes"
+        },
+        {
+          "level": 2,
+          "text": "2. Generación de consultas del ORM",
+          "id": "2-generación-de-consultas-del-orm"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Búsqueda → SQL",
+          "id": "21-búsqueda-sql"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Prefetch",
+          "id": "22-prefetch"
+        },
+        {
+          "level": 3,
+          "text": "2.3 readgroup / readgroup",
+          "id": "23-readgroup-readgroup"
+        },
+        {
+          "level": 2,
+          "text": "3. Estrategia de indexación",
+          "id": "3-estrategia-de-indexación"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Qué indexa Odoo",
+          "id": "31-qué-indexa-odoo"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Qué no indexa Odoo",
+          "id": "32-qué-no-indexa-odoo"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Ejemplos de índices compuestos",
+          "id": "33-ejemplos-de-índices-compuestos"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Reglas de selección de índices",
+          "id": "34-reglas-de-selección-de-índices"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Antipatrones de índices",
+          "id": "35-antipatrones-de-índices"
+        },
+        {
+          "level": 2,
+          "text": "4. N+1 y operaciones sin límite",
+          "id": "4-n1-y-operaciones-sin-límite"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Detección de N+1",
+          "id": "41-detección-de-n1"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Patrones N+1 comunes",
+          "id": "42-patrones-n1-comunes"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Operaciones sin límite sobre conjuntos de registros",
+          "id": "43-operaciones-sin-límite-sobre-conjuntos-de-registros"
+        },
+        {
+          "level": 2,
+          "text": "5. Coste de cálculo y recálculo",
+          "id": "5-coste-de-cálculo-y-recálculo"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Cálculos almacenados",
+          "id": "51-cálculos-almacenados"
+        },
+        {
+          "level": 3,
+          "text": "5.2 computesudo",
+          "id": "52-computesudo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Tormentas de recálculo",
+          "id": "53-tormentas-de-recálculo"
+        },
+        {
+          "level": 2,
+          "text": "6. Transacciones, bloqueos y vacuum",
+          "id": "6-transacciones-bloqueos-y-vacuum"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Transacciones largas",
+          "id": "61-transacciones-largas"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Autovacuum",
+          "id": "62-autovacuum"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Grupo de conexiones",
+          "id": "63-grupo-de-conexiones"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Dimensionamiento de workers",
+          "id": "64-dimensionamiento-de-workers"
+        },
+        {
+          "level": 2,
+          "text": "7. Perfilado",
+          "id": "7-perfilado"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Perfilador integrado",
+          "id": "71-perfilador-integrado"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Registro SQL",
+          "id": "72-registro-sql"
+        },
+        {
+          "level": 3,
+          "text": "7.3 pgstatstatements de PostgreSQL",
+          "id": "73-pgstatstatements-de-postgresql"
+        },
+        {
+          "level": 3,
+          "text": "7.4 EXPLAIN (ANALYZE, BUFFERS)",
+          "id": "74-explain-analyze-buffers"
+        },
+        {
+          "level": 2,
+          "text": "8. Patrones de escalado",
+          "id": "8-patrones-de-escalado"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Primero vertical",
+          "id": "81-primero-vertical"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Réplicas de lectura",
+          "id": "82-réplicas-de-lectura"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Particionado",
+          "id": "83-particionado"
+        },
+        {
+          "level": 3,
+          "text": "8.4 Archivado",
+          "id": "84-archivado"
+        },
+        {
+          "level": 2,
+          "text": "9. Lista de verificación de rendimiento",
+          "id": "9-lista-de-verificación-de-rendimiento"
+        },
+        {
+          "level": 3,
+          "text": "Nivel de consulta",
+          "id": "nivel-de-consulta"
+        },
+        {
+          "level": 3,
+          "text": "Nivel de ORM",
+          "id": "nivel-de-orm"
+        },
+        {
+          "level": 3,
+          "text": "Nivel de base de datos",
+          "id": "nivel-de-base-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "Operaciones",
+          "id": "operaciones"
+        },
+        {
+          "level": 2,
+          "text": "10. Índice de evidencias",
+          "id": "10-índice-de-evidencias"
+        }
+      ],
+      "words": 2134,
+      "minutes": 10
+    },
+    {
+      "slug": "03-database/05-migrations",
+      "section": "03-database",
+      "sectionTitle": "Diseño de base de datos",
+      "title": "Diseño de base de datos V — Migraciones, actualizaciones y evolución de datos",
+      "description": "Evolución del esquema, scripts de migración de módulos, noupdate, rellenos, OpenUpgrade y reversión.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Superficies de actualización",
+          "id": "1-superficies-de-actualización"
+        },
+        {
+          "level": 2,
+          "text": "2. Canal de actualización estándar",
+          "id": "2-canal-de-actualización-estándar"
+        },
+        {
+          "level": 2,
+          "text": "3. Scripts de migración de módulos",
+          "id": "3-scripts-de-migración-de-módulos"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Estructura de directorios",
+          "id": "31-estructura-de-directorios"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Contrato de los scripts",
+          "id": "32-contrato-de-los-scripts"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Coincidencia de versiones",
+          "id": "33-coincidencia-de-versiones"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Ubicación de los scripts",
+          "id": "34-ubicación-de-los-scripts"
+        },
+        {
+          "level": 2,
+          "text": "4. Archivos de datos y noupdate",
+          "id": "4-archivos-de-datos-y-noupdate"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Semántica",
+          "id": "41-semántica"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Estabilidad de los ID XML",
+          "id": "42-estabilidad-de-los-id-xml"
+        },
+        {
+          "level": 2,
+          "text": "5. Patrones de migración de esquema",
+          "id": "5-patrones-de-migración-de-esquema"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Añadir un campo obligatorio",
+          "id": "51-añadir-un-campo-obligatorio"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Renombrar un campo",
+          "id": "52-renombrar-un-campo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Cambiar el tipo de un campo",
+          "id": "53-cambiar-el-tipo-de-un-campo"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Eliminar un campo",
+          "id": "54-eliminar-un-campo"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Cambiar inherits",
+          "id": "55-cambiar-inherits"
+        },
+        {
+          "level": 3,
+          "text": "5.6 Cambiar parentstore",
+          "id": "56-cambiar-parentstore"
+        },
+        {
+          "level": 2,
+          "text": "6. Estrategias de migración de datos",
+          "id": "6-estrategias-de-migración-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Procesamiento por lotes",
+          "id": "61-procesamiento-por-lotes"
+        },
+        {
+          "level": 3,
+          "text": "6.2 ORM frente a SQL",
+          "id": "62-orm-frente-a-sql"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Idempotencia",
+          "id": "63-idempotencia"
+        },
+        {
+          "level": 2,
+          "text": "7. OpenUpgrade",
+          "id": "7-openupgrade"
+        },
+        {
+          "level": 2,
+          "text": "8. Probar una actualización",
+          "id": "8-probar-una-actualización"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Verificación previa",
+          "id": "81-verificación-previa"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Durante",
+          "id": "82-durante"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Verificación posterior",
+          "id": "83-verificación-posterior"
+        },
+        {
+          "level": 2,
+          "text": "9. Estrategia de reversión",
+          "id": "9-estrategia-de-reversión"
+        },
+        {
+          "level": 2,
+          "text": "10. Neutralización",
+          "id": "10-neutralización"
+        },
+        {
+          "level": 2,
+          "text": "11. Antipatrones de migración",
+          "id": "11-antipatrones-de-migración"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencias",
+          "id": "12-índice-de-evidencias"
+        }
+      ],
+      "words": 2147,
+      "minutes": 10
+    },
+    {
+      "slug": "04-modules/01-dependency-system",
+      "section": "04-modules",
+      "sectionTitle": "Relaciones entre módulos",
+      "title": "Relaciones entre módulos I — Manifiesto, carga y semántica de dependencias",
+      "description": "Semántica de manifiestos, fases de carga, autoinstalación, dependencias externas y estadísticas de módulos.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Esquema del manifiesto",
+          "id": "1-esquema-del-manifiesto"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Referencia de claves",
+          "id": "11-referencia-de-claves"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Claves heredadas/ignoradas",
+          "id": "12-claves-heredadasignoradas"
+        },
+        {
+          "level": 3,
+          "text": "1.3 Semántica de autoinstall",
+          "id": "13-semántica-de-autoinstall"
+        },
+        {
+          "level": 3,
+          "text": "1.4 Dependencias externas",
+          "id": "14-dependencias-externas"
+        },
+        {
+          "level": 2,
+          "text": "2. Proceso de carga",
+          "id": "2-proceso-de-carga"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Construcción del grafo",
+          "id": "21-construcción-del-grafo"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Pasos por módulo",
+          "id": "22-pasos-por-módulo"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Límites de transacción",
+          "id": "23-límites-de-transacción"
+        },
+        {
+          "level": 2,
+          "text": "3. Semántica de dependencias",
+          "id": "3-semántica-de-dependencias"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Manifiesto frente a importaciones de Python",
+          "id": "31-manifiesto-frente-a-importaciones-de-python"
+        },
+        {
+          "level": 3,
+          "text": "3.2 IDs XML de datos",
+          "id": "32-ids-xml-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Claves foráneas de la base de datos",
+          "id": "33-claves-foráneas-de-la-base-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Dependencias circulares",
+          "id": "34-dependencias-circulares"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Community frente a Enterprise",
+          "id": "35-community-frente-a-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "4. Estadísticas de dependencias (este árbol)",
+          "id": "4-estadísticas-de-dependencias-este-árbol"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Mayor fan-in",
+          "id": "41-mayor-fan-in"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Distribución de profundidad",
+          "id": "42-distribución-de-profundidad"
+        },
+        {
+          "level": 2,
+          "text": "5. Semántica de desinstalación",
+          "id": "5-semántica-de-desinstalación"
+        },
+        {
+          "level": 2,
+          "text": "6. Máquina de estados de los módulos",
+          "id": "6-máquina-de-estados-de-los-módulos"
+        },
+        {
+          "level": 2,
+          "text": "7. Reglas de diseño de manifiestos",
+          "id": "7-reglas-de-diseño-de-manifiestos"
+        },
+        {
+          "level": 2,
+          "text": "8. Índice de evidencia",
+          "id": "8-índice-de-evidencia"
+        }
+      ],
+      "words": 2146,
+      "minutes": 10
+    },
+    {
+      "slug": "04-modules/02-module-map",
+      "section": "04-modules",
+      "sectionTitle": "Relaciones entre módulos",
+      "title": "Relaciones entre módulos II — Mapa de la plataforma y clústeres de dependencias",
+      "description": "Mapa por capas de 1.469 módulos, módulos puente, clústeres Enterprise y análisis de impacto.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Mapa por capas",
+          "id": "1-mapa-por-capas"
+        },
+        {
+          "level": 2,
+          "text": "2. Clúster fundacional",
+          "id": "2-clúster-fundacional"
+        },
+        {
+          "level": 2,
+          "text": "3. Clúster comercial",
+          "id": "3-clúster-comercial"
+        },
+        {
+          "level": 2,
+          "text": "4. Clúster logístico",
+          "id": "4-clúster-logístico"
+        },
+        {
+          "level": 2,
+          "text": "5. Clúster financiero",
+          "id": "5-clúster-financiero"
+        },
+        {
+          "level": 2,
+          "text": "6. Clúster Enterprise",
+          "id": "6-clúster-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "7. Módulos de aplicación (las 78 «apps»)",
+          "id": "7-módulos-de-aplicación-las-78-apps"
+        },
+        {
+          "level": 2,
+          "text": "8. Módulos puente y servicios compartidos",
+          "id": "8-módulos-puente-y-servicios-compartidos"
+        },
+        {
+          "level": 2,
+          "text": "9. Reglas de análisis de impacto",
+          "id": "9-reglas-de-análisis-de-impacto"
+        },
+        {
+          "level": 2,
+          "text": "10. Dónde ubicar una personalización",
+          "id": "10-dónde-ubicar-una-personalización"
+        },
+        {
+          "level": 2,
+          "text": "11. Índice de evidencia",
+          "id": "11-índice-de-evidencia"
+        }
+      ],
+      "words": 1850,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/03-extension-points",
+      "section": "04-modules",
+      "sectionTitle": "Relaciones entre módulos",
+      "title": "Relaciones entre módulos III — Puntos de extensión ordenados por seguridad",
+      "description": "Puntos de extensión ordenados por seguridad, con trampas de sobrescritura y una matriz de decisión.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Clasificación por seguridad",
+          "id": "1-clasificación-por-seguridad"
+        },
+        {
+          "level": 2,
+          "text": "2. Modelos nuevos (los más seguros)",
+          "id": "2-modelos-nuevos-los-más-seguros"
+        },
+        {
+          "level": 2,
+          "text": "3. inherit + super() (el más habitual)",
+          "id": "3-inherit-super-el-más-habitual"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Dónde enganchar",
+          "id": "31-dónde-enganchar"
+        },
+        {
+          "level": 2,
+          "text": "4. Herencia de vistas",
+          "id": "4-herencia-de-vistas"
+        },
+        {
+          "level": 2,
+          "text": "5. Paquetes de recursos",
+          "id": "5-paquetes-de-recursos"
+        },
+        {
+          "level": 2,
+          "text": "6. Controladores",
+          "id": "6-controladores"
+        },
+        {
+          "level": 2,
+          "text": "7. Componentes y parches de OWL",
+          "id": "7-componentes-y-parches-de-owl"
+        },
+        {
+          "level": 2,
+          "text": "8. Plantillas de correo",
+          "id": "8-plantillas-de-correo"
+        },
+        {
+          "level": 2,
+          "text": "9. Acciones automatizadas",
+          "id": "9-acciones-automatizadas"
+        },
+        {
+          "level": 2,
+          "text": "10. Acciones de servidor",
+          "id": "10-acciones-de-servidor"
+        },
+        {
+          "level": 2,
+          "text": "11. Configuración e indicadores de funcionalidad",
+          "id": "11-configuración-e-indicadores-de-funcionalidad"
+        },
+        {
+          "level": 2,
+          "text": "12. Hooks de módulo",
+          "id": "12-hooks-de-módulo"
+        },
+        {
+          "level": 2,
+          "text": "13. mail.thread y inherits",
+          "id": "13-mailthread-y-inherits"
+        },
+        {
+          "level": 3,
+          "text": "13.1 mail.thread",
+          "id": "131-mailthread"
+        },
+        {
+          "level": 3,
+          "text": "13.2 inherits",
+          "id": "132-inherits"
+        },
+        {
+          "level": 2,
+          "text": "14. Errores concretos en las sobrescrituras",
+          "id": "14-errores-concretos-en-las-sobrescrituras"
+        },
+        {
+          "level": 2,
+          "text": "15. Matriz de decisión de extensión",
+          "id": "15-matriz-de-decisión-de-extensión"
+        },
+        {
+          "level": 2,
+          "text": "16. Índice de evidencia",
+          "id": "16-índice-de-evidencia"
+        }
+      ],
+      "words": 2093,
+      "minutes": 10
+    },
+    {
+      "slug": "04-modules/04-circular-dependencies",
+      "section": "04-modules",
+      "sectionTitle": "Relaciones entre módulos",
+      "title": "Relaciones entre módulos IV — Dependencias circulares, acoplamiento y composición segura",
+      "description": "Ciclos de manifiesto, ciclos de importación de Python, ciclos de datos, acoplamiento por autoinstalación y reglas de composición.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Cuatro tipos de «dependencia circular»",
+          "id": "1-cuatro-tipos-de-dependencia-circular"
+        },
+        {
+          "level": 2,
+          "text": "2. Por qué los ciclos de manifiesto no pueden funcionar",
+          "id": "2-por-qué-los-ciclos-de-manifiesto-no-pueden-funcionar"
+        },
+        {
+          "level": 2,
+          "text": "3. Ciclos de importación legales en Python",
+          "id": "3-ciclos-de-importación-legales-en-python"
+        },
+        {
+          "level": 2,
+          "text": "4. Dependencias blandas",
+          "id": "4-dependencias-blandas"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Importaciones protegidas",
+          "id": "41-importaciones-protegidas"
+        },
+        {
+          "level": 2,
+          "text": "5. Ciclos a nivel de datos",
+          "id": "5-ciclos-a-nivel-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Orden de carga de XML",
+          "id": "51-orden-de-carga-de-xml"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Referencias circulares entre registros",
+          "id": "52-referencias-circulares-entre-registros"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Ciclos vista/acción",
+          "id": "53-ciclos-vistaacción"
+        },
+        {
+          "level": 2,
+          "text": "6. Ciclos de comportamiento en ejecución",
+          "id": "6-ciclos-de-comportamiento-en-ejecución"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Ciclos de LdM",
+          "id": "61-ciclos-de-ldm"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Bucles intercompañía",
+          "id": "62-bucles-intercompañía"
+        },
+        {
+          "level": 2,
+          "text": "7. Acoplamiento por auto-instalación",
+          "id": "7-acoplamiento-por-auto-instalación"
+        },
+        {
+          "level": 2,
+          "text": "8. Métricas de acoplamiento",
+          "id": "8-métricas-de-acoplamiento"
+        },
+        {
+          "level": 2,
+          "text": "9. Romper un ciclo",
+          "id": "9-romper-un-ciclo"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Extraer los conceptos compartidos",
+          "id": "91-extraer-los-conceptos-compartidos"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Invertir con eventos/outbox",
+          "id": "92-invertir-con-eventosoutbox"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Usar una dependencia blanda",
+          "id": "93-usar-una-dependencia-blanda"
+        },
+        {
+          "level": 3,
+          "text": "9.4 Fusionar los módulos",
+          "id": "94-fusionar-los-módulos"
+        },
+        {
+          "level": 2,
+          "text": "10. Reglas de composición",
+          "id": "10-reglas-de-composición"
+        },
+        {
+          "level": 2,
+          "text": "11. Comandos de diagnóstico",
+          "id": "11-comandos-de-diagnóstico"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencia",
+          "id": "12-índice-de-evidencia"
+        }
+      ],
+      "words": 1767,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/05-upgrade-compat",
+      "section": "04-modules",
+      "sectionTitle": "Relaciones entre módulos",
+      "title": "Relaciones entre módulos V — Compatibilidad de versiones y cambios disruptivos de 18→19",
+      "description": "Los cambios disruptivos de la 18→19: aprovisionamiento, valoración, tipo de producto, UdM, estados, motor de impuestos y API.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Por qué la versión 19 rompe cosas",
+          "id": "1-por-qué-la-versión-19-rompe-cosas"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Cambios disruptivos de un vistazo",
+          "id": "11-cambios-disruptivos-de-un-vistazo"
+        },
+        {
+          "level": 2,
+          "text": "2. Abastecimiento: stock.reference [V19]",
+          "id": "2-abastecimiento-stockreference-v19"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Qué ha cambiado",
+          "id": "21-qué-ha-cambiado"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Lista de verificación de la migración",
+          "id": "22-lista-de-verificación-de-la-migración"
+        },
+        {
+          "level": 2,
+          "text": "3. Valoración: sin stock.valuation.layer [V19]",
+          "id": "3-valoración-sin-stockvaluationlayer-v19"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Qué ha cambiado",
+          "id": "31-qué-ha-cambiado"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Lista de verificación de la migración",
+          "id": "32-lista-de-verificación-de-la-migración"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Prioridad de valoración",
+          "id": "33-prioridad-de-valoración"
+        },
+        {
+          "level": 2,
+          "text": "4. Tipo de producto: consu + isstorable [V19]",
+          "id": "4-tipo-de-producto-consu-isstorable-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Qué ha cambiado",
+          "id": "41-qué-ha-cambiado"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Lista de verificación de la migración",
+          "id": "42-lista-de-verificación-de-la-migración"
+        },
+        {
+          "level": 2,
+          "text": "5. Árbol de UdM [V19]",
+          "id": "5-árbol-de-udm-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Qué ha cambiado",
+          "id": "51-qué-ha-cambiado"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Lista de verificación de la migración",
+          "id": "52-lista-de-verificación-de-la-migración"
+        },
+        {
+          "level": 3,
+          "text": "5.3 API de conversión",
+          "id": "53-api-de-conversión"
+        },
+        {
+          "level": 2,
+          "text": "6. Estados de los documentos",
+          "id": "6-estados-de-los-documentos"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Ventas",
+          "id": "61-ventas"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Compras",
+          "id": "62-compras"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Fabricación",
+          "id": "63-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "7. Motor de impuestos [V19]",
+          "id": "7-motor-de-impuestos-v19"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Qué ha cambiado",
+          "id": "71-qué-ha-cambiado"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Lista de verificación de la migración",
+          "id": "72-lista-de-verificación-de-la-migración"
+        },
+        {
+          "level": 2,
+          "text": "8. Cambios en la API del ORM",
+          "id": "8-cambios-en-la-api-del-orm"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Eliminado/obsoleto",
+          "id": "81-eliminadoobsoleto"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Firma de create()",
+          "id": "82-firma-de-create"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Clase Domain",
+          "id": "83-clase-domain"
+        },
+        {
+          "level": 3,
+          "text": "8.4 readgroup → readgroup",
+          "id": "84-readgroup-readgroup"
+        },
+        {
+          "level": 2,
+          "text": "9. Cambios en campos y atributos",
+          "id": "9-cambios-en-campos-y-atributos"
+        },
+        {
+          "level": 2,
+          "text": "10. Cambios en el frontend",
+          "id": "10-cambios-en-el-frontend"
+        },
+        {
+          "level": 2,
+          "text": "11. Matriz de compatibilidad para módulos personalizados",
+          "id": "11-matriz-de-compatibilidad-para-módulos-personalizados"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Orden de portado",
+          "id": "111-orden-de-portado"
+        },
+        {
+          "level": 2,
+          "text": "12. Probar el portado",
+          "id": "12-probar-el-portado"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencia",
+          "id": "13-índice-de-evidencia"
+        }
+      ],
+      "words": 2006,
+      "minutes": 9
+    },
+    {
+      "slug": "05-scope/01-coverage",
+      "section": "05-scope",
+      "sectionTitle": "Límites del alcance ERP",
+      "title": "Alcance del ERP I — Matriz de cobertura funcional",
+      "description": "Cobertura de serie, configuración y personalización en comercial, logística, fabricación, finanzas, RR. HH. y plataforma.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Leyenda de cobertura",
+          "id": "1-leyenda-de-cobertura"
+        },
+        {
+          "level": 2,
+          "text": "2. Comercial",
+          "id": "2-comercial"
+        },
+        {
+          "level": 2,
+          "text": "3. Compras",
+          "id": "3-compras"
+        },
+        {
+          "level": 2,
+          "text": "4. Inventario y logística",
+          "id": "4-inventario-y-logística"
+        },
+        {
+          "level": 2,
+          "text": "5. Fabricación",
+          "id": "5-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "6. Contabilidad y finanzas",
+          "id": "6-contabilidad-y-finanzas"
+        },
+        {
+          "level": 2,
+          "text": "7. Recursos humanos",
+          "id": "7-recursos-humanos"
+        },
+        {
+          "level": 2,
+          "text": "8. Proyectos y servicios",
+          "id": "8-proyectos-y-servicios"
+        },
+        {
+          "level": 2,
+          "text": "9. Plataforma e integración",
+          "id": "9-plataforma-e-integración"
+        },
+        {
+          "level": 2,
+          "text": "10. Resumen de los límites del alcance",
+          "id": "10-resumen-de-los-límites-del-alcance"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Sólido out-of-box",
+          "id": "101-sólido-out-of-box"
+        },
+        {
+          "level": 3,
+          "text": "10.2 Con mucha configuración",
+          "id": "102-con-mucha-configuración"
+        },
+        {
+          "level": 3,
+          "text": "10.3 Con mucha personalización",
+          "id": "103-con-mucha-personalización"
+        },
+        {
+          "level": 3,
+          "text": "10.4 No cubierto",
+          "id": "104-no-cubierto"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidencia y advertencias",
+          "id": "11-evidencia-y-advertencias"
+        }
+      ],
+      "words": 2083,
+      "minutes": 9
+    },
+    {
+      "slug": "05-scope/02-gaps",
+      "section": "05-scope",
+      "sectionTitle": "Límites del alcance ERP",
+      "title": "Alcance del ERP II — Brechas funcionales y sus consecuencias de ingeniería",
+      "description": "Dónde se detiene el Odoo estándar y cuánto cuesta cruzar la frontera, desde APS hasta NIIF 15.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Matriz de severidad de las brechas",
+          "id": "1-matriz-de-severidad-de-las-brechas"
+        },
+        {
+          "level": 2,
+          "text": "2. Planificación y programación",
+          "id": "2-planificación-y-programación"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Límite",
+          "id": "21-límite"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Solución alternativa",
+          "id": "22-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Consecuencia de ingeniería",
+          "id": "23-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "3. Gestión de almacenes (WMS)",
+          "id": "3-gestión-de-almacenes-wms"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Límite",
+          "id": "31-límite"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Solución alternativa",
+          "id": "32-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Consecuencia de ingeniería",
+          "id": "33-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "4. Reconocimiento de ingresos (IFRS 15 / ASC 606)",
+          "id": "4-reconocimiento-de-ingresos-ifrs-15-asc-606"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Límite",
+          "id": "41-límite"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Solución alternativa",
+          "id": "42-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Consecuencia de ingeniería",
+          "id": "43-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "5. Contabilidad de arrendamientos (IFRS 16 / ASC 842)",
+          "id": "5-contabilidad-de-arrendamientos-ifrs-16-asc-842"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Límite",
+          "id": "51-límite"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Solución alternativa",
+          "id": "52-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Consecuencia de ingeniería",
+          "id": "53-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "6. Precios de transferencia y consolidación",
+          "id": "6-precios-de-transferencia-y-consolidación"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Límite",
+          "id": "61-límite"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Solución alternativa",
+          "id": "62-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Consecuencia de ingeniería",
+          "id": "63-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "7. Variación del precio de compra",
+          "id": "7-variación-del-precio-de-compra"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Límite",
+          "id": "71-límite"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Solución alternativa",
+          "id": "72-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Consecuencia de ingeniería",
+          "id": "73-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "8. Comisiones",
+          "id": "8-comisiones"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Límite",
+          "id": "81-límite"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Solución alternativa",
+          "id": "82-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Consecuencia de ingeniería",
+          "id": "83-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "9. Gestión del ciclo de vida de contratos",
+          "id": "9-gestión-del-ciclo-de-vida-de-contratos"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Límite",
+          "id": "91-límite"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Solución alternativa",
+          "id": "92-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Consecuencia de ingeniería",
+          "id": "93-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "10. Flujo de trabajo de RMA",
+          "id": "10-flujo-de-trabajo-de-rma"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Límite",
+          "id": "101-límite"
+        },
+        {
+          "level": 3,
+          "text": "10.2 Solución alternativa",
+          "id": "102-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "10.3 Consecuencia de ingeniería",
+          "id": "103-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "11. Recuento cíclico",
+          "id": "11-recuento-cíclico"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Límite",
+          "id": "111-límite"
+        },
+        {
+          "level": 3,
+          "text": "11.2 Solución alternativa",
+          "id": "112-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "11.3 Consecuencia de ingeniería",
+          "id": "113-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "12. SPC de calidad",
+          "id": "12-spc-de-calidad"
+        },
+        {
+          "level": 3,
+          "text": "12.1 Límite",
+          "id": "121-límite"
+        },
+        {
+          "level": 3,
+          "text": "12.2 Solución alternativa",
+          "id": "122-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "12.3 Consecuencia de ingeniería",
+          "id": "123-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "13. Integración con MES/SCADA",
+          "id": "13-integración-con-messcada"
+        },
+        {
+          "level": 3,
+          "text": "13.1 Límite",
+          "id": "131-límite"
+        },
+        {
+          "level": 3,
+          "text": "13.2 Solución alternativa",
+          "id": "132-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "13.3 Consecuencia de ingeniería",
+          "id": "133-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "14. Cumplimiento del comercio internacional",
+          "id": "14-cumplimiento-del-comercio-internacional"
+        },
+        {
+          "level": 3,
+          "text": "14.1 Límite",
+          "id": "141-límite"
+        },
+        {
+          "level": 3,
+          "text": "14.2 Solución alternativa",
+          "id": "142-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "14.3 Consecuencia de ingeniería",
+          "id": "143-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "15. Nóminas",
+          "id": "15-nóminas"
+        },
+        {
+          "level": 3,
+          "text": "15.1 Límite",
+          "id": "151-límite"
+        },
+        {
+          "level": 3,
+          "text": "15.2 Solución alternativa",
+          "id": "152-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "15.3 Consecuencia de ingeniería",
+          "id": "153-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "16. BI y almacén de datos",
+          "id": "16-bi-y-almacén-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "16.1 Límite",
+          "id": "161-límite"
+        },
+        {
+          "level": 3,
+          "text": "16.2 Solución alternativa",
+          "id": "162-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "16.3 Consecuencia de ingeniería",
+          "id": "163-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "17. Fabricación por procesos",
+          "id": "17-fabricación-por-procesos"
+        },
+        {
+          "level": 3,
+          "text": "17.1 Límite",
+          "id": "171-límite"
+        },
+        {
+          "level": 3,
+          "text": "17.2 Solución alternativa",
+          "id": "172-solución-alternativa"
+        },
+        {
+          "level": 3,
+          "text": "17.3 Consecuencia de ingeniería",
+          "id": "173-consecuencia-de-ingeniería"
+        },
+        {
+          "level": 2,
+          "text": "18. Guía de gestión de brechas",
+          "id": "18-guía-de-gestión-de-brechas"
+        },
+        {
+          "level": 2,
+          "text": "19. Evidencia y salvedades",
+          "id": "19-evidencia-y-salvedades"
+        }
+      ],
+      "words": 2904,
+      "minutes": 13
+    },
+    {
+      "slug": "05-scope/03-performance",
+      "section": "05-scope",
+      "sectionTitle": "Límites del alcance ERP",
+      "title": "Alcance del ERP III — Cuellos de botella de rendimiento y límites de escalado",
+      "description": "Los diez cuellos de botella que importan, reglas de dimensionamiento, pruebas de carga y criterios de aceptación.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Los diez cuellos de botella que importan",
+          "id": "1-los-diez-cuellos-de-botella-que-importan"
+        },
+        {
+          "level": 2,
+          "text": "2. Flujos comerciales",
+          "id": "2-flujos-comerciales"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Confirmación de pedidos de venta",
+          "id": "21-confirmación-de-pedidos-de-venta"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Creación de facturas",
+          "id": "22-creación-de-facturas"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Portal y sitio web",
+          "id": "23-portal-y-sitio-web"
+        },
+        {
+          "level": 2,
+          "text": "3. Flujos de inventario",
+          "id": "3-flujos-de-inventario"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Reserva y validación",
+          "id": "31-reserva-y-validación"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Valoración",
+          "id": "32-valoración"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Informes de inventario",
+          "id": "33-informes-de-inventario"
+        },
+        {
+          "level": 2,
+          "text": "4. Fabricación",
+          "id": "4-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "5. Contabilidad",
+          "id": "5-contabilidad"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Publicación",
+          "id": "51-publicación"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Informes",
+          "id": "52-informes"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Conciliación",
+          "id": "53-conciliación"
+        },
+        {
+          "level": 2,
+          "text": "6. Correo y notificaciones",
+          "id": "6-correo-y-notificaciones"
+        },
+        {
+          "level": 2,
+          "text": "7. Importaciones y exportaciones",
+          "id": "7-importaciones-y-exportaciones"
+        },
+        {
+          "level": 2,
+          "text": "8. Adjuntos y filestore",
+          "id": "8-adjuntos-y-filestore"
+        },
+        {
+          "level": 2,
+          "text": "9. Dimensionamiento de workers y base de datos",
+          "id": "9-dimensionamiento-de-workers-y-base-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Fórmula",
+          "id": "91-fórmula"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Síntomas de un dimensionamiento incorrecto",
+          "id": "92-síntomas-de-un-dimensionamiento-incorrecto"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Gevent frente a prefork",
+          "id": "93-gevent-frente-a-prefork"
+        },
+        {
+          "level": 2,
+          "text": "10. Crecimiento de la base de datos",
+          "id": "10-crecimiento-de-la-base-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "11. Criterios de aceptación de rendimiento",
+          "id": "11-criterios-de-aceptación-de-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "12. Pruebas de carga",
+          "id": "12-pruebas-de-carga"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencia",
+          "id": "13-índice-de-evidencia"
+        }
+      ],
+      "words": 2009,
+      "minutes": 9
+    },
+    {
+      "slug": "05-scope/04-doc-gaps",
+      "section": "05-scope",
+      "sectionTitle": "Límites del alcance ERP",
+      "title": "Alcance del ERP IV — Dónde la documentación oficial induce a error o se detiene",
+      "description": "Deriva de versiones, comentarios obsoletos, modelos eliminados y las trampas de documentación que rompen el código personalizado.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. La discrepancia estructural",
+          "id": "1-la-discrepancia-estructural"
+        },
+        {
+          "level": 2,
+          "text": "2. Catálogo de trampas",
+          "id": "2-catálogo-de-trampas"
+        },
+        {
+          "level": 3,
+          "text": "2.1 «El modelo existe» (modelos eliminados)",
+          "id": "21-el-modelo-existe-modelos-eliminados"
+        },
+        {
+          "level": 3,
+          "text": "2.2 «Estado done» (estados eliminados)",
+          "id": "22-estado-done-estados-eliminados"
+        },
+        {
+          "level": 3,
+          "text": "2.3 «El tipo de producto es product»",
+          "id": "23-el-tipo-de-producto-es-product"
+        },
+        {
+          "level": 3,
+          "text": "2.4 «La UdM tiene una categoría»",
+          "id": "24-la-udm-tiene-una-categoría"
+        },
+        {
+          "level": 3,
+          "text": "2.5 «readgroup es la API»",
+          "id": "25-readgroup-es-la-api"
+        },
+        {
+          "level": 3,
+          "text": "2.6 «create acepta un dict»",
+          "id": "26-create-acepta-un-dict"
+        },
+        {
+          "level": 3,
+          "text": "2.7 «nameget es la API de visualización»",
+          "id": "27-nameget-es-la-api-de-visualización"
+        },
+        {
+          "level": 3,
+          "text": "2.8 «checkaccessrights está vigente»",
+          "id": "28-checkaccessrights-está-vigente"
+        },
+        {
+          "level": 3,
+          "text": "2.9 «Los impuestos se calculan con computetaxes»",
+          "id": "29-los-impuestos-se-calculan-con-computetaxes"
+        },
+        {
+          "level": 3,
+          "text": "2.10 «El ORM hace commit al final de cada método»",
+          "id": "210-el-orm-hace-commit-al-final-de-cada-método"
+        },
+        {
+          "level": 3,
+          "text": "2.11 «Los puntos de guardado son gratuitos»",
+          "id": "211-los-puntos-de-guardado-son-gratuitos"
+        },
+        {
+          "level": 3,
+          "text": "2.12 «Las reglas de registro son opcionales»",
+          "id": "212-las-reglas-de-registro-son-opcionales"
+        },
+        {
+          "level": 3,
+          "text": "2.13 «noupdate significa que nunca se actualiza»",
+          "id": "213-noupdate-significa-que-nunca-se-actualiza"
+        },
+        {
+          "level": 3,
+          "text": "2.14 «Las vistas son solo XML»",
+          "id": "214-las-vistas-son-solo-xml"
+        },
+        {
+          "level": 3,
+          "text": "2.15 «El cron es un planificador sencillo»",
+          "id": "215-el-cron-es-un-planificador-sencillo"
+        },
+        {
+          "level": 3,
+          "text": "2.16 «El bus es una cola de mensajes»",
+          "id": "216-el-bus-es-una-cola-de-mensajes"
+        },
+        {
+          "level": 3,
+          "text": "2.17 «Los adjuntos están en la base de datos»",
+          "id": "217-los-adjuntos-están-en-la-base-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "2.18 «Eliminar un registro es sencillo»",
+          "id": "218-eliminar-un-registro-es-sencillo"
+        },
+        {
+          "level": 2,
+          "text": "3. Lo que la documentación oficial cubre bien",
+          "id": "3-lo-que-la-documentación-oficial-cubre-bien"
+        },
+        {
+          "level": 2,
+          "text": "4. Mapa de brechas de cobertura",
+          "id": "4-mapa-de-brechas-de-cobertura"
+        },
+        {
+          "level": 2,
+          "text": "5. Cómo verificar una afirmación rápidamente",
+          "id": "5-cómo-verificar-una-afirmación-rápidamente"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Existencia de un modelo",
+          "id": "51-existencia-de-un-modelo"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Definición de un campo",
+          "id": "52-definición-de-un-campo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Cuerpo de un método",
+          "id": "53-cuerpo-de-un-método"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Valores reales de los estados",
+          "id": "54-valores-reales-de-los-estados"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Versión del módulo instalado",
+          "id": "55-versión-del-módulo-instalado"
+        },
+        {
+          "level": 3,
+          "text": "5.6 Esquema real",
+          "id": "56-esquema-real"
+        },
+        {
+          "level": 3,
+          "text": "5.7 Comportamiento en tiempo de ejecución",
+          "id": "57-comportamiento-en-tiempo-de-ejecución"
+        },
+        {
+          "level": 2,
+          "text": "6. Trampas de la documentación en el código personalizado",
+          "id": "6-trampas-de-la-documentación-en-el-código-personalizado"
+        },
+        {
+          "level": 2,
+          "text": "7. Recomendaciones para el equipo",
+          "id": "7-recomendaciones-para-el-equipo"
+        },
+        {
+          "level": 2,
+          "text": "8. Índice de evidencia",
+          "id": "8-índice-de-evidencia"
+        }
+      ],
+      "words": 1646,
+      "minutes": 7
+    },
+    {
+      "slug": "06-engineering/01-use-cases",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software I — Modelo de casos de uso",
+      "description": "Actores, contexto del sistema y un catálogo de 28 casos de uso con flujos y trazabilidad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actores",
+          "id": "1-actores"
+        },
+        {
+          "level": 2,
+          "text": "2. Contexto del sistema",
+          "id": "2-contexto-del-sistema"
+        },
+        {
+          "level": 2,
+          "text": "3. Diagrama de casos de uso",
+          "id": "3-diagrama-de-casos-de-uso"
+        },
+        {
+          "level": 2,
+          "text": "4. Catálogo de casos de uso",
+          "id": "4-catálogo-de-casos-de-uso"
+        },
+        {
+          "level": 3,
+          "text": "UC-01 Crear presupuesto",
+          "id": "uc-01-crear-presupuesto"
+        },
+        {
+          "level": 3,
+          "text": "UC-02 Aplicar tarifa o descuento",
+          "id": "uc-02-aplicar-tarifa-o-descuento"
+        },
+        {
+          "level": 3,
+          "text": "UC-03 Confirmar pedido",
+          "id": "uc-03-confirmar-pedido"
+        },
+        {
+          "level": 3,
+          "text": "UC-04 Aprobar excepción",
+          "id": "uc-04-aprobar-excepción"
+        },
+        {
+          "level": 3,
+          "text": "UC-05 Entregar pedido",
+          "id": "uc-05-entregar-pedido"
+        },
+        {
+          "level": 3,
+          "text": "UC-06 Facturar pedido",
+          "id": "uc-06-facturar-pedido"
+        },
+        {
+          "level": 3,
+          "text": "UC-07 Registrar pago",
+          "id": "uc-07-registrar-pago"
+        },
+        {
+          "level": 3,
+          "text": "UC-08 Crear SdP",
+          "id": "uc-08-crear-sdp"
+        },
+        {
+          "level": 3,
+          "text": "UC-09 Aprobar pedido de compra",
+          "id": "uc-09-aprobar-pedido-de-compra"
+        },
+        {
+          "level": 3,
+          "text": "UC-10 Recibir mercancía",
+          "id": "uc-10-recibir-mercancía"
+        },
+        {
+          "level": 3,
+          "text": "UC-11 Registrar factura de proveedor",
+          "id": "uc-11-registrar-factura-de-proveedor"
+        },
+        {
+          "level": 3,
+          "text": "UC-12 Pagar al proveedor",
+          "id": "uc-12-pagar-al-proveedor"
+        },
+        {
+          "level": 3,
+          "text": "UC-13 Transferir stock",
+          "id": "uc-13-transferir-stock"
+        },
+        {
+          "level": 3,
+          "text": "UC-14 Ajustar inventario",
+          "id": "uc-14-ajustar-inventario"
+        },
+        {
+          "level": 3,
+          "text": "UC-15 Devolver mercancía",
+          "id": "uc-15-devolver-mercancía"
+        },
+        {
+          "level": 3,
+          "text": "UC-16 Desecho",
+          "id": "uc-16-desecho"
+        },
+        {
+          "level": 3,
+          "text": "UC-17 Crear LdM",
+          "id": "uc-17-crear-ldm"
+        },
+        {
+          "level": 3,
+          "text": "UC-18 Planificar OF",
+          "id": "uc-18-planificar-of"
+        },
+        {
+          "level": 3,
+          "text": "UC-19 Ejecutar órdenes de trabajo",
+          "id": "uc-19-ejecutar-órdenes-de-trabajo"
+        },
+        {
+          "level": 3,
+          "text": "UC-20 Cerrar OF",
+          "id": "uc-20-cerrar-of"
+        },
+        {
+          "level": 3,
+          "text": "UC-21 Publicar factura",
+          "id": "uc-21-publicar-factura"
+        },
+        {
+          "level": 3,
+          "text": "UC-22 Conciliar banco",
+          "id": "uc-22-conciliar-banco"
+        },
+        {
+          "level": 3,
+          "text": "UC-23 Cerrar periodo",
+          "id": "uc-23-cerrar-periodo"
+        },
+        {
+          "level": 3,
+          "text": "UC-24 Generar informes financieros",
+          "id": "uc-24-generar-informes-financieros"
+        },
+        {
+          "level": 3,
+          "text": "UC-25 Gestionar usuarios y accesos",
+          "id": "uc-25-gestionar-usuarios-y-accesos"
+        },
+        {
+          "level": 3,
+          "text": "UC-26 Instalar o actualizar un módulo",
+          "id": "uc-26-instalar-o-actualizar-un-módulo"
+        },
+        {
+          "level": 3,
+          "text": "UC-27 Ejecutar integración",
+          "id": "uc-27-ejecutar-integración"
+        },
+        {
+          "level": 3,
+          "text": "UC-28 Programar tarea",
+          "id": "uc-28-programar-tarea"
+        },
+        {
+          "level": 2,
+          "text": "5. Matriz de trazabilidad",
+          "id": "5-matriz-de-trazabilidad"
+        },
+        {
+          "level": 2,
+          "text": "6. Reglas de calidad de los casos de uso",
+          "id": "6-reglas-de-calidad-de-los-casos-de-uso"
+        }
+      ],
+      "words": 3314,
+      "minutes": 15
+    },
+    {
+      "slug": "06-engineering/02-domain-model",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software II — Modelo de dominio y agregados",
+      "description": "Lenguaje ubicuo, diagrama de clases, agregados, invariantes y mapeo de eventos de dominio.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Lenguaje ubicuo",
+          "id": "1-lenguaje-ubicuo"
+        },
+        {
+          "level": 2,
+          "text": "2. Diagrama de clases principal",
+          "id": "2-diagrama-de-clases-principal"
+        },
+        {
+          "level": 2,
+          "text": "3. Agregados y límites de consistencia",
+          "id": "3-agregados-y-límites-de-consistencia"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Agregado del pedido de venta",
+          "id": "31-agregado-del-pedido-de-venta"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Agregado del pedido de compra",
+          "id": "32-agregado-del-pedido-de-compra"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Agregado del movimiento de stock",
+          "id": "33-agregado-del-movimiento-de-stock"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Agregado de la factura",
+          "id": "34-agregado-de-la-factura"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Agregado de fabricación",
+          "id": "35-agregado-de-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "4. Reglas entre agregados",
+          "id": "4-reglas-entre-agregados"
+        },
+        {
+          "level": 2,
+          "text": "5. Catálogo de invariantes del dominio",
+          "id": "5-catálogo-de-invariantes-del-dominio"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Comercial",
+          "id": "51-comercial"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Inventario",
+          "id": "52-inventario"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Contabilidad",
+          "id": "53-contabilidad"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Fabricación",
+          "id": "54-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "6. Eventos de dominio (conceptuales)",
+          "id": "6-eventos-de-dominio-conceptuales"
+        },
+        {
+          "level": 2,
+          "text": "7. Correspondencia con la implementación",
+          "id": "7-correspondencia-con-la-implementación"
+        },
+        {
+          "level": 2,
+          "text": "8. Reglas de modelado para dominios personalizados",
+          "id": "8-reglas-de-modelado-para-dominios-personalizados"
+        },
+        {
+          "level": 2,
+          "text": "9. Índice de evidencias",
+          "id": "9-índice-de-evidencias"
+        }
+      ],
+      "words": 2012,
+      "minutes": 9
+    },
+    {
+      "slug": "06-engineering/03-sequence-diagrams",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software III — Diagramas de secuencia",
+      "description": "Secuencias a nivel de método para el manejo de peticiones, ventas, compras, entrega, facturación, pagos, OF, cron e integraciones.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Ciclo de vida de una petición HTTP",
+          "id": "1-ciclo-de-vida-de-una-petición-http"
+        },
+        {
+          "level": 2,
+          "text": "2. Confirmación del pedido de venta",
+          "id": "2-confirmación-del-pedido-de-venta"
+        },
+        {
+          "level": 2,
+          "text": "3. Del pedido de compra a la recepción",
+          "id": "3-del-pedido-de-compra-a-la-recepción"
+        },
+        {
+          "level": 2,
+          "text": "4. Entrega y factura",
+          "id": "4-entrega-y-factura"
+        },
+        {
+          "level": 2,
+          "text": "5. Funcionamiento interno de la publicación de facturas",
+          "id": "5-funcionamiento-interno-de-la-publicación-de-facturas"
+        },
+        {
+          "level": 2,
+          "text": "6. Pago y conciliación",
+          "id": "6-pago-y-conciliación"
+        },
+        {
+          "level": 2,
+          "text": "7. Finalización de la orden de fabricación",
+          "id": "7-finalización-de-la-orden-de-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "8. Ejecución de tareas cron",
+          "id": "8-ejecución-de-tareas-cron"
+        },
+        {
+          "level": 2,
+          "text": "9. Integración externa con reintentos",
+          "id": "9-integración-externa-con-reintentos"
+        },
+        {
+          "level": 2,
+          "text": "10. Notificación por bus",
+          "id": "10-notificación-por-bus"
+        },
+        {
+          "level": 2,
+          "text": "11. Secuencia de fallo y reintento",
+          "id": "11-secuencia-de-fallo-y-reintento"
+        },
+        {
+          "level": 2,
+          "text": "12. Convenciones de los diagramas",
+          "id": "12-convenciones-de-los-diagramas"
+        },
+        {
+          "level": 2,
+          "text": "13. Índice de evidencias",
+          "id": "13-índice-de-evidencias"
+        }
+      ],
+      "words": 1196,
+      "minutes": 5
+    },
+    {
+      "slug": "06-engineering/04-activity-diagrams",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software IV — Diagramas de actividad y mapeo a BPMN",
+      "description": "Flujos de decisión para ventas, compras, entrega, contabilización, fabricación, cierre, integración y triaje, con mapeo a BPMN.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Reglas de mapeo a BPMN",
+          "id": "1-reglas-de-mapeo-a-bpmn"
+        },
+        {
+          "level": 2,
+          "text": "2. Confirmación de pedido de venta",
+          "id": "2-confirmación-de-pedido-de-venta"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Notas sobre BPMN",
+          "id": "21-notas-sobre-bpmn"
+        },
+        {
+          "level": 2,
+          "text": "3. Aprobación de compra",
+          "id": "3-aprobación-de-compra"
+        },
+        {
+          "level": 2,
+          "text": "4. Validación de entrega",
+          "id": "4-validación-de-entrega"
+        },
+        {
+          "level": 2,
+          "text": "5. Contabilización de factura",
+          "id": "5-contabilización-de-factura"
+        },
+        {
+          "level": 2,
+          "text": "6. Finalización de fabricación",
+          "id": "6-finalización-de-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "7. Cierre de mes",
+          "id": "7-cierre-de-mes"
+        },
+        {
+          "level": 2,
+          "text": "8. Procesamiento de integraciones",
+          "id": "8-procesamiento-de-integraciones"
+        },
+        {
+          "level": 2,
+          "text": "9. Triaje de incidencias de soporte",
+          "id": "9-triaje-de-incidencias-de-soporte"
+        },
+        {
+          "level": 2,
+          "text": "10. Mapeo de actividades a pruebas",
+          "id": "10-mapeo-de-actividades-a-pruebas"
+        },
+        {
+          "level": 2,
+          "text": "11. Lista de verificación para la exportación a BPMN",
+          "id": "11-lista-de-verificación-para-la-exportación-a-bpmn"
+        },
+        {
+          "level": 2,
+          "text": "12. Índice de evidencia",
+          "id": "12-índice-de-evidencia"
+        }
+      ],
+      "words": 1423,
+      "minutes": 6
+    },
+    {
+      "slug": "06-engineering/05-state-machines",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software V — Referencia de máquinas de estados",
+      "description": "Estados legales, transiciones, disparadores y guardas para ventas, CRM, compras, stock, contabilidad, activos, MRP, módulos y cron.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Principios de las máquinas de estados en Odoo",
+          "id": "1-principios-de-las-máquinas-de-estados-en-odoo"
+        },
+        {
+          "level": 2,
+          "text": "2. Pedido de venta",
+          "id": "2-pedido-de-venta"
+        },
+        {
+          "level": 2,
+          "text": "3. Lead de CRM",
+          "id": "3-lead-de-crm"
+        },
+        {
+          "level": 2,
+          "text": "4. Pedido de compra",
+          "id": "4-pedido-de-compra"
+        },
+        {
+          "level": 2,
+          "text": "5. Picking de stock",
+          "id": "5-picking-de-stock"
+        },
+        {
+          "level": 2,
+          "text": "6. Movimiento de stock / línea de movimiento",
+          "id": "6-movimiento-de-stock-línea-de-movimiento"
+        },
+        {
+          "level": 2,
+          "text": "7. Quant de stock",
+          "id": "7-quant-de-stock"
+        },
+        {
+          "level": 2,
+          "text": "8. Movimiento contable (asiento contable / factura)",
+          "id": "8-movimiento-contable-asiento-contable-factura"
+        },
+        {
+          "level": 2,
+          "text": "9. Pago contable",
+          "id": "9-pago-contable"
+        },
+        {
+          "level": 2,
+          "text": "10. Activo contable",
+          "id": "10-activo-contable"
+        },
+        {
+          "level": 2,
+          "text": "11. Orden de fabricación",
+          "id": "11-orden-de-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "12. Orden de trabajo",
+          "id": "12-orden-de-trabajo"
+        },
+        {
+          "level": 2,
+          "text": "13. Módulo",
+          "id": "13-módulo"
+        },
+        {
+          "level": 2,
+          "text": "14. Trabajo cron (ciclo de vida, no un campo de estado)",
+          "id": "14-trabajo-cron-ciclo-de-vida-no-un-campo-de-estado"
+        },
+        {
+          "level": 2,
+          "text": "15. Matriz de pruebas de transiciones",
+          "id": "15-matriz-de-pruebas-de-transiciones"
+        },
+        {
+          "level": 2,
+          "text": "16. Índice de evidencia",
+          "id": "16-índice-de-evidencia"
+        }
+      ],
+      "words": 1683,
+      "minutes": 8
+    },
+    {
+      "slug": "06-engineering/06-nfr",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software VI — Requisitos no funcionales",
+      "description": "Requisitos medibles de disponibilidad, rendimiento, seguridad, auditoría, localización, copias de seguridad y observabilidad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Disponibilidad",
+          "id": "1-disponibilidad"
+        },
+        {
+          "level": 2,
+          "text": "2. Rendimiento",
+          "id": "2-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "3. Escalabilidad",
+          "id": "3-escalabilidad"
+        },
+        {
+          "level": 2,
+          "text": "4. Seguridad",
+          "id": "4-seguridad"
+        },
+        {
+          "level": 2,
+          "text": "5. Auditabilidad",
+          "id": "5-auditabilidad"
+        },
+        {
+          "level": 2,
+          "text": "6. Calidad de datos",
+          "id": "6-calidad-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "7. Localización y cumplimiento",
+          "id": "7-localización-y-cumplimiento"
+        },
+        {
+          "level": 2,
+          "text": "8. Mantenibilidad",
+          "id": "8-mantenibilidad"
+        },
+        {
+          "level": 2,
+          "text": "9. Observabilidad",
+          "id": "9-observabilidad"
+        },
+        {
+          "level": 2,
+          "text": "10. Copias de seguridad y recuperación ante desastres",
+          "id": "10-copias-de-seguridad-y-recuperación-ante-desastres"
+        },
+        {
+          "level": 2,
+          "text": "11. Usabilidad y accesibilidad",
+          "id": "11-usabilidad-y-accesibilidad"
+        },
+        {
+          "level": 2,
+          "text": "12. Operabilidad",
+          "id": "12-operabilidad"
+        },
+        {
+          "level": 2,
+          "text": "13. Lista de verificación de aceptación de RNF",
+          "id": "13-lista-de-verificación-de-aceptación-de-rnf"
+        },
+        {
+          "level": 2,
+          "text": "14. Índice de evidencia",
+          "id": "14-índice-de-evidencia"
+        }
+      ],
+      "words": 1652,
+      "minutes": 8
+    },
+    {
+      "slug": "06-engineering/07-testing-strategy",
+      "section": "06-engineering",
+      "sectionTitle": "Ingeniería de software",
+      "title": "Ingeniería de software VII — Estrategia de pruebas para personalizaciones de Odoo",
+      "description": "Pirámide de pruebas, clases de prueba de Odoo, pruebas de seguridad/rendimiento, CI y UAT para personalizaciones.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Pirámide de pruebas para Odoo",
+          "id": "1-pirámide-de-pruebas-para-odoo"
+        },
+        {
+          "level": 2,
+          "text": "2. Clases base de prueba",
+          "id": "2-clases-base-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "3. Qué probar",
+          "id": "3-qué-probar"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Invariantes",
+          "id": "31-invariantes"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Cálculos",
+          "id": "32-cálculos"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Transiciones de estado",
+          "id": "33-transiciones-de-estado"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Seguridad",
+          "id": "34-seguridad"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Multicompañía",
+          "id": "35-multicompañía"
+        },
+        {
+          "level": 3,
+          "text": "3.6 Concurrencia",
+          "id": "36-concurrencia"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Rendimiento",
+          "id": "37-rendimiento"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Tours",
+          "id": "38-tours"
+        },
+        {
+          "level": 2,
+          "text": "4. Datos de prueba",
+          "id": "4-datos-de-prueba"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Fixtures",
+          "id": "41-fixtures"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Fábricas",
+          "id": "42-fábricas"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Datos de demostración",
+          "id": "43-datos-de-demostración"
+        },
+        {
+          "level": 2,
+          "text": "5. Organización de las pruebas",
+          "id": "5-organización-de-las-pruebas"
+        },
+        {
+          "level": 2,
+          "text": "6. Pipeline de CI",
+          "id": "6-pipeline-de-ci"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Etapas",
+          "id": "61-etapas"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Estrategia de base de datos de prueba",
+          "id": "62-estrategia-de-base-de-datos-de-prueba"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Pruebas inestables",
+          "id": "63-pruebas-inestables"
+        },
+        {
+          "level": 2,
+          "text": "7. Pruebas de actualización",
+          "id": "7-pruebas-de-actualización"
+        },
+        {
+          "level": 2,
+          "text": "8. UAT y aceptación",
+          "id": "8-uat-y-aceptación"
+        },
+        {
+          "level": 2,
+          "text": "9. Antipatrones de prueba",
+          "id": "9-antipatrones-de-prueba"
+        },
+        {
+          "level": 2,
+          "text": "10. Objetivos de cobertura",
+          "id": "10-objetivos-de-cobertura"
+        },
+        {
+          "level": 2,
+          "text": "11. Índice de evidencia",
+          "id": "11-índice-de-evidencia"
+        }
+      ],
+      "words": 1382,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/01-delivery-lifecycle",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos I — Ciclo de vida de la entrega",
+      "description": "Fases, puertas, artefactos y RACI desde el descubrimiento hasta el soporte intensivo.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Fases y puertas",
+          "id": "1-fases-y-puertas"
+        },
+        {
+          "level": 2,
+          "text": "2. Descubrimiento",
+          "id": "2-descubrimiento"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Objetivos",
+          "id": "21-objetivos"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Artefactos",
+          "id": "22-artefactos"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Talleres",
+          "id": "23-talleres"
+        },
+        {
+          "level": 2,
+          "text": "3. Ajuste y diseño",
+          "id": "3-ajuste-y-diseño"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Matriz de ajuste (fit-gap)",
+          "id": "31-matriz-de-ajuste-fit-gap"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Artefactos de diseño",
+          "id": "32-artefactos-de-diseño"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Lista de verificación de la revisión de diseño",
+          "id": "33-lista-de-verificación-de-la-revisión-de-diseño"
+        },
+        {
+          "level": 2,
+          "text": "4. Construcción y configuración",
+          "id": "4-construcción-y-configuración"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Líneas de trabajo",
+          "id": "41-líneas-de-trabajo"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Cadencia de sprints",
+          "id": "42-cadencia-de-sprints"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Orden de construcción",
+          "id": "43-orden-de-construcción"
+        },
+        {
+          "level": 2,
+          "text": "5. Pruebas y UAT",
+          "id": "5-pruebas-y-uat"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Niveles de prueba",
+          "id": "51-niveles-de-prueba"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Diseño de la UAT",
+          "id": "52-diseño-de-la-uat"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Criterios de salida",
+          "id": "53-criterios-de-salida"
+        },
+        {
+          "level": 2,
+          "text": "6. Despliegue y paso a producción",
+          "id": "6-despliegue-y-paso-a-producción"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Plan de paso a producción",
+          "id": "61-plan-de-paso-a-producción"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Lista de verificación del paso a producción",
+          "id": "62-lista-de-verificación-del-paso-a-producción"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Decisión go/no-go",
+          "id": "63-decisión-gono-go"
+        },
+        {
+          "level": 2,
+          "text": "7. Soporte intensivo posterior a la puesta en marcha",
+          "id": "7-soporte-intensivo-posterior-a-la-puesta-en-marcha"
+        },
+        {
+          "level": 2,
+          "text": "8. RACI",
+          "id": "8-raci"
+        },
+        {
+          "level": 2,
+          "text": "9. Plantilla de cronograma (tamaño medio, 3 dominios)",
+          "id": "9-plantilla-de-cronograma-tamaño-medio-3-dominios"
+        },
+        {
+          "level": 2,
+          "text": "10. Fallos habituales de los programas",
+          "id": "10-fallos-habituales-de-los-programas"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidencias y adaptación",
+          "id": "11-evidencias-y-adaptación"
+        }
+      ],
+      "words": 1897,
+      "minutes": 9
+    },
+    {
+      "slug": "07-project-management/02-estimation",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos II — Estimación y presupuesto",
+      "description": "Heurísticas de persona-día, multiplicadores de complejidad, impulsores de datos/integración y un presupuesto de ejemplo.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Unidades de estimación",
+          "id": "1-unidades-de-estimación"
+        },
+        {
+          "level": 2,
+          "text": "2. Fórmula de estimación",
+          "id": "2-fórmula-de-estimación"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Esfuerzo base por tipo de trabajo",
+          "id": "21-esfuerzo-base-por-tipo-de-trabajo"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Multiplicadores de complejidad",
+          "id": "22-multiplicadores-de-complejidad"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Contingencia por riesgo",
+          "id": "23-contingencia-por-riesgo"
+        },
+        {
+          "level": 2,
+          "text": "3. Factores que dominan",
+          "id": "3-factores-que-dominan"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Migración de datos",
+          "id": "31-migración-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Localización",
+          "id": "32-localización"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Integración",
+          "id": "33-integración"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Pruebas y UAT",
+          "id": "34-pruebas-y-uat"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Gestión de proyectos",
+          "id": "35-gestión-de-proyectos"
+        },
+        {
+          "level": 2,
+          "text": "4. Estimación de ejemplo: empresa de distribución de tamaño medio",
+          "id": "4-estimación-de-ejemplo-empresa-de-distribución-de-tamaño-medio"
+        },
+        {
+          "level": 2,
+          "text": "5. Estimación por complejidad de módulo",
+          "id": "5-estimación-por-complejidad-de-módulo"
+        },
+        {
+          "level": 2,
+          "text": "6. Estimación ascendente frente a descendente",
+          "id": "6-estimación-ascendente-frente-a-descendente"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Ascendente",
+          "id": "61-ascendente"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Descendente",
+          "id": "62-descendente"
+        },
+        {
+          "level": 3,
+          "text": "6.3 De tres puntos",
+          "id": "63-de-tres-puntos"
+        },
+        {
+          "level": 2,
+          "text": "7. Antipatrones de estimación",
+          "id": "7-antipatrones-de-estimación"
+        },
+        {
+          "level": 2,
+          "text": "8. Modelo de presupuesto",
+          "id": "8-modelo-de-presupuesto"
+        },
+        {
+          "level": 2,
+          "text": "9. Seguimiento",
+          "id": "9-seguimiento"
+        },
+        {
+          "level": 2,
+          "text": "10. Evidencias y calibración",
+          "id": "10-evidencias-y-calibración"
+        }
+      ],
+      "words": 1528,
+      "minutes": 7
+    },
+    {
+      "slug": "07-project-management/03-team-and-roles",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos III — Estructura del equipo y roles",
+      "description": "Roles, derechos de decisión, dimensionamiento del equipo y rituales de colaboración.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Roles principales",
+          "id": "1-roles-principales"
+        },
+        {
+          "level": 2,
+          "text": "2. RACI por fase",
+          "id": "2-raci-por-fase"
+        },
+        {
+          "level": 2,
+          "text": "3. Perfiles de rol",
+          "id": "3-perfiles-de-rol"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Arquitecto de soluciones",
+          "id": "31-arquitecto-de-soluciones"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Consultor funcional / BA",
+          "id": "32-consultor-funcional-ba"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Desarrollador",
+          "id": "33-desarrollador"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Ingeniero de datos",
+          "id": "34-ingeniero-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Ingeniero de QA",
+          "id": "35-ingeniero-de-qa"
+        },
+        {
+          "level": 3,
+          "text": "3.6 Ingeniero DevOps",
+          "id": "36-ingeniero-devops"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Gestor del cambio",
+          "id": "37-gestor-del-cambio"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Usuario clave",
+          "id": "38-usuario-clave"
+        },
+        {
+          "level": 2,
+          "text": "4. Tamaño del equipo según la escala del proyecto",
+          "id": "4-tamaño-del-equipo-según-la-escala-del-proyecto"
+        },
+        {
+          "level": 2,
+          "text": "5. Derechos de decisión",
+          "id": "5-derechos-de-decisión"
+        },
+        {
+          "level": 2,
+          "text": "6. Antipatrones",
+          "id": "6-antipatrones"
+        },
+        {
+          "level": 2,
+          "text": "7. Rituales de colaboración",
+          "id": "7-rituales-de-colaboración"
+        },
+        {
+          "level": 2,
+          "text": "8. Lista de verificación del traspaso",
+          "id": "8-lista-de-verificación-del-traspaso"
+        }
+      ],
+      "words": 1376,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/04-quality-gates",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos IV — Puertas de calidad y definición de terminado",
+      "description": "Puertas de diseño, código, pruebas, UAT, puesta en marcha y cierre con listas de verificación y métricas.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Mapa de puertas",
+          "id": "1-mapa-de-puertas"
+        },
+        {
+          "level": 2,
+          "text": "2. G1 — Revisión de diseño",
+          "id": "2-g1-revisión-de-diseño"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Lista de verificación",
+          "id": "21-lista-de-verificación"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Revisores",
+          "id": "22-revisores"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Criterios de salida",
+          "id": "23-criterios-de-salida"
+        },
+        {
+          "level": 2,
+          "text": "3. G2 — Revisión de código",
+          "id": "3-g2-revisión-de-código"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Comprobaciones automáticas",
+          "id": "31-comprobaciones-automáticas"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Lista de verificación manual",
+          "id": "32-lista-de-verificación-manual"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Criterios de salida",
+          "id": "33-criterios-de-salida"
+        },
+        {
+          "level": 2,
+          "text": "4. G3 — Pruebas de sistema",
+          "id": "4-g3-pruebas-de-sistema"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Evidencias de prueba",
+          "id": "41-evidencias-de-prueba"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Puerta de rendimiento",
+          "id": "42-puerta-de-rendimiento"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Puerta de seguridad",
+          "id": "43-puerta-de-seguridad"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Puerta de datos",
+          "id": "44-puerta-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "5. G4 — UAT",
+          "id": "5-g4-uat"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Criterios de entrada",
+          "id": "51-criterios-de-entrada"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Criterios de salida",
+          "id": "52-criterios-de-salida"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Escenarios de UAT",
+          "id": "53-escenarios-de-uat"
+        },
+        {
+          "level": 2,
+          "text": "6. G5 — Preparación para la puesta en marcha",
+          "id": "6-g5-preparación-para-la-puesta-en-marcha"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Lista de verificación",
+          "id": "61-lista-de-verificación"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Criterios de reversión",
+          "id": "62-criterios-de-reversión"
+        },
+        {
+          "level": 2,
+          "text": "7. G6 — Cierre",
+          "id": "7-g6-cierre"
+        },
+        {
+          "level": 2,
+          "text": "8. Definición de terminado",
+          "id": "8-definición-de-terminado"
+        },
+        {
+          "level": 2,
+          "text": "9. Métricas de calidad",
+          "id": "9-métricas-de-calidad"
+        },
+        {
+          "level": 2,
+          "text": "10. Índice de evidencias",
+          "id": "10-índice-de-evidencias"
+        }
+      ],
+      "words": 1614,
+      "minutes": 7
+    },
+    {
+      "slug": "07-project-management/05-environments-ci",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos V — Entornos, CI/CD y operaciones",
+      "description": "Topología de entornos, copias de bases de datos, neutralización, CI/CD, copias de seguridad, monitorización y guías operativas.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Topología de entornos",
+          "id": "1-topología-de-entornos"
+        },
+        {
+          "level": 2,
+          "text": "2. Copias de base de datos",
+          "id": "2-copias-de-base-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Procedimiento de copia",
+          "id": "21-procedimiento-de-copia"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Neutralización",
+          "id": "22-neutralización"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Anonimización",
+          "id": "23-anonimización"
+        },
+        {
+          "level": 2,
+          "text": "3. Desarrollo local",
+          "id": "3-desarrollo-local"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Estructura típica",
+          "id": "31-estructura-típica"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Aspectos esenciales de odoo.conf",
+          "id": "32-aspectos-esenciales-de-odooconf"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Docker Compose (desarrollo)",
+          "id": "33-docker-compose-desarrollo"
+        },
+        {
+          "level": 2,
+          "text": "4. Pipeline de CI",
+          "id": "4-pipeline-de-ci"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Ejemplo de job",
+          "id": "41-ejemplo-de-job"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Etiquetas de prueba",
+          "id": "42-etiquetas-de-prueba"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Job de actualización",
+          "id": "43-job-de-actualización"
+        },
+        {
+          "level": 2,
+          "text": "5. Gestión de versiones",
+          "id": "5-gestión-de-versiones"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Versionado",
+          "id": "51-versionado"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Lista de verificación de publicación",
+          "id": "52-lista-de-verificación-de-publicación"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Pasos de despliegue",
+          "id": "53-pasos-de-despliegue"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Reversión",
+          "id": "54-reversión"
+        },
+        {
+          "level": 2,
+          "text": "6. Copia de seguridad y restauración",
+          "id": "6-copia-de-seguridad-y-restauración"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Validación de la restauración",
+          "id": "61-validación-de-la-restauración"
+        },
+        {
+          "level": 2,
+          "text": "7. Monitorización",
+          "id": "7-monitorización"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Infraestructura",
+          "id": "71-infraestructura"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Aplicación",
+          "id": "72-aplicación"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Alertas",
+          "id": "73-alertas"
+        },
+        {
+          "level": 2,
+          "text": "8. Operaciones de seguridad",
+          "id": "8-operaciones-de-seguridad"
+        },
+        {
+          "level": 2,
+          "text": "9. Guías operativas",
+          "id": "9-guías-operativas"
+        },
+        {
+          "level": 2,
+          "text": "10. Índice de evidencias",
+          "id": "10-índice-de-evidencias"
+        }
+      ],
+      "words": 1326,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/06-risk-register",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos VI — Registro de riesgos y manual de mitigación",
+      "description": "Riesgos específicos de Odoo, puntuación, mitigación y planificación de contingencias.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Puntuación",
+          "id": "1-puntuación"
+        },
+        {
+          "level": 2,
+          "text": "2. Registro de riesgos",
+          "id": "2-registro-de-riesgos"
+        },
+        {
+          "level": 2,
+          "text": "3. Riesgos principales en detalle",
+          "id": "3-riesgos-principales-en-detalle"
+        },
+        {
+          "level": 3,
+          "text": "R-01 Expansión del alcance",
+          "id": "r-01-expansión-del-alcance"
+        },
+        {
+          "level": 3,
+          "text": "R-02 Datos maestros deficientes",
+          "id": "r-02-datos-maestros-deficientes"
+        },
+        {
+          "level": 3,
+          "text": "R-03 Lagunas de localización",
+          "id": "r-03-lagunas-de-localización"
+        },
+        {
+          "level": 3,
+          "text": "R-04 Integración subestimada",
+          "id": "r-04-integración-subestimada"
+        },
+        {
+          "level": 3,
+          "text": "R-05 Rendimiento con volumen",
+          "id": "r-05-rendimiento-con-volumen"
+        },
+        {
+          "level": 3,
+          "text": "R-07 La actualización rompe el código personalizado",
+          "id": "r-07-la-actualización-rompe-el-código-personalizado"
+        },
+        {
+          "level": 3,
+          "text": "R-10 Baja adopción",
+          "id": "r-10-baja-adopción"
+        },
+        {
+          "level": 3,
+          "text": "R-15 Procesamiento duplicado",
+          "id": "r-15-procesamiento-duplicado"
+        },
+        {
+          "level": 2,
+          "text": "4. Proceso de revisión de riesgos",
+          "id": "4-proceso-de-revisión-de-riesgos"
+        },
+        {
+          "level": 2,
+          "text": "5. Incidencia frente a riesgo",
+          "id": "5-incidencia-frente-a-riesgo"
+        },
+        {
+          "level": 2,
+          "text": "6. Planificación de contingencias",
+          "id": "6-planificación-de-contingencias"
+        },
+        {
+          "level": 2,
+          "text": "7. Plantilla de registro de riesgos",
+          "id": "7-plantilla-de-registro-de-riesgos"
+        },
+        {
+          "level": 2,
+          "text": "8. Evidencias y adaptación",
+          "id": "8-evidencias-y-adaptación"
+        }
+      ],
+      "words": 1523,
+      "minutes": 7
+    },
+    {
+      "slug": "07-project-management/07-implementation-playbook",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos VII — Manual de implementación",
+      "description": "Guía de implementación fase por fase, desde el inicio hasta la entrega, incluido un plan de 90 días.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Arranque (semana 0)",
+          "id": "1-arranque-semana-0"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Entradas",
+          "id": "11-entradas"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Actividades",
+          "id": "12-actividades"
+        },
+        {
+          "level": 3,
+          "text": "1.3 Resultados",
+          "id": "13-resultados"
+        },
+        {
+          "level": 2,
+          "text": "2. Descubrimiento (semanas 1–4)",
+          "id": "2-descubrimiento-semanas-14"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Talleres",
+          "id": "21-talleres"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Auditoría de datos",
+          "id": "22-auditoría-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Resultados",
+          "id": "23-resultados"
+        },
+        {
+          "level": 2,
+          "text": "3. Diseño (semanas 3–8)",
+          "id": "3-diseño-semanas-38"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Diseño de la solución",
+          "id": "31-diseño-de-la-solución"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Autoridad de diseño",
+          "id": "32-autoridad-de-diseño"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Resultados",
+          "id": "33-resultados"
+        },
+        {
+          "level": 2,
+          "text": "4. Construcción (semanas 6–20)",
+          "id": "4-construcción-semanas-620"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Fundamentos",
+          "id": "41-fundamentos"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Datos maestros",
+          "id": "42-datos-maestros"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Flujos principales",
+          "id": "43-flujos-principales"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Desarrollo personalizado",
+          "id": "44-desarrollo-personalizado"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Migración de datos",
+          "id": "45-migración-de-datos"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Integraciones",
+          "id": "46-integraciones"
+        },
+        {
+          "level": 2,
+          "text": "5. Pruebas (semanas 16–24)",
+          "id": "5-pruebas-semanas-1624"
+        },
+        {
+          "level": 2,
+          "text": "6. Paso a producción (semanas 24–26)",
+          "id": "6-paso-a-producción-semanas-2426"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Plan T-menos",
+          "id": "61-plan-t-menos"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Guía operativa del paso a producción",
+          "id": "62-guía-operativa-del-paso-a-producción"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Decisión de continuar o no",
+          "id": "63-decisión-de-continuar-o-no"
+        },
+        {
+          "level": 2,
+          "text": "7. Soporte intensivo posterior a la puesta en marcha (semanas 26–32)",
+          "id": "7-soporte-intensivo-posterior-a-la-puesta-en-marcha-semanas-2632"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Cadencia",
+          "id": "71-cadencia"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Enfoque",
+          "id": "72-enfoque"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Criterios de salida",
+          "id": "73-criterios-de-salida"
+        },
+        {
+          "level": 2,
+          "text": "8. Traspaso",
+          "id": "8-traspaso"
+        },
+        {
+          "level": 2,
+          "text": "9. Plan rápido de 90 días (despliegue pequeño)",
+          "id": "9-plan-rápido-de-90-días-despliegue-pequeño"
+        },
+        {
+          "level": 2,
+          "text": "10. Antipatrones del manual",
+          "id": "10-antipatrones-del-manual"
+        },
+        {
+          "level": 2,
+          "text": "11. Lista de verificación de artefactos",
+          "id": "11-lista-de-verificación-de-artefactos"
+        }
+      ],
+      "words": 1332,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/08-templates",
+      "section": "07-project-management",
+      "sectionTitle": "Gestión de proyectos",
+      "title": "Gestión de proyectos VIII — Plantillas de documentos",
+      "description": "Plantillas de ADR, especificación, plan de pruebas, paso a producción, RAID, solicitud de cambio, mapeo de datos, guía operativa y entrega.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Registro de decisiones de arquitectura (ADR)",
+          "id": "1-registro-de-decisiones-de-arquitectura-adr"
+        },
+        {
+          "level": 2,
+          "text": "Contexto",
+          "id": "contexto"
+        },
+        {
+          "level": 2,
+          "text": "Opciones",
+          "id": "opciones"
+        },
+        {
+          "level": 3,
+          "text": "Opción A —",
+          "id": "opción-a"
+        },
+        {
+          "level": 3,
+          "text": "Opción B —",
+          "id": "opción-b"
+        },
+        {
+          "level": 2,
+          "text": "Decisión",
+          "id": "decisión"
+        },
+        {
+          "level": 2,
+          "text": "Consecuencias",
+          "id": "consecuencias"
+        },
+        {
+          "level": 2,
+          "text": "Evidencias",
+          "id": "evidencias"
+        },
+        {
+          "level": 2,
+          "text": "2. Especificación de la solución",
+          "id": "2-especificación-de-la-solución"
+        },
+        {
+          "level": 2,
+          "text": "1. Resumen",
+          "id": "1-resumen"
+        },
+        {
+          "level": 2,
+          "text": "2. Contexto de negocio",
+          "id": "2-contexto-de-negocio"
+        },
+        {
+          "level": 2,
+          "text": "3. Requisitos",
+          "id": "3-requisitos"
+        },
+        {
+          "level": 2,
+          "text": "4. Alcance",
+          "id": "4-alcance"
+        },
+        {
+          "level": 2,
+          "text": "5. Diseño en Odoo",
+          "id": "5-diseño-en-odoo"
+        },
+        {
+          "level": 2,
+          "text": "6. Modelo de datos",
+          "id": "6-modelo-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "7. Flujos",
+          "id": "7-flujos"
+        },
+        {
+          "level": 2,
+          "text": "8. Integración",
+          "id": "8-integración"
+        },
+        {
+          "level": 2,
+          "text": "9. Migración",
+          "id": "9-migración"
+        },
+        {
+          "level": 2,
+          "text": "10. Rendimiento",
+          "id": "10-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "11. Pruebas",
+          "id": "11-pruebas"
+        },
+        {
+          "level": 2,
+          "text": "12. Riesgos",
+          "id": "12-riesgos"
+        },
+        {
+          "level": 2,
+          "text": "13. Preguntas abiertas",
+          "id": "13-preguntas-abiertas"
+        },
+        {
+          "level": 2,
+          "text": "3. Plan de pruebas",
+          "id": "3-plan-de-pruebas"
+        },
+        {
+          "level": 2,
+          "text": "1. Alcance",
+          "id": "1-alcance"
+        },
+        {
+          "level": 2,
+          "text": "2. Entornos",
+          "id": "2-entornos"
+        },
+        {
+          "level": 2,
+          "text": "3. Roles",
+          "id": "3-roles"
+        },
+        {
+          "level": 2,
+          "text": "4. Escenarios",
+          "id": "4-escenarios"
+        },
+        {
+          "level": 2,
+          "text": "5. No funcionales",
+          "id": "5-no-funcionales"
+        },
+        {
+          "level": 2,
+          "text": "6. Defectos",
+          "id": "6-defectos"
+        },
+        {
+          "level": 2,
+          "text": "7. Criterios de salida",
+          "id": "7-criterios-de-salida"
+        },
+        {
+          "level": 2,
+          "text": "8. Aprobación",
+          "id": "8-aprobación"
+        },
+        {
+          "level": 2,
+          "text": "4. Lista de verificación del paso a producción",
+          "id": "4-lista-de-verificación-del-paso-a-producción"
+        },
+        {
+          "level": 2,
+          "text": "Cronograma",
+          "id": "cronograma"
+        },
+        {
+          "level": 2,
+          "text": "Requisitos previos",
+          "id": "requisitos-previos"
+        },
+        {
+          "level": 2,
+          "text": "Continuar/No continuar",
+          "id": "continuarno-continuar"
+        },
+        {
+          "level": 2,
+          "text": "Comunicación",
+          "id": "comunicación"
+        },
+        {
+          "level": 2,
+          "text": "Posterior al paso a producción",
+          "id": "posterior-al-paso-a-producción"
+        },
+        {
+          "level": 2,
+          "text": "5. Registro RAID",
+          "id": "5-registro-raid"
+        },
+        {
+          "level": 2,
+          "text": "Riesgos",
+          "id": "riesgos"
+        },
+        {
+          "level": 2,
+          "text": "Supuestos",
+          "id": "supuestos"
+        },
+        {
+          "level": 2,
+          "text": "Incidencias",
+          "id": "incidencias"
+        },
+        {
+          "level": 2,
+          "text": "Dependencias",
+          "id": "dependencias"
+        },
+        {
+          "level": 2,
+          "text": "6. Solicitud de cambio",
+          "id": "6-solicitud-de-cambio"
+        },
+        {
+          "level": 2,
+          "text": "Descripción",
+          "id": "descripción"
+        },
+        {
+          "level": 2,
+          "text": "Impacto",
+          "id": "impacto"
+        },
+        {
+          "level": 2,
+          "text": "Opciones",
+          "id": "opciones-2"
+        },
+        {
+          "level": 2,
+          "text": "Decisión",
+          "id": "decisión-2"
+        },
+        {
+          "level": 2,
+          "text": "Implementación",
+          "id": "implementación"
+        },
+        {
+          "level": 2,
+          "text": "7. Especificación del mapeo de datos",
+          "id": "7-especificación-del-mapeo-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "Perfil de origen",
+          "id": "perfil-de-origen"
+        },
+        {
+          "level": 2,
+          "text": "Mapeo",
+          "id": "mapeo"
+        },
+        {
+          "level": 2,
+          "text": "Claves",
+          "id": "claves"
+        },
+        {
+          "level": 2,
+          "text": "Conciliación",
+          "id": "conciliación"
+        },
+        {
+          "level": 2,
+          "text": "Paso a producción",
+          "id": "paso-a-producción"
+        },
+        {
+          "level": 2,
+          "text": "8. Lista de verificación de revisión de código",
+          "id": "8-lista-de-verificación-de-revisión-de-código"
+        },
+        {
+          "level": 2,
+          "text": "Corrección",
+          "id": "corrección"
+        },
+        {
+          "level": 2,
+          "text": "Odoo",
+          "id": "odoo"
+        },
+        {
+          "level": 2,
+          "text": "Esquema",
+          "id": "esquema"
+        },
+        {
+          "level": 2,
+          "text": "Seguridad",
+          "id": "seguridad"
+        },
+        {
+          "level": 2,
+          "text": "Pruebas",
+          "id": "pruebas"
+        },
+        {
+          "level": 2,
+          "text": "Documentación",
+          "id": "documentación"
+        },
+        {
+          "level": 2,
+          "text": "9. Guía operativa",
+          "id": "9-guía-operativa"
+        },
+        {
+          "level": 2,
+          "text": "Disparador",
+          "id": "disparador"
+        },
+        {
+          "level": 2,
+          "text": "Impacto",
+          "id": "impacto-2"
+        },
+        {
+          "level": 2,
+          "text": "Comprobaciones previas",
+          "id": "comprobaciones-previas"
+        },
+        {
+          "level": 2,
+          "text": "Pasos",
+          "id": "pasos"
+        },
+        {
+          "level": 2,
+          "text": "Verificación",
+          "id": "verificación"
+        },
+        {
+          "level": 2,
+          "text": "Reversión",
+          "id": "reversión"
+        },
+        {
+          "level": 2,
+          "text": "Escalado",
+          "id": "escalado"
+        },
+        {
+          "level": 2,
+          "text": "10. Traspaso",
+          "id": "10-traspaso"
+        },
+        {
+          "level": 2,
+          "text": "Alcance entregado",
+          "id": "alcance-entregado"
+        },
+        {
+          "level": 2,
+          "text": "Arquitectura",
+          "id": "arquitectura"
+        },
+        {
+          "level": 2,
+          "text": "Entornos",
+          "id": "entornos"
+        },
+        {
+          "level": 2,
+          "text": "Accesos/credenciales (transferencia segura)",
+          "id": "accesoscredenciales-transferencia-segura"
+        },
+        {
+          "level": 2,
+          "text": "Guías operativas",
+          "id": "guías-operativas"
+        },
+        {
+          "level": 2,
+          "text": "Monitorización/alertas",
+          "id": "monitorizaciónalertas"
+        },
+        {
+          "level": 2,
+          "text": "Incidencias abiertas/backlog",
+          "id": "incidencias-abiertasbacklog"
+        },
+        {
+          "level": 2,
+          "text": "Modelo de soporte/SLA",
+          "id": "modelo-de-soportesla"
+        },
+        {
+          "level": 2,
+          "text": "Registros de formación",
+          "id": "registros-de-formación"
+        },
+        {
+          "level": 2,
+          "text": "Garantía",
+          "id": "garantía"
+        },
+        {
+          "level": 2,
+          "text": "Aprobación",
+          "id": "aprobación"
+        },
+        {
+          "level": 2,
+          "text": "11. Convenciones de documentos",
+          "id": "11-convenciones-de-documentos"
+        }
+      ],
+      "words": 1089,
+      "minutes": 5
+    },
+    {
+      "slug": "08-appendix/01-code-map",
+      "section": "08-appendix",
+      "sectionTitle": "Apéndice",
+      "title": "Apéndice A — Mapa del código fuente",
+      "description": "Mapa archivo por archivo del ORM, runtime, módulos, herramientas y módulos de negocio clave.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Nivel superior",
+          "id": "1-nivel-superior"
+        },
+        {
+          "level": 2,
+          "text": "2. Núcleo del ORM",
+          "id": "2-núcleo-del-orm"
+        },
+        {
+          "level": 2,
+          "text": "3. HTTP y servicios",
+          "id": "3-http-y-servicios"
+        },
+        {
+          "level": 2,
+          "text": "4. Módulos",
+          "id": "4-módulos"
+        },
+        {
+          "level": 2,
+          "text": "5. Herramientas",
+          "id": "5-herramientas"
+        },
+        {
+          "level": 2,
+          "text": "6. Módulos de negocio (archivos clave)",
+          "id": "6-módulos-de-negocio-archivos-clave"
+        },
+        {
+          "level": 2,
+          "text": "7. Localizar un comportamiento",
+          "id": "7-localizar-un-comportamiento"
+        },
+        {
+          "level": 2,
+          "text": "8. Lectura de un traceback",
+          "id": "8-lectura-de-un-traceback"
+        },
+        {
+          "level": 2,
+          "text": "9. Fijación de versiones",
+          "id": "9-fijación-de-versiones"
+        }
+      ],
+      "words": 1076,
+      "minutes": 5
+    },
+    {
+      "slug": "08-appendix/02-sql-cookbook",
+      "section": "08-appendix",
+      "sectionTitle": "Apéndice",
+      "title": "Apéndice B — Recetario SQL para Odoo 19",
+      "description": "Consultas de diagnóstico de solo lectura para esquema, módulos, ventas, compras, stock, contabilidad, rendimiento y seguridad.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Inspección del esquema",
+          "id": "1-inspección-del-esquema"
+        },
+        {
+          "level": 2,
+          "text": "2. Metadatos de módulos y modelos",
+          "id": "2-metadatos-de-módulos-y-modelos"
+        },
+        {
+          "level": 2,
+          "text": "3. Ventas",
+          "id": "3-ventas"
+        },
+        {
+          "level": 2,
+          "text": "4. Compras",
+          "id": "4-compras"
+        },
+        {
+          "level": 2,
+          "text": "5. Inventario",
+          "id": "5-inventario"
+        },
+        {
+          "level": 2,
+          "text": "6. Contabilidad",
+          "id": "6-contabilidad"
+        },
+        {
+          "level": 2,
+          "text": "7. Fabricación",
+          "id": "7-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "8. Diagnóstico de rendimiento",
+          "id": "8-diagnóstico-de-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "9. Seguridad y auditoría",
+          "id": "9-seguridad-y-auditoría"
+        },
+        {
+          "level": 2,
+          "text": "10. Calidad de datos",
+          "id": "10-calidad-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "11. Reglas de seguridad",
+          "id": "11-reglas-de-seguridad"
+        }
+      ],
+      "words": 1523,
+      "minutes": 7
+    },
+    {
+      "slug": "08-appendix/03-debug-playbook",
+      "section": "08-appendix",
+      "sectionTitle": "Apéndice",
+      "title": "Apéndice C — Guía operativa de depuración e incidentes",
+      "description": "Primera respuesta, errores comunes, depuración de ORM/stock/contabilidad/MRP, perfilado de rendimiento y postmortems.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Primeros 10 minutos",
+          "id": "1-primeros-10-minutos"
+        },
+        {
+          "level": 2,
+          "text": "2. Registros",
+          "id": "2-registros"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Niveles",
+          "id": "21-niveles"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Greps útiles",
+          "id": "22-greps-útiles"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Correlación de solicitudes",
+          "id": "23-correlación-de-solicitudes"
+        },
+        {
+          "level": 2,
+          "text": "3. Shell de Odoo",
+          "id": "3-shell-de-odoo"
+        },
+        {
+          "level": 2,
+          "text": "4. Errores comunes",
+          "id": "4-errores-comunes"
+        },
+        {
+          "level": 3,
+          "text": "4.1 UserError",
+          "id": "41-usererror"
+        },
+        {
+          "level": 3,
+          "text": "4.2 AccessError",
+          "id": "42-accesserror"
+        },
+        {
+          "level": 3,
+          "text": "4.3 MissingError",
+          "id": "43-missingerror"
+        },
+        {
+          "level": 3,
+          "text": "4.4 ValidationError procedente de IntegrityError",
+          "id": "44-validationerror-procedente-de-integrityerror"
+        },
+        {
+          "level": 3,
+          "text": "4.5 psycopg2.errors.SerializationFailure",
+          "id": "45-psycopg2errorsserializationfailure"
+        },
+        {
+          "level": 3,
+          "text": "4.6 psycopg2.errors.DeadlockDetected",
+          "id": "46-psycopg2errorsdeadlockdetected"
+        },
+        {
+          "level": 3,
+          "text": "4.7 psycopg2.errors.LockNotAvailable",
+          "id": "47-psycopg2errorslocknotavailable"
+        },
+        {
+          "level": 3,
+          "text": "4.8 KeyError: 'model.name'",
+          "id": "48-keyerror-modelname"
+        },
+        {
+          "level": 3,
+          "text": "4.9 ValueError: Invalid field ...",
+          "id": "49-valueerror-invalid-field"
+        },
+        {
+          "level": 3,
+          "text": "4.10 ParseError / validación de vistas",
+          "id": "410-parseerror-validación-de-vistas"
+        },
+        {
+          "level": 3,
+          "text": "4.11 RegistryError: Cannot get registry",
+          "id": "411-registryerror-cannot-get-registry"
+        },
+        {
+          "level": 3,
+          "text": "4.12 Worker terminado / 502",
+          "id": "412-worker-terminado-502"
+        },
+        {
+          "level": 2,
+          "text": "5. Depuración de rendimiento",
+          "id": "5-depuración-de-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "6. Depuración de contabilidad",
+          "id": "6-depuración-de-contabilidad"
+        },
+        {
+          "level": 2,
+          "text": "7. Depuración de stock",
+          "id": "7-depuración-de-stock"
+        },
+        {
+          "level": 2,
+          "text": "8. Depuración de fabricación",
+          "id": "8-depuración-de-fabricación"
+        },
+        {
+          "level": 2,
+          "text": "9. Depuración de instalación/actualización de módulos",
+          "id": "9-depuración-de-instalaciónactualización-de-módulos"
+        },
+        {
+          "level": 2,
+          "text": "10. Depuración de frontend",
+          "id": "10-depuración-de-frontend"
+        },
+        {
+          "level": 2,
+          "text": "11. Depuración de integraciones",
+          "id": "11-depuración-de-integraciones"
+        },
+        {
+          "level": 2,
+          "text": "12. Severidad de incidentes",
+          "id": "12-severidad-de-incidentes"
+        },
+        {
+          "level": 2,
+          "text": "13. Plantilla de postmortem",
+          "id": "13-plantilla-de-postmortem"
+        },
+        {
+          "level": 2,
+          "text": "Summary",
+          "id": "summary"
+        },
+        {
+          "level": 2,
+          "text": "Impact",
+          "id": "impact"
+        },
+        {
+          "level": 2,
+          "text": "Timeline (UTC)",
+          "id": "timeline-utc"
+        },
+        {
+          "level": 2,
+          "text": "Root cause",
+          "id": "root-cause"
+        },
+        {
+          "level": 2,
+          "text": "Detection",
+          "id": "detection"
+        },
+        {
+          "level": 2,
+          "text": "Resolution",
+          "id": "resolution"
+        },
+        {
+          "level": 2,
+          "text": "What went well",
+          "id": "what-went-well"
+        },
+        {
+          "level": 2,
+          "text": "What went wrong",
+          "id": "what-went-wrong"
+        },
+        {
+          "level": 2,
+          "text": "Action items",
+          "id": "action-items"
+        },
+        {
+          "level": 2,
+          "text": "14. Índice de evidencias",
+          "id": "14-índice-de-evidencias"
+        }
+      ],
+      "words": 1543,
+      "minutes": 7
+    },
+    {
+      "slug": "08-appendix/04-checklists",
+      "section": "08-appendix",
+      "sectionTitle": "Apéndice",
+      "title": "Apéndice D — Listas de verificación",
+      "description": "Listas de verificación de arquitectura, código, seguridad, rendimiento, migración, actualización, puesta en marcha y soporte.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Revisión de arquitectura",
+          "id": "1-revisión-de-arquitectura"
+        },
+        {
+          "level": 2,
+          "text": "2. Revisión de código",
+          "id": "2-revisión-de-código"
+        },
+        {
+          "level": 3,
+          "text": "ORM",
+          "id": "orm"
+        },
+        {
+          "level": 3,
+          "text": "Esquema",
+          "id": "esquema"
+        },
+        {
+          "level": 3,
+          "text": "Seguridad",
+          "id": "seguridad"
+        },
+        {
+          "level": 3,
+          "text": "Vistas/UI",
+          "id": "vistasui"
+        },
+        {
+          "level": 3,
+          "text": "Operaciones",
+          "id": "operaciones"
+        },
+        {
+          "level": 2,
+          "text": "3. Revisión de seguridad",
+          "id": "3-revisión-de-seguridad"
+        },
+        {
+          "level": 2,
+          "text": "4. Revisión de rendimiento",
+          "id": "4-revisión-de-rendimiento"
+        },
+        {
+          "level": 2,
+          "text": "5. Migración de datos",
+          "id": "5-migración-de-datos"
+        },
+        {
+          "level": 2,
+          "text": "6. Actualización",
+          "id": "6-actualización"
+        },
+        {
+          "level": 2,
+          "text": "7. Puesta en marcha",
+          "id": "7-puesta-en-marcha"
+        },
+        {
+          "level": 2,
+          "text": "8. Soporte intensivo",
+          "id": "8-soporte-intensivo"
+        },
+        {
+          "level": 2,
+          "text": "9. Preparación del soporte",
+          "id": "9-preparación-del-soporte"
+        },
+        {
+          "level": 2,
+          "text": "10. Plantilla de aprobación",
+          "id": "10-plantilla-de-aprobación"
+        }
+      ],
+      "words": 1204,
+      "minutes": 5
+    },
+    {
+      "slug": "08-appendix/05-sources",
+      "section": "08-appendix",
+      "sectionTitle": "Apéndice",
+      "title": "Apéndice E — Fuentes, evidencias y matriz de versiones",
+      "description": "Matriz de versiones, índice de evidencias, cobertura de la documentación oficial, limitaciones y comandos de verificación.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Matriz de versiones",
+          "id": "1-matriz-de-versiones"
+        },
+        {
+          "level": 2,
+          "text": "2. Referencias a fuentes primarias",
+          "id": "2-referencias-a-fuentes-primarias"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Núcleo del ORM",
+          "id": "21-núcleo-del-orm"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Tiempo de ejecución",
+          "id": "22-tiempo-de-ejecución"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Módulos",
+          "id": "23-módulos"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Módulos de negocio",
+          "id": "24-módulos-de-negocio"
+        },
+        {
+          "level": 2,
+          "text": "3. Estructura de la documentación oficial",
+          "id": "3-estructura-de-la-documentación-oficial"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Lo que verificamos de forma cruzada",
+          "id": "31-lo-que-verificamos-de-forma-cruzada"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Lo que la documentación no cubre",
+          "id": "32-lo-que-la-documentación-no-cubre"
+        },
+        {
+          "level": 2,
+          "text": "4. Fuentes de la comunidad (solo corroboración)",
+          "id": "4-fuentes-de-la-comunidad-solo-corroboración"
+        },
+        {
+          "level": 2,
+          "text": "5. Metodología de análisis estático",
+          "id": "5-metodología-de-análisis-estático"
+        },
+        {
+          "level": 2,
+          "text": "6. Cómo verificar una afirmación",
+          "id": "6-cómo-verificar-una-afirmación"
+        },
+        {
+          "level": 2,
+          "text": "7. Limitaciones conocidas de este manual",
+          "id": "7-limitaciones-conocidas-de-este-manual"
+        },
+        {
+          "level": 2,
+          "text": "8. Orden de lectura sugerido para nuevos miembros del equipo",
+          "id": "8-orden-de-lectura-sugerido-para-nuevos-miembros-del-equipo"
+        },
+        {
+          "level": 2,
+          "text": "9. Mantenimiento",
+          "id": "9-mantenimiento"
+        },
+        {
+          "level": 2,
+          "text": "10. Atribución",
+          "id": "10-atribución"
+        }
+      ],
+      "words": 1217,
+      "minutes": 6
+    }
+  ]
+}
