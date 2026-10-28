@@ -1,0 +1,6999 @@
+{
+  "generated": "2026-10-28T16:31:27.528Z",
+  "version": "19.0+e.20260826",
+  "sections": [
+    {
+      "id": "start",
+      "title": "Start Here",
+      "short": "Start",
+      "icon": "★",
+      "pages": [
+        "intro"
+      ]
+    },
+    {
+      "id": "00-overview",
+      "title": "Orientation",
+      "short": "Orientation",
+      "icon": "00",
+      "pages": [
+        "00-overview/01-architecture",
+        "00-overview/02-glossary"
+      ]
+    },
+    {
+      "id": "01-business-logic",
+      "title": "Business Logic Layer",
+      "short": "Business Logic",
+      "icon": "01",
+      "pages": [
+        "01-business-logic/01-orm-runtime",
+        "01-business-logic/02-transactions",
+        "01-business-logic/03-service-layer",
+        "01-business-logic/04-business-rules-events",
+        "01-business-logic/05-security"
+      ]
+    },
+    {
+      "id": "02-flows",
+      "title": "End-to-End Flows",
+      "short": "Flows",
+      "icon": "02",
+      "pages": [
+        "02-flows/01-sales",
+        "02-flows/02-purchase",
+        "02-flows/03-inventory",
+        "02-flows/04-accounting",
+        "02-flows/05-manufacturing",
+        "02-flows/06-cross-module"
+      ]
+    },
+    {
+      "id": "03-database",
+      "title": "Database Design",
+      "short": "Database",
+      "icon": "03",
+      "pages": [
+        "03-database/01-conventions",
+        "03-database/02-inheritance",
+        "03-database/03-er-model",
+        "03-database/04-indexes-performance",
+        "03-database/05-migrations"
+      ]
+    },
+    {
+      "id": "04-modules",
+      "title": "Module Relationships",
+      "short": "Modules",
+      "icon": "04",
+      "pages": [
+        "04-modules/01-dependency-system",
+        "04-modules/02-module-map",
+        "04-modules/03-extension-points",
+        "04-modules/04-circular-dependencies",
+        "04-modules/05-upgrade-compat"
+      ]
+    },
+    {
+      "id": "05-scope",
+      "title": "ERP Scope Boundaries",
+      "short": "Scope",
+      "icon": "05",
+      "pages": [
+        "05-scope/01-coverage",
+        "05-scope/02-gaps",
+        "05-scope/03-performance",
+        "05-scope/04-doc-gaps"
+      ]
+    },
+    {
+      "id": "06-engineering",
+      "title": "Software Engineering",
+      "short": "Engineering",
+      "icon": "06",
+      "pages": [
+        "06-engineering/01-use-cases",
+        "06-engineering/02-domain-model",
+        "06-engineering/03-sequence-diagrams",
+        "06-engineering/04-activity-diagrams",
+        "06-engineering/05-state-machines",
+        "06-engineering/06-nfr",
+        "06-engineering/07-testing-strategy"
+      ]
+    },
+    {
+      "id": "07-project-management",
+      "title": "Project Management",
+      "short": "Project Mgmt",
+      "icon": "07",
+      "pages": [
+        "07-project-management/01-delivery-lifecycle",
+        "07-project-management/02-estimation",
+        "07-project-management/03-team-and-roles",
+        "07-project-management/04-quality-gates",
+        "07-project-management/05-environments-ci",
+        "07-project-management/06-risk-register",
+        "07-project-management/07-implementation-playbook",
+        "07-project-management/08-templates"
+      ]
+    },
+    {
+      "id": "08-appendix",
+      "title": "Appendix",
+      "short": "Appendix",
+      "icon": "08",
+      "pages": [
+        "08-appendix/01-code-map",
+        "08-appendix/02-sql-cookbook",
+        "08-appendix/03-debug-playbook",
+        "08-appendix/04-checklists",
+        "08-appendix/05-sources"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "slug": "intro",
+      "section": "start",
+      "sectionTitle": "Start Here",
+      "title": "Odoo Internals Field Manual",
+      "description": "A developer-focused technical reference for the mechanics the official documentation does not explain.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "Summary",
+          "id": "summary"
+        },
+        {
+          "level": 3,
+          "text": "At a glance",
+          "id": "at-a-glance"
+        },
+        {
+          "level": 2,
+          "text": "Critical version warning",
+          "id": "critical-version-warning"
+        },
+        {
+          "level": 2,
+          "text": "What is inside",
+          "id": "what-is-inside"
+        },
+        {
+          "level": 2,
+          "text": "Documentation map",
+          "id": "documentation-map"
+        },
+        {
+          "level": 2,
+          "text": "Selected findings",
+          "id": "selected-findings"
+        },
+        {
+          "level": 2,
+          "text": "Reading paths",
+          "id": "reading-paths"
+        },
+        {
+          "level": 2,
+          "text": "Run the web reader",
+          "id": "run-the-web-reader"
+        },
+        {
+          "level": 3,
+          "text": "Rebuild the content index after editing Markdown",
+          "id": "rebuild-the-content-index-after-editing-markdown"
+        },
+        {
+          "level": 2,
+          "text": "Repository layout",
+          "id": "repository-layout"
+        },
+        {
+          "level": 2,
+          "text": "Notation and conventions",
+          "id": "notation-and-conventions"
+        },
+        {
+          "level": 3,
+          "text": "Call sequence notation",
+          "id": "call-sequence-notation"
+        },
+        {
+          "level": 3,
+          "text": "State notation",
+          "id": "state-notation"
+        },
+        {
+          "level": 3,
+          "text": "Severity markers",
+          "id": "severity-markers"
+        },
+        {
+          "level": 3,
+          "text": "Code references",
+          "id": "code-references"
+        },
+        {
+          "level": 2,
+          "text": "Evidence base and methodology",
+          "id": "evidence-base-and-methodology"
+        },
+        {
+          "level": 2,
+          "text": "What this manual is — and is not",
+          "id": "what-this-manual-is-and-is-not"
+        },
+        {
+          "level": 2,
+          "text": "Maintenance rules",
+          "id": "maintenance-rules"
+        },
+        {
+          "level": 2,
+          "text": "Licence and attribution",
+          "id": "licence-and-attribution"
+        }
+      ],
+      "words": 2397,
+      "minutes": 11
+    },
+    {
+      "slug": "00-overview/01-architecture",
+      "section": "00-overview",
+      "sectionTitle": "Orientation",
+      "title": "Architecture and Runtime Model",
+      "description": "Process model, request lifecycle, registry, environment, cursor, module loading, async machinery and architectural invariants.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Executive summary",
+          "id": "1-executive-summary"
+        },
+        {
+          "level": 2,
+          "text": "2. Process and deployment topology",
+          "id": "2-process-and-deployment-topology"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Runtime processes",
+          "id": "21-runtime-processes"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Request lifecycle (HTTP)",
+          "id": "22-request-lifecycle-http"
+        },
+        {
+          "level": 3,
+          "text": "2.3 The read-only fast path [V19]",
+          "id": "23-the-read-only-fast-path-v19"
+        },
+        {
+          "level": 2,
+          "text": "3. The registry",
+          "id": "3-the-registry"
+        },
+        {
+          "level": 3,
+          "text": "3.1 What it is",
+          "id": "31-what-it-is"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Model class assembly [INTERNAL but essential]",
+          "id": "32-model-class-assembly-internal-but-essential"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Registry lifecycle events",
+          "id": "33-registry-lifecycle-events"
+        },
+        {
+          "level": 2,
+          "text": "4. Environment, cursor, and transaction",
+          "id": "4-environment-cursor-and-transaction"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Environment composition",
+          "id": "41-environment-composition"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Transaction object",
+          "id": "42-transaction-object"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Environment and transaction rules",
+          "id": "43-environment-and-transaction-rules"
+        },
+        {
+          "level": 2,
+          "text": "5. The ORM as a business-logic runtime",
+          "id": "5-the-orm-as-a-business-logic-runtime"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Recordsets are the unit of work",
+          "id": "51-recordsets-are-the-unit-of-work"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Field machinery",
+          "id": "52-field-machinery"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Compute, inverse, and search",
+          "id": "53-compute-inverse-and-search"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Cache and recomputation",
+          "id": "54-cache-and-recomputation"
+        },
+        {
+          "level": 2,
+          "text": "6. Module loading and schema synchronisation",
+          "id": "6-module-loading-and-schema-synchronisation"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Loading phases",
+          "id": "61-loading-phases"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Per-module pipeline",
+          "id": "62-per-module-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Schema synchronisation",
+          "id": "63-schema-synchronisation"
+        },
+        {
+          "level": 2,
+          "text": "7. HTTP, RPC, and controller contracts",
+          "id": "7-http-rpc-and-controller-contracts"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Route declaration",
+          "id": "71-route-declaration"
+        },
+        {
+          "level": 3,
+          "text": "7.2 JSON-RPC contract",
+          "id": "72-json-rpc-contract"
+        },
+        {
+          "level": 3,
+          "text": "7.3 The retrying wrapper",
+          "id": "73-the-retrying-wrapper"
+        },
+        {
+          "level": 2,
+          "text": "8. Asynchronous machinery",
+          "id": "8-asynchronous-machinery"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Cron",
+          "id": "81-cron"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Bus / websocket",
+          "id": "82-bus-websocket"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Mail",
+          "id": "83-mail"
+        },
+        {
+          "level": 2,
+          "text": "9. Persistence and storage",
+          "id": "9-persistence-and-storage"
+        },
+        {
+          "level": 3,
+          "text": "9.1 PostgreSQL",
+          "id": "91-postgresql"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Filestore",
+          "id": "92-filestore"
+        },
+        {
+          "level": 3,
+          "text": "9.3 JSONB columns",
+          "id": "93-jsonb-columns"
+        },
+        {
+          "level": 2,
+          "text": "10. Architectural invariants checklist",
+          "id": "10-architectural-invariants-checklist"
+        },
+        {
+          "level": 2,
+          "text": "11. Where official documentation stops",
+          "id": "11-where-official-documentation-stops"
+        }
+      ],
+      "words": 3194,
+      "minutes": 15
+    },
+    {
+      "slug": "00-overview/02-glossary",
+      "section": "00-overview",
+      "sectionTitle": "Orientation",
+      "title": "Glossary of Odoo Internals",
+      "description": "Precise runtime meanings for Odoo's overloaded terms, from ACLs and actions to quants and wizards.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "A",
+          "id": "a"
+        },
+        {
+          "level": 2,
+          "text": "B",
+          "id": "b"
+        },
+        {
+          "level": 2,
+          "text": "C",
+          "id": "c"
+        },
+        {
+          "level": 2,
+          "text": "D",
+          "id": "d"
+        },
+        {
+          "level": 2,
+          "text": "E",
+          "id": "e"
+        },
+        {
+          "level": 2,
+          "text": "F",
+          "id": "f"
+        },
+        {
+          "level": 2,
+          "text": "G",
+          "id": "g"
+        },
+        {
+          "level": 2,
+          "text": "H",
+          "id": "h"
+        },
+        {
+          "level": 2,
+          "text": "I",
+          "id": "i"
+        },
+        {
+          "level": 2,
+          "text": "J",
+          "id": "j"
+        },
+        {
+          "level": 2,
+          "text": "L",
+          "id": "l"
+        },
+        {
+          "level": 2,
+          "text": "M",
+          "id": "m"
+        },
+        {
+          "level": 2,
+          "text": "N",
+          "id": "n"
+        },
+        {
+          "level": 2,
+          "text": "O",
+          "id": "o"
+        },
+        {
+          "level": 2,
+          "text": "P",
+          "id": "p"
+        },
+        {
+          "level": 2,
+          "text": "Q",
+          "id": "q"
+        },
+        {
+          "level": 2,
+          "text": "R",
+          "id": "r"
+        },
+        {
+          "level": 2,
+          "text": "S",
+          "id": "s"
+        },
+        {
+          "level": 2,
+          "text": "T",
+          "id": "t"
+        },
+        {
+          "level": 2,
+          "text": "U",
+          "id": "u"
+        },
+        {
+          "level": 2,
+          "text": "V",
+          "id": "v"
+        },
+        {
+          "level": 2,
+          "text": "W",
+          "id": "w"
+        },
+        {
+          "level": 2,
+          "text": "X",
+          "id": "x"
+        },
+        {
+          "level": 2,
+          "text": "Z",
+          "id": "z"
+        }
+      ],
+      "words": 1590,
+      "minutes": 7
+    },
+    {
+      "slug": "01-business-logic/01-orm-runtime",
+      "section": "01-business-logic",
+      "sectionTitle": "Business Logic Layer",
+      "title": "ORM Runtime and Model Semantics",
+      "description": "Recordset semantics, field machinery, cache, recomputation, CRUD internals, inheritance, access control and performance rules.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The mental model",
+          "id": "1-the-mental-model"
+        },
+        {
+          "level": 2,
+          "text": "2. Recordsets",
+          "id": "2-recordsets"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Representation",
+          "id": "21-representation"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Set algebra",
+          "id": "22-set-algebra"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Prefetch",
+          "id": "23-prefetch"
+        },
+        {
+          "level": 3,
+          "text": "2.4 New records (NewId)",
+          "id": "24-new-records-newid"
+        },
+        {
+          "level": 2,
+          "text": "3. Fields in depth",
+          "id": "3-fields-in-depth"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Field construction and attributes",
+          "id": "31-field-construction-and-attributes"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Stored vs non-stored",
+          "id": "32-stored-vs-non-stored"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Compute methods",
+          "id": "33-compute-methods"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Inverse methods",
+          "id": "34-inverse-methods"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Related fields",
+          "id": "35-related-fields"
+        },
+        {
+          "level": 3,
+          "text": "3.6 Company-dependent fields",
+          "id": "36-company-dependent-fields"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Translated fields",
+          "id": "37-translated-fields"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Binary fields",
+          "id": "38-binary-fields"
+        },
+        {
+          "level": 2,
+          "text": "4. CRUD internals",
+          "id": "4-crud-internals"
+        },
+        {
+          "level": 3,
+          "text": "4.1 create()",
+          "id": "41-create"
+        },
+        {
+          "level": 3,
+          "text": "4.2 write()",
+          "id": "42-write"
+        },
+        {
+          "level": 3,
+          "text": "4.3 unlink()",
+          "id": "43-unlink"
+        },
+        {
+          "level": 3,
+          "text": "4.4 read() / searchread()",
+          "id": "44-read-searchread"
+        },
+        {
+          "level": 3,
+          "text": "4.5 search()",
+          "id": "45-search"
+        },
+        {
+          "level": 2,
+          "text": "5. Domains and SQL generation",
+          "id": "5-domains-and-sql-generation"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Domain AST",
+          "id": "51-domain-ast"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Operators and their SQL",
+          "id": "52-operators-and-their-sql"
+        },
+        {
+          "level": 3,
+          "text": "5.3 order pitfalls",
+          "id": "53-order-pitfalls"
+        },
+        {
+          "level": 2,
+          "text": "6. Context, company, and language",
+          "id": "6-context-company-and-language"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Context keys that change behaviour",
+          "id": "61-context-keys-that-change-behaviour"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Multi-company",
+          "id": "62-multi-company"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Language",
+          "id": "63-language"
+        },
+        {
+          "level": 2,
+          "text": "7. Inheritance semantics",
+          "id": "7-inheritance-semantics"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Three mechanisms",
+          "id": "71-three-mechanisms"
+        },
+        {
+          "level": 3,
+          "text": "7.2 inherit without name",
+          "id": "72-inherit-without-name"
+        },
+        {
+          "level": 3,
+          "text": "7.3 inherit with name",
+          "id": "73-inherit-with-name"
+        },
+        {
+          "level": 3,
+          "text": "7.4 inherits",
+          "id": "74-inherits"
+        },
+        {
+          "level": 3,
+          "text": "7.5 MRO and super()",
+          "id": "75-mro-and-super"
+        },
+        {
+          "level": 2,
+          "text": "8. Access control in the ORM",
+          "id": "8-access-control-in-the-orm"
+        },
+        {
+          "level": 2,
+          "text": "9. Practical rules for business methods",
+          "id": "9-practical-rules-for-business-methods"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Method design",
+          "id": "91-method-design"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Idempotency",
+          "id": "92-idempotency"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Error types",
+          "id": "93-error-types"
+        },
+        {
+          "level": 3,
+          "text": "9.4 Transactions in business methods",
+          "id": "94-transactions-in-business-methods"
+        },
+        {
+          "level": 2,
+          "text": "10. Anti-patterns checklist",
+          "id": "10-anti-patterns-checklist"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence index",
+          "id": "11-evidence-index"
+        }
+      ],
+      "words": 3397,
+      "minutes": 15
+    },
+    {
+      "slug": "01-business-logic/02-transactions",
+      "section": "01-business-logic",
+      "sectionTitle": "Business Logic Layer",
+      "title": "Transactions, Concurrency, and Data Integrity",
+      "description": "Transaction boundaries, isolation, savepoints, retries, locks, cron transactions and exactly-once pitfalls.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The transaction contract",
+          "id": "1-the-transaction-contract"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Isolation level",
+          "id": "11-isolation-level"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Transaction lifecycle",
+          "id": "12-transaction-lifecycle"
+        },
+        {
+          "level": 2,
+          "text": "2. Cursor and transaction API",
+          "id": "2-cursor-and-transaction-api"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Cursor creation",
+          "id": "21-cursor-creation"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Commit and rollback",
+          "id": "22-commit-and-rollback"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Savepoints",
+          "id": "23-savepoints"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Pre/post commit hooks",
+          "id": "24-prepost-commit-hooks"
+        },
+        {
+          "level": 3,
+          "text": "2.5 Cursor context manager",
+          "id": "25-cursor-context-manager"
+        },
+        {
+          "level": 2,
+          "text": "3. The retry wrapper",
+          "id": "3-the-retry-wrapper"
+        },
+        {
+          "level": 3,
+          "text": "3.1 What is reset between attempts",
+          "id": "31-what-is-reset-between-attempts"
+        },
+        {
+          "level": 3,
+          "text": "3.2 What is not reset",
+          "id": "32-what-is-not-reset"
+        },
+        {
+          "level": 2,
+          "text": "4. Locking and concurrency",
+          "id": "4-locking-and-concurrency"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Implicit locks",
+          "id": "41-implicit-locks"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Stock quant locking [V19]",
+          "id": "42-stock-quant-locking-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Accounting sequence locking",
+          "id": "43-accounting-sequence-locking"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Deadlock patterns",
+          "id": "44-deadlock-patterns"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Advisory locks",
+          "id": "45-advisory-locks"
+        },
+        {
+          "level": 2,
+          "text": "5. ORM cache and flush semantics",
+          "id": "5-orm-cache-and-flush-semantics"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Dirty vs computed",
+          "id": "51-dirty-vs-computed"
+        },
+        {
+          "level": 3,
+          "text": "5.2 When flush happens",
+          "id": "52-when-flush-happens"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Raw SQL rules",
+          "id": "53-raw-sql-rules"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Cache invalidation across workers",
+          "id": "54-cache-invalidation-across-workers"
+        },
+        {
+          "level": 2,
+          "text": "6. Cron transactions",
+          "id": "6-cron-transactions"
+        },
+        {
+          "level": 2,
+          "text": "7. Bus and mail transaction hooks",
+          "id": "7-bus-and-mail-transaction-hooks"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Bus",
+          "id": "71-bus"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Mail",
+          "id": "72-mail"
+        },
+        {
+          "level": 2,
+          "text": "8. Idempotency and exactly-once",
+          "id": "8-idempotency-and-exactly-once"
+        },
+        {
+          "level": 2,
+          "text": "9. Transaction anti-patterns",
+          "id": "9-transaction-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "10. Diagnostic queries",
+          "id": "10-diagnostic-queries"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence index",
+          "id": "11-evidence-index"
+        }
+      ],
+      "words": 2293,
+      "minutes": 10
+    },
+    {
+      "slug": "01-business-logic/03-service-layer",
+      "section": "01-business-logic",
+      "sectionTitle": "Business Logic Layer",
+      "title": "Service Structure, Injection, and Orchestration",
+      "description": "How Odoo expresses services, dependency injection, orchestration, wizards, controllers and reliable integration.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. What counts as a service in Odoo",
+          "id": "1-what-counts-as-a-service-in-odoo"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Core service class map",
+          "id": "11-core-service-class-map"
+        },
+        {
+          "level": 3,
+          "text": "1.2 The canonical call stack",
+          "id": "12-the-canonical-call-stack"
+        },
+        {
+          "level": 2,
+          "text": "2. Dependency injection, Odoo style",
+          "id": "2-dependency-injection-odoo-style"
+        },
+        {
+          "level": 3,
+          "text": "2.1 The environment is a service locator",
+          "id": "21-the-environment-is-a-service-locator"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Inheritance is the injection mechanism",
+          "id": "22-inheritance-is-the-injection-mechanism"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Mixins as capability injection",
+          "id": "23-mixins-as-capability-injection"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Configuration as injection",
+          "id": "24-configuration-as-injection"
+        },
+        {
+          "level": 3,
+          "text": "2.5 External dependency injection",
+          "id": "25-external-dependency-injection"
+        },
+        {
+          "level": 2,
+          "text": "3. Application services: wizards",
+          "id": "3-application-services-wizards"
+        },
+        {
+          "level": 2,
+          "text": "4. Controllers as transport adapters",
+          "id": "4-controllers-as-transport-adapters"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Idempotency at the boundary",
+          "id": "41-idempotency-at-the-boundary"
+        },
+        {
+          "level": 2,
+          "text": "5. Domain service design",
+          "id": "5-domain-service-design"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Public vs private methods",
+          "id": "51-public-vs-private-methods"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Orchestration vs computation",
+          "id": "52-orchestration-vs-computation"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Invariants and guards",
+          "id": "53-invariants-and-guards"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Domain events",
+          "id": "54-domain-events"
+        },
+        {
+          "level": 2,
+          "text": "6. A reference service layout for custom modules",
+          "id": "6-a-reference-service-layout-for-custom-modules"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Layering rules that work with Odoo",
+          "id": "61-layering-rules-that-work-with-odoo"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Example: reliable integration",
+          "id": "62-example-reliable-integration"
+        },
+        {
+          "level": 2,
+          "text": "7. Service-level testing",
+          "id": "7-service-level-testing"
+        },
+        {
+          "level": 2,
+          "text": "8. Service-layer anti-patterns",
+          "id": "8-service-layer-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "9. Evidence index",
+          "id": "9-evidence-index"
+        }
+      ],
+      "words": 2224,
+      "minutes": 10
+    },
+    {
+      "slug": "01-business-logic/04-business-rules-events",
+      "section": "01-business-logic",
+      "sectionTitle": "Business Logic Layer",
+      "title": "Business Rules, Events, and Automation Triggers",
+      "description": "Decision matrix for computes, constraints, onchange, tracking, automation, server actions, cron and bus.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Trigger catalogue",
+          "id": "1-trigger-catalogue"
+        },
+        {
+          "level": 2,
+          "text": "2. Computed fields as rules",
+          "id": "2-computed-fields-as-rules"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Semantics",
+          "id": "21-semantics"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Dependency completeness",
+          "id": "22-dependency-completeness"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Recursive computes",
+          "id": "23-recursive-computes"
+        },
+        {
+          "level": 2,
+          "text": "3. Constraints",
+          "id": "3-constraints"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Python constraints",
+          "id": "31-python-constraints"
+        },
+        {
+          "level": 3,
+          "text": "3.2 SQL constraints",
+          "id": "32-sql-constraints"
+        },
+        {
+          "level": 3,
+          "text": "3.3 @api.ondelete",
+          "id": "33-apiondelete"
+        },
+        {
+          "level": 2,
+          "text": "4. Onchange: UI-only convenience",
+          "id": "4-onchange-ui-only-convenience"
+        },
+        {
+          "level": 2,
+          "text": "5. Method overrides as rules",
+          "id": "5-method-overrides-as-rules"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Ordering inside write",
+          "id": "51-ordering-inside-write"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Recursion guards",
+          "id": "52-recursion-guards"
+        },
+        {
+          "level": 2,
+          "text": "6. mail.thread tracking",
+          "id": "6-mailthread-tracking"
+        },
+        {
+          "level": 3,
+          "text": "6.1 How tracking works",
+          "id": "61-how-tracking-works"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Cost",
+          "id": "62-cost"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Subtypes and followers",
+          "id": "63-subtypes-and-followers"
+        },
+        {
+          "level": 2,
+          "text": "7. Automated actions (base.automation)",
+          "id": "7-automated-actions-baseautomation"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Trigger types [V19]",
+          "id": "71-trigger-types-v19"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Execution model",
+          "id": "72-execution-model"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Time-based automations",
+          "id": "73-time-based-automations"
+        },
+        {
+          "level": 2,
+          "text": "8. Server actions",
+          "id": "8-server-actions"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Types",
+          "id": "81-types"
+        },
+        {
+          "level": 3,
+          "text": "8.2 safeeval is not a sandbox",
+          "id": "82-safeeval-is-not-a-sandbox"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Execution context",
+          "id": "83-execution-context"
+        },
+        {
+          "level": 3,
+          "text": "8.4 Webhooks",
+          "id": "84-webhooks"
+        },
+        {
+          "level": 2,
+          "text": "9. Cron as a rule engine",
+          "id": "9-cron-as-a-rule-engine"
+        },
+        {
+          "level": 2,
+          "text": "10. Bus events",
+          "id": "10-bus-events"
+        },
+        {
+          "level": 2,
+          "text": "11. Choosing the right mechanism",
+          "id": "11-choosing-the-right-mechanism"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Decision rules",
+          "id": "111-decision-rules"
+        },
+        {
+          "level": 2,
+          "text": "12. Testing rules and triggers",
+          "id": "12-testing-rules-and-triggers"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 2149,
+      "minutes": 10
+    },
+    {
+      "slug": "01-business-logic/05-security",
+      "section": "01-business-logic",
+      "sectionTitle": "Business Logic Layer",
+      "title": "Security Model",
+      "description": "ACLs, record rules, field groups, sudo, multi-company, portal and a security review checklist.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The five gates",
+          "id": "1-the-five-gates"
+        },
+        {
+          "level": 2,
+          "text": "2. Model ACLs",
+          "id": "2-model-acls"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Structure",
+          "id": "21-structure"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Common mistakes",
+          "id": "22-common-mistakes"
+        },
+        {
+          "level": 2,
+          "text": "3. Record rules",
+          "id": "3-record-rules"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Structure",
+          "id": "31-structure"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Example",
+          "id": "32-example"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Rules on inherited models",
+          "id": "33-rules-on-inherited-models"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Rules and activetest",
+          "id": "34-rules-and-activetest"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Performance",
+          "id": "35-performance"
+        },
+        {
+          "level": 2,
+          "text": "4. Field-level security",
+          "id": "4-field-level-security"
+        },
+        {
+          "level": 3,
+          "text": "4.1 checkcompany",
+          "id": "41-checkcompany"
+        },
+        {
+          "level": 2,
+          "text": "5. sudo() and privilege boundaries",
+          "id": "5-sudo-and-privilege-boundaries"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Semantics",
+          "id": "51-semantics"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Dangerous patterns",
+          "id": "52-dangerous-patterns"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Recommended pattern",
+          "id": "53-recommended-pattern"
+        },
+        {
+          "level": 2,
+          "text": "6. Portal, public, and website users",
+          "id": "6-portal-public-and-website-users"
+        },
+        {
+          "level": 2,
+          "text": "7. Multi-company security",
+          "id": "7-multi-company-security"
+        },
+        {
+          "level": 2,
+          "text": "8. Authentication and sessions",
+          "id": "8-authentication-and-sessions"
+        },
+        {
+          "level": 2,
+          "text": "9. SQL injection and raw SQL",
+          "id": "9-sql-injection-and-raw-sql"
+        },
+        {
+          "level": 2,
+          "text": "10. File upload and attachment security",
+          "id": "10-file-upload-and-attachment-security"
+        },
+        {
+          "level": 2,
+          "text": "11. Server actions, automations, and code execution",
+          "id": "11-server-actions-automations-and-code-execution"
+        },
+        {
+          "level": 2,
+          "text": "12. Security review checklist",
+          "id": "12-security-review-checklist"
+        },
+        {
+          "level": 3,
+          "text": "Model",
+          "id": "model"
+        },
+        {
+          "level": 3,
+          "text": "Controller",
+          "id": "controller"
+        },
+        {
+          "level": 3,
+          "text": "Integration",
+          "id": "integration"
+        },
+        {
+          "level": 3,
+          "text": "Operations",
+          "id": "operations"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1929,
+      "minutes": 9
+    },
+    {
+      "slug": "02-flows/01-sales",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Sales and CRM (Quote to Cash)",
+      "description": "Quote-to-cash: sales and CRM states, procurement, delivery, invoicing, pricing, down payments and accounting.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actors and entry points",
+          "id": "1-actors-and-entry-points"
+        },
+        {
+          "level": 2,
+          "text": "2. Model map",
+          "id": "2-model-map"
+        },
+        {
+          "level": 2,
+          "text": "3. State machines",
+          "id": "3-state-machines"
+        },
+        {
+          "level": 3,
+          "text": "3.1 sale.order",
+          "id": "31-saleorder"
+        },
+        {
+          "level": 3,
+          "text": "3.2 crm.lead",
+          "id": "32-crmlead"
+        },
+        {
+          "level": 3,
+          "text": "3.3 account.move (invoice)",
+          "id": "33-accountmove-invoice"
+        },
+        {
+          "level": 2,
+          "text": "4. End-to-end sequence",
+          "id": "4-end-to-end-sequence"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Confirmation detail",
+          "id": "41-confirmation-detail"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Procurement in v19 [V19]",
+          "id": "42-procurement-in-v19-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Delivery",
+          "id": "43-delivery"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Invoicing",
+          "id": "44-invoicing"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Invoice status semantics",
+          "id": "45-invoice-status-semantics"
+        },
+        {
+          "level": 2,
+          "text": "5. Decision points and guards",
+          "id": "5-decision-points-and-guards"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Invoicing policy matrix",
+          "id": "51-invoicing-policy-matrix"
+        },
+        {
+          "level": 2,
+          "text": "6. Pricing, taxes, and currency",
+          "id": "6-pricing-taxes-and-currency"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Price computation chain",
+          "id": "61-price-computation-chain"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Fiscal position",
+          "id": "62-fiscal-position"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Multi-currency",
+          "id": "63-multi-currency"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Down payments",
+          "id": "64-down-payments"
+        },
+        {
+          "level": 2,
+          "text": "7. CRM pipeline",
+          "id": "7-crm-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Lead lifecycle",
+          "id": "71-lead-lifecycle"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Lead → SO conversion",
+          "id": "72-lead-so-conversion"
+        },
+        {
+          "level": 2,
+          "text": "8. Accounting impact",
+          "id": "8-accounting-impact"
+        },
+        {
+          "level": 2,
+          "text": "9. Failure modes and troubleshooting",
+          "id": "9-failure-modes-and-troubleshooting"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Diagnostic ORM snippets",
+          "id": "91-diagnostic-orm-snippets"
+        },
+        {
+          "level": 2,
+          "text": "10. Extension points",
+          "id": "10-extension-points"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Safe customisation recipe",
+          "id": "101-safe-customisation-recipe"
+        },
+        {
+          "level": 2,
+          "text": "11. Test scenarios",
+          "id": "11-test-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 2390,
+      "minutes": 11
+    },
+    {
+      "slug": "02-flows/02-purchase",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Purchase (Requisition to Payables)",
+      "description": "Requisition-to-payables: RFQ approval, receipts, vendor bills, three-way match, landed costs and returns.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actors and documents",
+          "id": "1-actors-and-documents"
+        },
+        {
+          "level": 2,
+          "text": "2. Model map",
+          "id": "2-model-map"
+        },
+        {
+          "level": 2,
+          "text": "3. State machine",
+          "id": "3-state-machine"
+        },
+        {
+          "level": 3,
+          "text": "3.1 purchase.order",
+          "id": "31-purchaseorder"
+        },
+        {
+          "level": 3,
+          "text": "3.2 stock.picking (receipt)",
+          "id": "32-stockpicking-receipt"
+        },
+        {
+          "level": 2,
+          "text": "4. End-to-end sequence",
+          "id": "4-end-to-end-sequence"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Confirmation detail",
+          "id": "41-confirmation-detail"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Receipt creation [V19]",
+          "id": "42-receipt-creation-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Receipt validation",
+          "id": "43-receipt-validation"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Vendor bill",
+          "id": "44-vendor-bill"
+        },
+        {
+          "level": 2,
+          "text": "5. Quantity and billing semantics",
+          "id": "5-quantity-and-billing-semantics"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Control policy",
+          "id": "51-control-policy"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Three-way match [ENTERPRISE]",
+          "id": "52-three-way-match-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "6. Decision points",
+          "id": "6-decision-points"
+        },
+        {
+          "level": 2,
+          "text": "7. Returns and corrections",
+          "id": "7-returns-and-corrections"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Purchase return",
+          "id": "71-purchase-return"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Price difference",
+          "id": "72-price-difference"
+        },
+        {
+          "level": 2,
+          "text": "8. Landed costs",
+          "id": "8-landed-costs"
+        },
+        {
+          "level": 2,
+          "text": "9. Accounting impact [V19]",
+          "id": "9-accounting-impact-v19"
+        },
+        {
+          "level": 2,
+          "text": "10. Failure modes",
+          "id": "10-failure-modes"
+        },
+        {
+          "level": 2,
+          "text": "11. Extension points",
+          "id": "11-extension-points"
+        },
+        {
+          "level": 2,
+          "text": "12. Test scenarios",
+          "id": "12-test-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1882,
+      "minutes": 9
+    },
+    {
+      "slug": "02-flows/03-inventory",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Inventory and Stock Valuation",
+      "description": "Inventory model, routes, reservation, quants, validation, v19 valuation, returns, scrap and locking.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The inventory model in one page",
+          "id": "1-the-inventory-model-in-one-page"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Locations and usage types",
+          "id": "11-locations-and-usage-types"
+        },
+        {
+          "level": 2,
+          "text": "2. State machines",
+          "id": "2-state-machines"
+        },
+        {
+          "level": 3,
+          "text": "2.1 stock.picking",
+          "id": "21-stockpicking"
+        },
+        {
+          "level": 3,
+          "text": "2.2 stock.quant",
+          "id": "22-stockquant"
+        },
+        {
+          "level": 2,
+          "text": "3. Procurement: how demand becomes moves",
+          "id": "3-procurement-how-demand-becomes-moves"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Rule resolution order",
+          "id": "31-rule-resolution-order"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Pull vs push",
+          "id": "32-pull-vs-push"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Multi-step routes",
+          "id": "33-multi-step-routes"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Reordering rules",
+          "id": "34-reordering-rules"
+        },
+        {
+          "level": 2,
+          "text": "4. Reservation and quants",
+          "id": "4-reservation-and-quants"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Reservation",
+          "id": "41-reservation"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Quant updates",
+          "id": "42-quant-updates"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Negative stock",
+          "id": "43-negative-stock"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Lots and serial numbers",
+          "id": "44-lots-and-serial-numbers"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Packages and owners",
+          "id": "45-packages-and-owners"
+        },
+        {
+          "level": 2,
+          "text": "5. Validation and valuation",
+          "id": "5-validation-and-valuation"
+        },
+        {
+          "level": 3,
+          "text": "5.1 buttonvalidate sequence",
+          "id": "51-buttonvalidate-sequence"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Valuation in v19 [V19]",
+          "id": "52-valuation-in-v19-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Cost methods",
+          "id": "53-cost-methods"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Journal entries [V19]",
+          "id": "54-journal-entries-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Cost methods and accounting",
+          "id": "55-cost-methods-and-accounting"
+        },
+        {
+          "level": 2,
+          "text": "6. Returns, scrap, and adjustments",
+          "id": "6-returns-scrap-and-adjustments"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Returns",
+          "id": "61-returns"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Scrap",
+          "id": "62-scrap"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Inventory adjustment",
+          "id": "63-inventory-adjustment"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Cycle counting",
+          "id": "64-cycle-counting"
+        },
+        {
+          "level": 2,
+          "text": "7. Decision points",
+          "id": "7-decision-points"
+        },
+        {
+          "level": 2,
+          "text": "8. Performance and locking",
+          "id": "8-performance-and-locking"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Hot paths",
+          "id": "81-hot-paths"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Deadlock avoidance",
+          "id": "82-deadlock-avoidance"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Query patterns",
+          "id": "83-query-patterns"
+        },
+        {
+          "level": 2,
+          "text": "9. Failure modes",
+          "id": "9-failure-modes"
+        },
+        {
+          "level": 2,
+          "text": "10. Extension points",
+          "id": "10-extension-points"
+        },
+        {
+          "level": 2,
+          "text": "11. Test scenarios",
+          "id": "11-test-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 2837,
+      "minutes": 13
+    },
+    {
+      "slug": "02-flows/04-accounting",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Accounting (Invoice to Financial Statements)",
+      "description": "Journal entry lifecycle, taxes, reconciliation, payments, assets, lock dates, hash chain and stock valuation accounting.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The accounting model",
+          "id": "1-the-accounting-model"
+        },
+        {
+          "level": 2,
+          "text": "2. Move lifecycle",
+          "id": "2-move-lifecycle"
+        },
+        {
+          "level": 3,
+          "text": "2.1 post(soft=True) pipeline",
+          "id": "21-postsofttrue-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Balanced check",
+          "id": "22-balanced-check"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Posted immutability",
+          "id": "23-posted-immutability"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Reversal",
+          "id": "24-reversal"
+        },
+        {
+          "level": 2,
+          "text": "3. Sequences and hash chain",
+          "id": "3-sequences-and-hash-chain"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Sequence allocation",
+          "id": "31-sequence-allocation"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Hash chain",
+          "id": "32-hash-chain"
+        },
+        {
+          "level": 2,
+          "text": "4. Taxes",
+          "id": "4-taxes"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Tax definition",
+          "id": "41-tax-definition"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Odoo 19 tax pipeline [V19]",
+          "id": "42-odoo-19-tax-pipeline-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Repartition lines",
+          "id": "43-repartition-lines"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Price-included taxes",
+          "id": "44-price-included-taxes"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Cash basis",
+          "id": "45-cash-basis"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Fiscal positions",
+          "id": "46-fiscal-positions"
+        },
+        {
+          "level": 2,
+          "text": "5. Reconciliation",
+          "id": "5-reconciliation"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Partial and full reconciliation",
+          "id": "51-partial-and-full-reconciliation"
+        },
+        {
+          "level": 3,
+          "text": "5.2 reconcileplan",
+          "id": "52-reconcileplan"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Exchange differences",
+          "id": "53-exchange-differences"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Payment matching",
+          "id": "54-payment-matching"
+        },
+        {
+          "level": 2,
+          "text": "6. Payments",
+          "id": "6-payments"
+        },
+        {
+          "level": 2,
+          "text": "7. Assets",
+          "id": "7-assets"
+        },
+        {
+          "level": 2,
+          "text": "8. Stock valuation accounting [V19]",
+          "id": "8-stock-valuation-accounting-v19"
+        },
+        {
+          "level": 2,
+          "text": "9. Lock dates",
+          "id": "9-lock-dates"
+        },
+        {
+          "level": 2,
+          "text": "10. Analytic accounting",
+          "id": "10-analytic-accounting"
+        },
+        {
+          "level": 2,
+          "text": "11. Reports and Enterprise accountreports",
+          "id": "11-reports-and-enterprise-accountreports"
+        },
+        {
+          "level": 2,
+          "text": "12. Decision points and invariants",
+          "id": "12-decision-points-and-invariants"
+        },
+        {
+          "level": 2,
+          "text": "13. Failure modes",
+          "id": "13-failure-modes"
+        },
+        {
+          "level": 2,
+          "text": "14. Test scenarios",
+          "id": "14-test-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "15. Evidence index",
+          "id": "15-evidence-index"
+        }
+      ],
+      "words": 2487,
+      "minutes": 11
+    },
+    {
+      "slug": "02-flows/05-manufacturing",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Manufacturing (Plan to Produce)",
+      "description": "Plan-to-produce: BoMs, MO states, work orders, consumption, costing, subcontracting and quality.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Model map",
+          "id": "1-model-map"
+        },
+        {
+          "level": 2,
+          "text": "2. State machine",
+          "id": "2-state-machine"
+        },
+        {
+          "level": 3,
+          "text": "2.1 mrp.production",
+          "id": "21-mrpproduction"
+        },
+        {
+          "level": 3,
+          "text": "2.2 mrp.workorder",
+          "id": "22-mrpworkorder"
+        },
+        {
+          "level": 3,
+          "text": "2.3 mrp.workcenter.productivity",
+          "id": "23-mrpworkcenterproductivity"
+        },
+        {
+          "level": 2,
+          "text": "3. Bill of materials",
+          "id": "3-bill-of-materials"
+        },
+        {
+          "level": 3,
+          "text": "3.1 BoM types",
+          "id": "31-bom-types"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Explosion algorithm [V19]",
+          "id": "32-explosion-algorithm-v19"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Component quantity",
+          "id": "33-component-quantity"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Byproducts and cost share",
+          "id": "34-byproducts-and-cost-share"
+        },
+        {
+          "level": 2,
+          "text": "4. End-to-end sequence",
+          "id": "4-end-to-end-sequence"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Creation paths",
+          "id": "41-creation-paths"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Confirmation",
+          "id": "42-confirmation"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Reservation",
+          "id": "43-reservation"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Planning",
+          "id": "44-planning"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Production",
+          "id": "45-production"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Backorders and splits",
+          "id": "46-backorders-and-splits"
+        },
+        {
+          "level": 2,
+          "text": "5. Valuation and cost",
+          "id": "5-valuation-and-cost"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Finished product cost",
+          "id": "51-finished-product-cost"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Labour posting",
+          "id": "52-labour-posting"
+        },
+        {
+          "level": 3,
+          "text": "5.3 WIP",
+          "id": "53-wip"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Scrap and byproducts",
+          "id": "54-scrap-and-byproducts"
+        },
+        {
+          "level": 2,
+          "text": "6. Subcontracting",
+          "id": "6-subcontracting"
+        },
+        {
+          "level": 2,
+          "text": "7. Quality integration",
+          "id": "7-quality-integration"
+        },
+        {
+          "level": 2,
+          "text": "8. Decision points",
+          "id": "8-decision-points"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Consumption modes",
+          "id": "81-consumption-modes"
+        },
+        {
+          "level": 2,
+          "text": "9. Failure modes",
+          "id": "9-failure-modes"
+        },
+        {
+          "level": 2,
+          "text": "10. Extension points",
+          "id": "10-extension-points"
+        },
+        {
+          "level": 2,
+          "text": "11. Test scenarios",
+          "id": "11-test-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 2008,
+      "minutes": 9
+    },
+    {
+      "slug": "02-flows/06-cross-module",
+      "section": "02-flows",
+      "sectionTitle": "End-to-End Flows",
+      "title": "Cross-Module Document Flow",
+      "description": "How demand becomes procurement, manufacturing, logistics and accounting documents across modules.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The document graph",
+          "id": "1-the-document-graph"
+        },
+        {
+          "level": 2,
+          "text": "2. Make-to-stock (MTS) flow",
+          "id": "2-make-to-stock-mts-flow"
+        },
+        {
+          "level": 2,
+          "text": "3. Make-to-order (MTO) flow",
+          "id": "3-make-to-order-mto-flow"
+        },
+        {
+          "level": 2,
+          "text": "4. Dropship flow",
+          "id": "4-dropship-flow"
+        },
+        {
+          "level": 2,
+          "text": "5. Subcontracting flow",
+          "id": "5-subcontracting-flow"
+        },
+        {
+          "level": 2,
+          "text": "6. Intercompany flow",
+          "id": "6-intercompany-flow"
+        },
+        {
+          "level": 2,
+          "text": "7. Project and service flows",
+          "id": "7-project-and-service-flows"
+        },
+        {
+          "level": 2,
+          "text": "8. Subscription and rental flows",
+          "id": "8-subscription-and-rental-flows"
+        },
+        {
+          "level": 2,
+          "text": "9. POS flow",
+          "id": "9-pos-flow"
+        },
+        {
+          "level": 2,
+          "text": "10. Decision matrix: which document for which demand?",
+          "id": "10-decision-matrix-which-document-for-which-demand"
+        },
+        {
+          "level": 2,
+          "text": "11. Coupling risks",
+          "id": "11-coupling-risks"
+        },
+        {
+          "level": 2,
+          "text": "12. Traceability queries",
+          "id": "12-traceability-queries"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1313,
+      "minutes": 6
+    },
+    {
+      "slug": "03-database/01-conventions",
+      "section": "03-database",
+      "sectionTitle": "Database Design",
+      "title": "Schema Conventions and Storage",
+      "description": "Table and column conventions, magic fields, relation tables, indexes, constraints, JSONB and filestore.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Table naming",
+          "id": "1-table-naming"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Magic columns",
+          "id": "11-magic-columns"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Model metadata columns",
+          "id": "12-model-metadata-columns"
+        },
+        {
+          "level": 2,
+          "text": "2. Column types",
+          "id": "2-column-types"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Translated columns",
+          "id": "21-translated-columns"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Company-dependent columns",
+          "id": "22-company-dependent-columns"
+        },
+        {
+          "level": 2,
+          "text": "3. Primary keys, foreign keys, and constraints",
+          "id": "3-primary-keys-foreign-keys-and-constraints"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Primary keys",
+          "id": "31-primary-keys"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Foreign keys",
+          "id": "32-foreign-keys"
+        },
+        {
+          "level": 3,
+          "text": "3.3 SQL constraints",
+          "id": "33-sql-constraints"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Check constraints",
+          "id": "34-check-constraints"
+        },
+        {
+          "level": 2,
+          "text": "4. Many2many relation tables",
+          "id": "4-many2many-relation-tables"
+        },
+        {
+          "level": 2,
+          "text": "5. Inheritance schemas",
+          "id": "5-inheritance-schemas"
+        },
+        {
+          "level": 3,
+          "text": "5.1 inherit (same model)",
+          "id": "51-inherit-same-model"
+        },
+        {
+          "level": 3,
+          "text": "5.2 name + inherit (prototype)",
+          "id": "52-name-inherit-prototype"
+        },
+        {
+          "level": 3,
+          "text": "5.3 inherits (delegation)",
+          "id": "53-inherits-delegation"
+        },
+        {
+          "level": 3,
+          "text": "5.4 SQL view models",
+          "id": "54-sql-view-models"
+        },
+        {
+          "level": 2,
+          "text": "6. Indexing conventions",
+          "id": "6-indexing-conventions"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Declared indexes",
+          "id": "61-declared-indexes"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Index naming and management",
+          "id": "62-index-naming-and-management"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Composite indexes",
+          "id": "63-composite-indexes"
+        },
+        {
+          "level": 3,
+          "text": "6.4 When to add an index",
+          "id": "64-when-to-add-an-index"
+        },
+        {
+          "level": 2,
+          "text": "7. Sequences and numbering",
+          "id": "7-sequences-and-numbering"
+        },
+        {
+          "level": 2,
+          "text": "8. Attachments and filestore",
+          "id": "8-attachments-and-filestore"
+        },
+        {
+          "level": 2,
+          "text": "9. Schema change behaviour",
+          "id": "9-schema-change-behaviour"
+        },
+        {
+          "level": 2,
+          "text": "10. Naming and design checklist",
+          "id": "10-naming-and-design-checklist"
+        },
+        {
+          "level": 2,
+          "text": "11. Diagnostic queries",
+          "id": "11-diagnostic-queries"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 2129,
+      "minutes": 10
+    },
+    {
+      "slug": "03-database/02-inheritance",
+      "section": "03-database",
+      "sectionTitle": "Database Design",
+      "title": "Inheritance Strategies and Schema Effects",
+      "description": "Extension, prototype, delegation and mixin inheritance, MRO and their schema consequences.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Comparison",
+          "id": "1-comparison"
+        },
+        {
+          "level": 2,
+          "text": "2. Extension inheritance (inherit)",
+          "id": "2-extension-inheritance-inherit"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Definition",
+          "id": "21-definition"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Schema effect",
+          "id": "22-schema-effect"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Class assembly",
+          "id": "23-class-assembly"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Field redefinition",
+          "id": "24-field-redefinition"
+        },
+        {
+          "level": 2,
+          "text": "3. Prototype inheritance (name + inherit)",
+          "id": "3-prototype-inheritance-name-inherit"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Definition",
+          "id": "31-definition"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Schema effect",
+          "id": "32-schema-effect"
+        },
+        {
+          "level": 3,
+          "text": "3.3 When to use",
+          "id": "33-when-to-use"
+        },
+        {
+          "level": 3,
+          "text": "3.4 When not to use",
+          "id": "34-when-not-to-use"
+        },
+        {
+          "level": 2,
+          "text": "4. Delegation inheritance (inherits)",
+          "id": "4-delegation-inheritance-inherits"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Definition",
+          "id": "41-definition"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Schema effect",
+          "id": "42-schema-effect"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Behaviour",
+          "id": "43-behaviour"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Requirements",
+          "id": "44-requirements"
+        },
+        {
+          "level": 3,
+          "text": "4.5 When to use",
+          "id": "45-when-to-use"
+        },
+        {
+          "level": 3,
+          "text": "4.6 When not to use",
+          "id": "46-when-not-to-use"
+        },
+        {
+          "level": 2,
+          "text": "5. Abstract mixins",
+          "id": "5-abstract-mixins"
+        },
+        {
+          "level": 2,
+          "text": "6. MRO and override order",
+          "id": "6-mro-and-override-order"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Load order",
+          "id": "61-load-order"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Sibling modules",
+          "id": "62-sibling-modules"
+        },
+        {
+          "level": 3,
+          "text": "6.3 super() pitfalls",
+          "id": "63-super-pitfalls"
+        },
+        {
+          "level": 2,
+          "text": "7. Schema merge rules",
+          "id": "7-schema-merge-rules"
+        },
+        {
+          "level": 2,
+          "text": "8. Inheritance decision tree",
+          "id": "8-inheritance-decision-tree"
+        },
+        {
+          "level": 2,
+          "text": "9. Migration implications",
+          "id": "9-migration-implications"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Safe rename pattern",
+          "id": "91-safe-rename-pattern"
+        },
+        {
+          "level": 2,
+          "text": "10. Anti-patterns",
+          "id": "10-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence index",
+          "id": "11-evidence-index"
+        }
+      ],
+      "words": 1680,
+      "minutes": 8
+    },
+    {
+      "slug": "03-database/03-er-model",
+      "section": "03-database",
+      "sectionTitle": "Database Design",
+      "title": "Core Entity-Relationship Model",
+      "description": "Core ER model for parties, products, sales, stock, accounting and manufacturing, including hidden columns.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Party and product core",
+          "id": "1-party-and-product-core"
+        },
+        {
+          "level": 3,
+          "text": "1.1 respartner",
+          "id": "11-respartner"
+        },
+        {
+          "level": 3,
+          "text": "1.2 producttemplate / productproduct",
+          "id": "12-producttemplate-productproduct"
+        },
+        {
+          "level": 3,
+          "text": "1.3 uomuom [V19]",
+          "id": "13-uomuom-v19"
+        },
+        {
+          "level": 2,
+          "text": "2. Sales and procurement",
+          "id": "2-sales-and-procurement"
+        },
+        {
+          "level": 3,
+          "text": "2.1 saleorder",
+          "id": "21-saleorder"
+        },
+        {
+          "level": 3,
+          "text": "2.2 stockreference [V19]",
+          "id": "22-stockreference-v19"
+        },
+        {
+          "level": 3,
+          "text": "2.3 stockmove",
+          "id": "23-stockmove"
+        },
+        {
+          "level": 3,
+          "text": "2.4 stockmoveline",
+          "id": "24-stockmoveline"
+        },
+        {
+          "level": 3,
+          "text": "2.5 stockquant",
+          "id": "25-stockquant"
+        },
+        {
+          "level": 2,
+          "text": "3. Accounting",
+          "id": "3-accounting"
+        },
+        {
+          "level": 3,
+          "text": "3.1 accountmove",
+          "id": "31-accountmove"
+        },
+        {
+          "level": 3,
+          "text": "3.2 accountmoveline",
+          "id": "32-accountmoveline"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Reconciliation tables",
+          "id": "33-reconciliation-tables"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Taxes",
+          "id": "34-taxes"
+        },
+        {
+          "level": 2,
+          "text": "4. Manufacturing",
+          "id": "4-manufacturing"
+        },
+        {
+          "level": 3,
+          "text": "4.1 mrpproduction",
+          "id": "41-mrpproduction"
+        },
+        {
+          "level": 3,
+          "text": "4.2 mrpworkorder",
+          "id": "42-mrpworkorder"
+        },
+        {
+          "level": 3,
+          "text": "4.3 mrpworkcenterproductivity",
+          "id": "43-mrpworkcenterproductivity"
+        },
+        {
+          "level": 2,
+          "text": "5. Cross-cutting system tables",
+          "id": "5-cross-cutting-system-tables"
+        },
+        {
+          "level": 2,
+          "text": "6. Hidden and legacy columns",
+          "id": "6-hidden-and-legacy-columns"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Removed/renamed in v19",
+          "id": "61-removedrenamed-in-v19"
+        },
+        {
+          "level": 2,
+          "text": "7. Reporting join patterns",
+          "id": "7-reporting-join-patterns"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Sales margin",
+          "id": "71-sales-margin"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Stock on hand by location",
+          "id": "72-stock-on-hand-by-location"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Trial balance",
+          "id": "73-trial-balance"
+        },
+        {
+          "level": 2,
+          "text": "8. Evidence index",
+          "id": "8-evidence-index"
+        }
+      ],
+      "words": 2679,
+      "minutes": 12
+    },
+    {
+      "slug": "03-database/04-indexes-performance",
+      "section": "03-database",
+      "sectionTitle": "Database Design",
+      "title": "Indexing, Query Performance, and Scaling",
+      "description": "Query cost model, indexing, N+1, prefetch, locks, autovacuum, worker sizing and profiling.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The cost model",
+          "id": "1-the-cost-model"
+        },
+        {
+          "level": 2,
+          "text": "2. ORM query generation",
+          "id": "2-orm-query-generation"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Search → SQL",
+          "id": "21-search-sql"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Prefetch",
+          "id": "22-prefetch"
+        },
+        {
+          "level": 3,
+          "text": "2.3 readgroup / readgroup",
+          "id": "23-readgroup-readgroup"
+        },
+        {
+          "level": 2,
+          "text": "3. Indexing strategy",
+          "id": "3-indexing-strategy"
+        },
+        {
+          "level": 3,
+          "text": "3.1 What Odoo indexes",
+          "id": "31-what-odoo-indexes"
+        },
+        {
+          "level": 3,
+          "text": "3.2 What Odoo does not index",
+          "id": "32-what-odoo-does-not-index"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Composite index examples",
+          "id": "33-composite-index-examples"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Index selection rules",
+          "id": "34-index-selection-rules"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Index anti-patterns",
+          "id": "35-index-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "4. N+1 and unbounded operations",
+          "id": "4-n1-and-unbounded-operations"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Detecting N+1",
+          "id": "41-detecting-n1"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Common N+1 patterns",
+          "id": "42-common-n1-patterns"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Unbounded recordset operations",
+          "id": "43-unbounded-recordset-operations"
+        },
+        {
+          "level": 2,
+          "text": "5. Compute and recompute cost",
+          "id": "5-compute-and-recompute-cost"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Stored computes",
+          "id": "51-stored-computes"
+        },
+        {
+          "level": 3,
+          "text": "5.2 computesudo",
+          "id": "52-computesudo"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Recompute storms",
+          "id": "53-recompute-storms"
+        },
+        {
+          "level": 2,
+          "text": "6. Transactions, locks, and vacuum",
+          "id": "6-transactions-locks-and-vacuum"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Long transactions",
+          "id": "61-long-transactions"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Autovacuum",
+          "id": "62-autovacuum"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Connection pool",
+          "id": "63-connection-pool"
+        },
+        {
+          "level": 3,
+          "text": "6.4 Worker sizing",
+          "id": "64-worker-sizing"
+        },
+        {
+          "level": 2,
+          "text": "7. Profiling",
+          "id": "7-profiling"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Built-in profiler",
+          "id": "71-built-in-profiler"
+        },
+        {
+          "level": 3,
+          "text": "7.2 SQL logging",
+          "id": "72-sql-logging"
+        },
+        {
+          "level": 3,
+          "text": "7.3 PostgreSQL pgstatstatements",
+          "id": "73-postgresql-pgstatstatements"
+        },
+        {
+          "level": 3,
+          "text": "7.4 EXPLAIN (ANALYZE, BUFFERS)",
+          "id": "74-explain-analyze-buffers"
+        },
+        {
+          "level": 2,
+          "text": "8. Scaling patterns",
+          "id": "8-scaling-patterns"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Vertical first",
+          "id": "81-vertical-first"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Read replicas",
+          "id": "82-read-replicas"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Partitioning",
+          "id": "83-partitioning"
+        },
+        {
+          "level": 3,
+          "text": "8.4 Archiving",
+          "id": "84-archiving"
+        },
+        {
+          "level": 2,
+          "text": "9. Performance checklist",
+          "id": "9-performance-checklist"
+        },
+        {
+          "level": 3,
+          "text": "Query level",
+          "id": "query-level"
+        },
+        {
+          "level": 3,
+          "text": "ORM level",
+          "id": "orm-level"
+        },
+        {
+          "level": 3,
+          "text": "Database level",
+          "id": "database-level"
+        },
+        {
+          "level": 3,
+          "text": "Operations",
+          "id": "operations"
+        },
+        {
+          "level": 2,
+          "text": "10. Evidence index",
+          "id": "10-evidence-index"
+        }
+      ],
+      "words": 1849,
+      "minutes": 8
+    },
+    {
+      "slug": "03-database/05-migrations",
+      "section": "03-database",
+      "sectionTitle": "Database Design",
+      "title": "Migrations, Upgrades, and Data Evolution",
+      "description": "Schema evolution, module migration scripts, noupdate, backfills, OpenUpgrade and rollback.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Upgrade surfaces",
+          "id": "1-upgrade-surfaces"
+        },
+        {
+          "level": 2,
+          "text": "2. Standard upgrade pipeline",
+          "id": "2-standard-upgrade-pipeline"
+        },
+        {
+          "level": 2,
+          "text": "3. Module migration scripts",
+          "id": "3-module-migration-scripts"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Directory layout",
+          "id": "31-directory-layout"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Script contract",
+          "id": "32-script-contract"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Version matching",
+          "id": "33-version-matching"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Where scripts live",
+          "id": "34-where-scripts-live"
+        },
+        {
+          "level": 2,
+          "text": "4. Data files and noupdate",
+          "id": "4-data-files-and-noupdate"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Semantics",
+          "id": "41-semantics"
+        },
+        {
+          "level": 3,
+          "text": "4.2 XML ID stability",
+          "id": "42-xml-id-stability"
+        },
+        {
+          "level": 2,
+          "text": "5. Schema migration patterns",
+          "id": "5-schema-migration-patterns"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Add a required field",
+          "id": "51-add-a-required-field"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Rename a field",
+          "id": "52-rename-a-field"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Change a field type",
+          "id": "53-change-a-field-type"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Remove a field",
+          "id": "54-remove-a-field"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Change inherits",
+          "id": "55-change-inherits"
+        },
+        {
+          "level": 3,
+          "text": "5.6 Change parentstore",
+          "id": "56-change-parentstore"
+        },
+        {
+          "level": 2,
+          "text": "6. Data migration strategies",
+          "id": "6-data-migration-strategies"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Batch processing",
+          "id": "61-batch-processing"
+        },
+        {
+          "level": 3,
+          "text": "6.2 ORM vs SQL",
+          "id": "62-orm-vs-sql"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Idempotency",
+          "id": "63-idempotency"
+        },
+        {
+          "level": 2,
+          "text": "7. OpenUpgrade",
+          "id": "7-openupgrade"
+        },
+        {
+          "level": 2,
+          "text": "8. Testing an upgrade",
+          "id": "8-testing-an-upgrade"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Pre-flight",
+          "id": "81-pre-flight"
+        },
+        {
+          "level": 3,
+          "text": "8.2 During",
+          "id": "82-during"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Post-flight",
+          "id": "83-post-flight"
+        },
+        {
+          "level": 2,
+          "text": "9. Rollback strategy",
+          "id": "9-rollback-strategy"
+        },
+        {
+          "level": 2,
+          "text": "10. Neutralisation",
+          "id": "10-neutralisation"
+        },
+        {
+          "level": 2,
+          "text": "11. Migration anti-patterns",
+          "id": "11-migration-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 1832,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/01-dependency-system",
+      "section": "04-modules",
+      "sectionTitle": "Module Relationships",
+      "title": "Manifest, Loading, and Dependency Semantics",
+      "description": "Manifest semantics, loading phases, auto-install, external dependencies and module statistics.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Manifest schema",
+          "id": "1-manifest-schema"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Key reference",
+          "id": "11-key-reference"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Legacy/ignored keys",
+          "id": "12-legacyignored-keys"
+        },
+        {
+          "level": 3,
+          "text": "1.3 autoinstall semantics",
+          "id": "13-autoinstall-semantics"
+        },
+        {
+          "level": 3,
+          "text": "1.4 External dependencies",
+          "id": "14-external-dependencies"
+        },
+        {
+          "level": 2,
+          "text": "2. Loading pipeline",
+          "id": "2-loading-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Graph construction",
+          "id": "21-graph-construction"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Per-module steps",
+          "id": "22-per-module-steps"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Transaction boundaries",
+          "id": "23-transaction-boundaries"
+        },
+        {
+          "level": 2,
+          "text": "3. Dependency semantics",
+          "id": "3-dependency-semantics"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Manifest vs Python imports",
+          "id": "31-manifest-vs-python-imports"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Data XML IDs",
+          "id": "32-data-xml-ids"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Database foreign keys",
+          "id": "33-database-foreign-keys"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Circular dependencies",
+          "id": "34-circular-dependencies"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Community vs Enterprise",
+          "id": "35-community-vs-enterprise"
+        },
+        {
+          "level": 2,
+          "text": "4. Dependency statistics (this tree)",
+          "id": "4-dependency-statistics-this-tree"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Top fan-in",
+          "id": "41-top-fan-in"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Depth distribution",
+          "id": "42-depth-distribution"
+        },
+        {
+          "level": 2,
+          "text": "5. Uninstall semantics",
+          "id": "5-uninstall-semantics"
+        },
+        {
+          "level": 2,
+          "text": "6. Module state machine",
+          "id": "6-module-state-machine"
+        },
+        {
+          "level": 2,
+          "text": "7. Manifest design rules",
+          "id": "7-manifest-design-rules"
+        },
+        {
+          "level": 2,
+          "text": "8. Evidence index",
+          "id": "8-evidence-index"
+        }
+      ],
+      "words": 1834,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/02-module-map",
+      "section": "04-modules",
+      "sectionTitle": "Module Relationships",
+      "title": "Platform Map and Dependency Clusters",
+      "description": "A layered map of 1,469 modules, bridge modules, enterprise clusters and impact analysis.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Layered map",
+          "id": "1-layered-map"
+        },
+        {
+          "level": 2,
+          "text": "2. Foundation cluster",
+          "id": "2-foundation-cluster"
+        },
+        {
+          "level": 2,
+          "text": "3. Commercial cluster",
+          "id": "3-commercial-cluster"
+        },
+        {
+          "level": 2,
+          "text": "4. Logistics cluster",
+          "id": "4-logistics-cluster"
+        },
+        {
+          "level": 2,
+          "text": "5. Finance cluster",
+          "id": "5-finance-cluster"
+        },
+        {
+          "level": 2,
+          "text": "6. Enterprise cluster",
+          "id": "6-enterprise-cluster"
+        },
+        {
+          "level": 2,
+          "text": "7. Application modules (the 78 \"apps\")",
+          "id": "7-application-modules-the-78-apps"
+        },
+        {
+          "level": 2,
+          "text": "8. Bridge modules and shared services",
+          "id": "8-bridge-modules-and-shared-services"
+        },
+        {
+          "level": 2,
+          "text": "9. Impact analysis rules",
+          "id": "9-impact-analysis-rules"
+        },
+        {
+          "level": 2,
+          "text": "10. Where to put a customisation",
+          "id": "10-where-to-put-a-customisation"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence index",
+          "id": "11-evidence-index"
+        }
+      ],
+      "words": 1677,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/03-extension-points",
+      "section": "04-modules",
+      "sectionTitle": "Module Relationships",
+      "title": "Extension Points Ranked by Safety",
+      "description": "Extension points ranked by safety, with override pitfalls and a decision matrix.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Safety ranking",
+          "id": "1-safety-ranking"
+        },
+        {
+          "level": 2,
+          "text": "2. New models (safest)",
+          "id": "2-new-models-safest"
+        },
+        {
+          "level": 2,
+          "text": "3. inherit + super() (most common)",
+          "id": "3-inherit-super-most-common"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Where to hook",
+          "id": "31-where-to-hook"
+        },
+        {
+          "level": 2,
+          "text": "4. View inheritance",
+          "id": "4-view-inheritance"
+        },
+        {
+          "level": 2,
+          "text": "5. Asset bundles",
+          "id": "5-asset-bundles"
+        },
+        {
+          "level": 2,
+          "text": "6. Controllers",
+          "id": "6-controllers"
+        },
+        {
+          "level": 2,
+          "text": "7. OWL components and patches",
+          "id": "7-owl-components-and-patches"
+        },
+        {
+          "level": 2,
+          "text": "8. Mail templates",
+          "id": "8-mail-templates"
+        },
+        {
+          "level": 2,
+          "text": "9. Automated actions",
+          "id": "9-automated-actions"
+        },
+        {
+          "level": 2,
+          "text": "10. Server actions",
+          "id": "10-server-actions"
+        },
+        {
+          "level": 2,
+          "text": "11. Configuration and feature flags",
+          "id": "11-configuration-and-feature-flags"
+        },
+        {
+          "level": 2,
+          "text": "12. Module hooks",
+          "id": "12-module-hooks"
+        },
+        {
+          "level": 2,
+          "text": "13. mail.thread and inherits",
+          "id": "13-mailthread-and-inherits"
+        },
+        {
+          "level": 3,
+          "text": "13.1 mail.thread",
+          "id": "131-mailthread"
+        },
+        {
+          "level": 3,
+          "text": "13.2 inherits",
+          "id": "132-inherits"
+        },
+        {
+          "level": 2,
+          "text": "14. Concrete override pitfalls",
+          "id": "14-concrete-override-pitfalls"
+        },
+        {
+          "level": 2,
+          "text": "15. Extension decision matrix",
+          "id": "15-extension-decision-matrix"
+        },
+        {
+          "level": 2,
+          "text": "16. Evidence index",
+          "id": "16-evidence-index"
+        }
+      ],
+      "words": 1827,
+      "minutes": 8
+    },
+    {
+      "slug": "04-modules/04-circular-dependencies",
+      "section": "04-modules",
+      "sectionTitle": "Module Relationships",
+      "title": "Circular Dependencies and Coupling",
+      "description": "Manifest cycles, Python import cycles, data cycles, auto-install coupling and composition rules.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Four kinds of \"circular dependency\"",
+          "id": "1-four-kinds-of-circular-dependency"
+        },
+        {
+          "level": 2,
+          "text": "2. Why manifest cycles cannot work",
+          "id": "2-why-manifest-cycles-cannot-work"
+        },
+        {
+          "level": 2,
+          "text": "3. Legal Python import cycles",
+          "id": "3-legal-python-import-cycles"
+        },
+        {
+          "level": 2,
+          "text": "4. Soft dependencies",
+          "id": "4-soft-dependencies"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Guarded imports",
+          "id": "41-guarded-imports"
+        },
+        {
+          "level": 2,
+          "text": "5. Data-level cycles",
+          "id": "5-data-level-cycles"
+        },
+        {
+          "level": 3,
+          "text": "5.1 XML load order",
+          "id": "51-xml-load-order"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Circular references between records",
+          "id": "52-circular-references-between-records"
+        },
+        {
+          "level": 3,
+          "text": "5.3 View/action cycles",
+          "id": "53-viewaction-cycles"
+        },
+        {
+          "level": 2,
+          "text": "6. Runtime behaviour cycles",
+          "id": "6-runtime-behaviour-cycles"
+        },
+        {
+          "level": 3,
+          "text": "6.1 BoM cycles",
+          "id": "61-bom-cycles"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Intercompany loops",
+          "id": "62-intercompany-loops"
+        },
+        {
+          "level": 2,
+          "text": "7. Auto-install coupling",
+          "id": "7-auto-install-coupling"
+        },
+        {
+          "level": 2,
+          "text": "8. Coupling metrics",
+          "id": "8-coupling-metrics"
+        },
+        {
+          "level": 2,
+          "text": "9. Breaking a cycle",
+          "id": "9-breaking-a-cycle"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Extract shared concepts",
+          "id": "91-extract-shared-concepts"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Invert with events/outbox",
+          "id": "92-invert-with-eventsoutbox"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Use a soft dependency",
+          "id": "93-use-a-soft-dependency"
+        },
+        {
+          "level": 3,
+          "text": "9.4 Merge the modules",
+          "id": "94-merge-the-modules"
+        },
+        {
+          "level": 2,
+          "text": "10. Composition rules",
+          "id": "10-composition-rules"
+        },
+        {
+          "level": 2,
+          "text": "11. Diagnostic commands",
+          "id": "11-diagnostic-commands"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 1503,
+      "minutes": 7
+    },
+    {
+      "slug": "04-modules/05-upgrade-compat",
+      "section": "04-modules",
+      "sectionTitle": "Module Relationships",
+      "title": "Version Compatibility and 18→19 Changes",
+      "description": "The 18→19 breaking changes: procurement, valuation, product type, UoM, states, tax engine and APIs.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Why 19 breaks things",
+          "id": "1-why-19-breaks-things"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Breaking changes at a glance",
+          "id": "11-breaking-changes-at-a-glance"
+        },
+        {
+          "level": 2,
+          "text": "2. Procurement: stock.reference [V19]",
+          "id": "2-procurement-stockreference-v19"
+        },
+        {
+          "level": 3,
+          "text": "2.1 What changed",
+          "id": "21-what-changed"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Migration checklist",
+          "id": "22-migration-checklist"
+        },
+        {
+          "level": 2,
+          "text": "3. Valuation: no stock.valuation.layer [V19]",
+          "id": "3-valuation-no-stockvaluationlayer-v19"
+        },
+        {
+          "level": 3,
+          "text": "3.1 What changed",
+          "id": "31-what-changed"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Migration checklist",
+          "id": "32-migration-checklist"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Valuation priority",
+          "id": "33-valuation-priority"
+        },
+        {
+          "level": 2,
+          "text": "4. Product type: consu + isstorable [V19]",
+          "id": "4-product-type-consu-isstorable-v19"
+        },
+        {
+          "level": 3,
+          "text": "4.1 What changed",
+          "id": "41-what-changed"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Migration checklist",
+          "id": "42-migration-checklist"
+        },
+        {
+          "level": 2,
+          "text": "5. UoM tree [V19]",
+          "id": "5-uom-tree-v19"
+        },
+        {
+          "level": 3,
+          "text": "5.1 What changed",
+          "id": "51-what-changed"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Migration checklist",
+          "id": "52-migration-checklist"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Conversion API",
+          "id": "53-conversion-api"
+        },
+        {
+          "level": 2,
+          "text": "6. Document states",
+          "id": "6-document-states"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Sales",
+          "id": "61-sales"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Purchase",
+          "id": "62-purchase"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Manufacturing",
+          "id": "63-manufacturing"
+        },
+        {
+          "level": 2,
+          "text": "7. Tax engine [V19]",
+          "id": "7-tax-engine-v19"
+        },
+        {
+          "level": 3,
+          "text": "7.1 What changed",
+          "id": "71-what-changed"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Migration checklist",
+          "id": "72-migration-checklist"
+        },
+        {
+          "level": 2,
+          "text": "8. ORM API changes",
+          "id": "8-orm-api-changes"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Removed/deprecated",
+          "id": "81-removeddeprecated"
+        },
+        {
+          "level": 3,
+          "text": "8.2 create() signature",
+          "id": "82-create-signature"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Domain class",
+          "id": "83-domain-class"
+        },
+        {
+          "level": 3,
+          "text": "8.4 readgroup → readgroup",
+          "id": "84-readgroup-readgroup"
+        },
+        {
+          "level": 2,
+          "text": "9. Field and attribute changes",
+          "id": "9-field-and-attribute-changes"
+        },
+        {
+          "level": 2,
+          "text": "10. Frontend changes",
+          "id": "10-frontend-changes"
+        },
+        {
+          "level": 2,
+          "text": "11. Compatibility matrix for custom modules",
+          "id": "11-compatibility-matrix-for-custom-modules"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Porting order",
+          "id": "111-porting-order"
+        },
+        {
+          "level": 2,
+          "text": "12. Testing the port",
+          "id": "12-testing-the-port"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1646,
+      "minutes": 7
+    },
+    {
+      "slug": "05-scope/01-coverage",
+      "section": "05-scope",
+      "sectionTitle": "ERP Scope Boundaries",
+      "title": "Functional Coverage Matrix",
+      "description": "Out-of-box vs configure vs custom coverage across commercial, logistics, manufacturing, finance, HR and platform.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Coverage legend",
+          "id": "1-coverage-legend"
+        },
+        {
+          "level": 2,
+          "text": "2. Commercial",
+          "id": "2-commercial"
+        },
+        {
+          "level": 2,
+          "text": "3. Purchasing",
+          "id": "3-purchasing"
+        },
+        {
+          "level": 2,
+          "text": "4. Inventory and logistics",
+          "id": "4-inventory-and-logistics"
+        },
+        {
+          "level": 2,
+          "text": "5. Manufacturing",
+          "id": "5-manufacturing"
+        },
+        {
+          "level": 2,
+          "text": "6. Accounting and finance",
+          "id": "6-accounting-and-finance"
+        },
+        {
+          "level": 2,
+          "text": "7. Human resources",
+          "id": "7-human-resources"
+        },
+        {
+          "level": 2,
+          "text": "8. Projects and services",
+          "id": "8-projects-and-services"
+        },
+        {
+          "level": 2,
+          "text": "9. Platform and integration",
+          "id": "9-platform-and-integration"
+        },
+        {
+          "level": 2,
+          "text": "10. Scope boundary summary",
+          "id": "10-scope-boundary-summary"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Strong out-of-box",
+          "id": "101-strong-out-of-box"
+        },
+        {
+          "level": 3,
+          "text": "10.2 Configure-heavy",
+          "id": "102-configure-heavy"
+        },
+        {
+          "level": 3,
+          "text": "10.3 Custom-heavy",
+          "id": "103-custom-heavy"
+        },
+        {
+          "level": 3,
+          "text": "10.4 Not covered",
+          "id": "104-not-covered"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence and caveats",
+          "id": "11-evidence-and-caveats"
+        }
+      ],
+      "words": 1818,
+      "minutes": 8
+    },
+    {
+      "slug": "05-scope/02-gaps",
+      "section": "05-scope",
+      "sectionTitle": "ERP Scope Boundaries",
+      "title": "Functional Gaps and Engineering Consequences",
+      "description": "Where standard Odoo stops and what it costs to cross the boundary, from APS to IFRS 15.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Gap severity matrix",
+          "id": "1-gap-severity-matrix"
+        },
+        {
+          "level": 2,
+          "text": "2. Planning and scheduling",
+          "id": "2-planning-and-scheduling"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Boundary",
+          "id": "21-boundary"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Workaround",
+          "id": "22-workaround"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Engineering consequence",
+          "id": "23-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "3. Warehouse management (WMS)",
+          "id": "3-warehouse-management-wms"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Boundary",
+          "id": "31-boundary"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Workaround",
+          "id": "32-workaround"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Engineering consequence",
+          "id": "33-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "4. Revenue recognition (IFRS 15 / ASC 606)",
+          "id": "4-revenue-recognition-ifrs-15-asc-606"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Boundary",
+          "id": "41-boundary"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Workaround",
+          "id": "42-workaround"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Engineering consequence",
+          "id": "43-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "5. Lease accounting (IFRS 16 / ASC 842)",
+          "id": "5-lease-accounting-ifrs-16-asc-842"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Boundary",
+          "id": "51-boundary"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Workaround",
+          "id": "52-workaround"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Engineering consequence",
+          "id": "53-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "6. Transfer pricing and consolidation",
+          "id": "6-transfer-pricing-and-consolidation"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Boundary",
+          "id": "61-boundary"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Workaround",
+          "id": "62-workaround"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Engineering consequence",
+          "id": "63-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "7. Purchase price variance",
+          "id": "7-purchase-price-variance"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Boundary",
+          "id": "71-boundary"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Workaround",
+          "id": "72-workaround"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Engineering consequence",
+          "id": "73-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "8. Commissions",
+          "id": "8-commissions"
+        },
+        {
+          "level": 3,
+          "text": "8.1 Boundary",
+          "id": "81-boundary"
+        },
+        {
+          "level": 3,
+          "text": "8.2 Workaround",
+          "id": "82-workaround"
+        },
+        {
+          "level": 3,
+          "text": "8.3 Engineering consequence",
+          "id": "83-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "9. Contract lifecycle management",
+          "id": "9-contract-lifecycle-management"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Boundary",
+          "id": "91-boundary"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Workaround",
+          "id": "92-workaround"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Engineering consequence",
+          "id": "93-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "10. RMA workflow",
+          "id": "10-rma-workflow"
+        },
+        {
+          "level": 3,
+          "text": "10.1 Boundary",
+          "id": "101-boundary"
+        },
+        {
+          "level": 3,
+          "text": "10.2 Workaround",
+          "id": "102-workaround"
+        },
+        {
+          "level": 3,
+          "text": "10.3 Engineering consequence",
+          "id": "103-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "11. Cycle counting",
+          "id": "11-cycle-counting"
+        },
+        {
+          "level": 3,
+          "text": "11.1 Boundary",
+          "id": "111-boundary"
+        },
+        {
+          "level": 3,
+          "text": "11.2 Workaround",
+          "id": "112-workaround"
+        },
+        {
+          "level": 3,
+          "text": "11.3 Engineering consequence",
+          "id": "113-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "12. Quality SPC",
+          "id": "12-quality-spc"
+        },
+        {
+          "level": 3,
+          "text": "12.1 Boundary",
+          "id": "121-boundary"
+        },
+        {
+          "level": 3,
+          "text": "12.2 Workaround",
+          "id": "122-workaround"
+        },
+        {
+          "level": 3,
+          "text": "12.3 Engineering consequence",
+          "id": "123-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "13. MES/SCADA integration",
+          "id": "13-messcada-integration"
+        },
+        {
+          "level": 3,
+          "text": "13.1 Boundary",
+          "id": "131-boundary"
+        },
+        {
+          "level": 3,
+          "text": "13.2 Workaround",
+          "id": "132-workaround"
+        },
+        {
+          "level": 3,
+          "text": "13.3 Engineering consequence",
+          "id": "133-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "14. Global trade compliance",
+          "id": "14-global-trade-compliance"
+        },
+        {
+          "level": 3,
+          "text": "14.1 Boundary",
+          "id": "141-boundary"
+        },
+        {
+          "level": 3,
+          "text": "14.2 Workaround",
+          "id": "142-workaround"
+        },
+        {
+          "level": 3,
+          "text": "14.3 Engineering consequence",
+          "id": "143-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "15. Payroll",
+          "id": "15-payroll"
+        },
+        {
+          "level": 3,
+          "text": "15.1 Boundary",
+          "id": "151-boundary"
+        },
+        {
+          "level": 3,
+          "text": "15.2 Workaround",
+          "id": "152-workaround"
+        },
+        {
+          "level": 3,
+          "text": "15.3 Engineering consequence",
+          "id": "153-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "16. BI and data warehouse",
+          "id": "16-bi-and-data-warehouse"
+        },
+        {
+          "level": 3,
+          "text": "16.1 Boundary",
+          "id": "161-boundary"
+        },
+        {
+          "level": 3,
+          "text": "16.2 Workaround",
+          "id": "162-workaround"
+        },
+        {
+          "level": 3,
+          "text": "16.3 Engineering consequence",
+          "id": "163-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "17. Process manufacturing",
+          "id": "17-process-manufacturing"
+        },
+        {
+          "level": 3,
+          "text": "17.1 Boundary",
+          "id": "171-boundary"
+        },
+        {
+          "level": 3,
+          "text": "17.2 Workaround",
+          "id": "172-workaround"
+        },
+        {
+          "level": 3,
+          "text": "17.3 Engineering consequence",
+          "id": "173-engineering-consequence"
+        },
+        {
+          "level": 2,
+          "text": "18. Gap management playbook",
+          "id": "18-gap-management-playbook"
+        },
+        {
+          "level": 2,
+          "text": "19. Evidence and caveats",
+          "id": "19-evidence-and-caveats"
+        }
+      ],
+      "words": 2215,
+      "minutes": 10
+    },
+    {
+      "slug": "05-scope/03-performance",
+      "section": "05-scope",
+      "sectionTitle": "ERP Scope Boundaries",
+      "title": "Performance Bottlenecks and Scaling Limits",
+      "description": "The ten bottlenecks that matter, sizing rules, load testing and acceptance criteria.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The ten bottlenecks that matter",
+          "id": "1-the-ten-bottlenecks-that-matter"
+        },
+        {
+          "level": 2,
+          "text": "2. Commercial flows",
+          "id": "2-commercial-flows"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Sales order confirmation",
+          "id": "21-sales-order-confirmation"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Invoice creation",
+          "id": "22-invoice-creation"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Portal and website",
+          "id": "23-portal-and-website"
+        },
+        {
+          "level": 2,
+          "text": "3. Inventory flows",
+          "id": "3-inventory-flows"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Reservation and validation",
+          "id": "31-reservation-and-validation"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Valuation",
+          "id": "32-valuation"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Inventory reports",
+          "id": "33-inventory-reports"
+        },
+        {
+          "level": 2,
+          "text": "4. Manufacturing",
+          "id": "4-manufacturing"
+        },
+        {
+          "level": 2,
+          "text": "5. Accounting",
+          "id": "5-accounting"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Posting",
+          "id": "51-posting"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Reporting",
+          "id": "52-reporting"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Reconciliation",
+          "id": "53-reconciliation"
+        },
+        {
+          "level": 2,
+          "text": "6. Mail and notifications",
+          "id": "6-mail-and-notifications"
+        },
+        {
+          "level": 2,
+          "text": "7. Imports and exports",
+          "id": "7-imports-and-exports"
+        },
+        {
+          "level": 2,
+          "text": "8. Attachments and filestore",
+          "id": "8-attachments-and-filestore"
+        },
+        {
+          "level": 2,
+          "text": "9. Worker and database sizing",
+          "id": "9-worker-and-database-sizing"
+        },
+        {
+          "level": 3,
+          "text": "9.1 Formula",
+          "id": "91-formula"
+        },
+        {
+          "level": 3,
+          "text": "9.2 Symptoms of mis-sizing",
+          "id": "92-symptoms-of-mis-sizing"
+        },
+        {
+          "level": 3,
+          "text": "9.3 Gevent vs prefork",
+          "id": "93-gevent-vs-prefork"
+        },
+        {
+          "level": 2,
+          "text": "10. Database growth",
+          "id": "10-database-growth"
+        },
+        {
+          "level": 2,
+          "text": "11. Performance acceptance criteria",
+          "id": "11-performance-acceptance-criteria"
+        },
+        {
+          "level": 2,
+          "text": "12. Load testing",
+          "id": "12-load-testing"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1550,
+      "minutes": 7
+    },
+    {
+      "slug": "05-scope/04-doc-gaps",
+      "section": "05-scope",
+      "sectionTitle": "ERP Scope Boundaries",
+      "title": "Where Documentation Misleads or Stops",
+      "description": "Version drift, stale comments, removed models and the documentation traps that break custom code.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. The structural mismatch",
+          "id": "1-the-structural-mismatch"
+        },
+        {
+          "level": 2,
+          "text": "2. Trap catalogue",
+          "id": "2-trap-catalogue"
+        },
+        {
+          "level": 3,
+          "text": "2.1 \"The model exists\" (removed models)",
+          "id": "21-the-model-exists-removed-models"
+        },
+        {
+          "level": 3,
+          "text": "2.2 \"State done\" (removed states)",
+          "id": "22-state-done-removed-states"
+        },
+        {
+          "level": 3,
+          "text": "2.3 \"Product type is product\"",
+          "id": "23-product-type-is-product"
+        },
+        {
+          "level": 3,
+          "text": "2.4 \"UoM has a category\"",
+          "id": "24-uom-has-a-category"
+        },
+        {
+          "level": 3,
+          "text": "2.5 \"readgroup is the API\"",
+          "id": "25-readgroup-is-the-api"
+        },
+        {
+          "level": 3,
+          "text": "2.6 \"create takes a dict\"",
+          "id": "26-create-takes-a-dict"
+        },
+        {
+          "level": 3,
+          "text": "2.7 \"nameget is the display API\"",
+          "id": "27-nameget-is-the-display-api"
+        },
+        {
+          "level": 3,
+          "text": "2.8 \"checkaccessrights is current\"",
+          "id": "28-checkaccessrights-is-current"
+        },
+        {
+          "level": 3,
+          "text": "2.9 \"Taxes are computed by computetaxes\"",
+          "id": "29-taxes-are-computed-by-computetaxes"
+        },
+        {
+          "level": 3,
+          "text": "2.10 \"The ORM commits at the end of each method\"",
+          "id": "210-the-orm-commits-at-the-end-of-each-method"
+        },
+        {
+          "level": 3,
+          "text": "2.11 \"Savepoints are free\"",
+          "id": "211-savepoints-are-free"
+        },
+        {
+          "level": 3,
+          "text": "2.12 \"Record rules are optional\"",
+          "id": "212-record-rules-are-optional"
+        },
+        {
+          "level": 3,
+          "text": "2.13 \"noupdate means never update\"",
+          "id": "213-noupdate-means-never-update"
+        },
+        {
+          "level": 3,
+          "text": "2.14 \"Views are just XML\"",
+          "id": "214-views-are-just-xml"
+        },
+        {
+          "level": 3,
+          "text": "2.15 \"Cron is a simple scheduler\"",
+          "id": "215-cron-is-a-simple-scheduler"
+        },
+        {
+          "level": 3,
+          "text": "2.16 \"Bus is a message queue\"",
+          "id": "216-bus-is-a-message-queue"
+        },
+        {
+          "level": 3,
+          "text": "2.17 \"Attachments are in the database\"",
+          "id": "217-attachments-are-in-the-database"
+        },
+        {
+          "level": 3,
+          "text": "2.18 \"Deleting a record is straightforward\"",
+          "id": "218-deleting-a-record-is-straightforward"
+        },
+        {
+          "level": 2,
+          "text": "3. What the official docs cover well",
+          "id": "3-what-the-official-docs-cover-well"
+        },
+        {
+          "level": 2,
+          "text": "4. Coverage gap map",
+          "id": "4-coverage-gap-map"
+        },
+        {
+          "level": 2,
+          "text": "5. How to verify a claim quickly",
+          "id": "5-how-to-verify-a-claim-quickly"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Model existence",
+          "id": "51-model-existence"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Field definition",
+          "id": "52-field-definition"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Method body",
+          "id": "53-method-body"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Actual state values",
+          "id": "54-actual-state-values"
+        },
+        {
+          "level": 3,
+          "text": "5.5 Installed module version",
+          "id": "55-installed-module-version"
+        },
+        {
+          "level": 3,
+          "text": "5.6 Actual schema",
+          "id": "56-actual-schema"
+        },
+        {
+          "level": 3,
+          "text": "5.7 Runtime behaviour",
+          "id": "57-runtime-behaviour"
+        },
+        {
+          "level": 2,
+          "text": "6. Documentation traps in custom code",
+          "id": "6-documentation-traps-in-custom-code"
+        },
+        {
+          "level": 2,
+          "text": "7. Recommendations for the team",
+          "id": "7-recommendations-for-the-team"
+        },
+        {
+          "level": 2,
+          "text": "8. Evidence index",
+          "id": "8-evidence-index"
+        }
+      ],
+      "words": 1323,
+      "minutes": 6
+    },
+    {
+      "slug": "06-engineering/01-use-cases",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Use Case Model",
+      "description": "Actors, system context and a catalogue of 28 use cases with flows and traceability.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Actors",
+          "id": "1-actors"
+        },
+        {
+          "level": 2,
+          "text": "2. System context",
+          "id": "2-system-context"
+        },
+        {
+          "level": 2,
+          "text": "3. Use case diagram",
+          "id": "3-use-case-diagram"
+        },
+        {
+          "level": 2,
+          "text": "4. Use case catalogue",
+          "id": "4-use-case-catalogue"
+        },
+        {
+          "level": 3,
+          "text": "UC-01 Create quotation",
+          "id": "uc-01-create-quotation"
+        },
+        {
+          "level": 3,
+          "text": "UC-02 Apply pricelist/discount",
+          "id": "uc-02-apply-pricelistdiscount"
+        },
+        {
+          "level": 3,
+          "text": "UC-03 Confirm order",
+          "id": "uc-03-confirm-order"
+        },
+        {
+          "level": 3,
+          "text": "UC-04 Approve exception",
+          "id": "uc-04-approve-exception"
+        },
+        {
+          "level": 3,
+          "text": "UC-05 Deliver order",
+          "id": "uc-05-deliver-order"
+        },
+        {
+          "level": 3,
+          "text": "UC-06 Invoice order",
+          "id": "uc-06-invoice-order"
+        },
+        {
+          "level": 3,
+          "text": "UC-07 Register payment",
+          "id": "uc-07-register-payment"
+        },
+        {
+          "level": 3,
+          "text": "UC-08 Create RFQ",
+          "id": "uc-08-create-rfq"
+        },
+        {
+          "level": 3,
+          "text": "UC-09 Approve PO",
+          "id": "uc-09-approve-po"
+        },
+        {
+          "level": 3,
+          "text": "UC-10 Receive goods",
+          "id": "uc-10-receive-goods"
+        },
+        {
+          "level": 3,
+          "text": "UC-11 Record vendor bill",
+          "id": "uc-11-record-vendor-bill"
+        },
+        {
+          "level": 3,
+          "text": "UC-12 Pay vendor",
+          "id": "uc-12-pay-vendor"
+        },
+        {
+          "level": 3,
+          "text": "UC-13 Transfer stock",
+          "id": "uc-13-transfer-stock"
+        },
+        {
+          "level": 3,
+          "text": "UC-14 Adjust inventory",
+          "id": "uc-14-adjust-inventory"
+        },
+        {
+          "level": 3,
+          "text": "UC-15 Return goods",
+          "id": "uc-15-return-goods"
+        },
+        {
+          "level": 3,
+          "text": "UC-16 Scrap",
+          "id": "uc-16-scrap"
+        },
+        {
+          "level": 3,
+          "text": "UC-17 Create BoM",
+          "id": "uc-17-create-bom"
+        },
+        {
+          "level": 3,
+          "text": "UC-18 Plan MO",
+          "id": "uc-18-plan-mo"
+        },
+        {
+          "level": 3,
+          "text": "UC-19 Execute work orders",
+          "id": "uc-19-execute-work-orders"
+        },
+        {
+          "level": 3,
+          "text": "UC-20 Close MO",
+          "id": "uc-20-close-mo"
+        },
+        {
+          "level": 3,
+          "text": "UC-21 Post invoice",
+          "id": "uc-21-post-invoice"
+        },
+        {
+          "level": 3,
+          "text": "UC-22 Reconcile bank",
+          "id": "uc-22-reconcile-bank"
+        },
+        {
+          "level": 3,
+          "text": "UC-23 Close period",
+          "id": "uc-23-close-period"
+        },
+        {
+          "level": 3,
+          "text": "UC-24 Report financials",
+          "id": "uc-24-report-financials"
+        },
+        {
+          "level": 3,
+          "text": "UC-25 Manage users/access",
+          "id": "uc-25-manage-usersaccess"
+        },
+        {
+          "level": 3,
+          "text": "UC-26 Install/upgrade module",
+          "id": "uc-26-installupgrade-module"
+        },
+        {
+          "level": 3,
+          "text": "UC-27 Run integration",
+          "id": "uc-27-run-integration"
+        },
+        {
+          "level": 3,
+          "text": "UC-28 Schedule job",
+          "id": "uc-28-schedule-job"
+        },
+        {
+          "level": 2,
+          "text": "5. Traceability matrix",
+          "id": "5-traceability-matrix"
+        },
+        {
+          "level": 2,
+          "text": "6. Use case quality rules",
+          "id": "6-use-case-quality-rules"
+        }
+      ],
+      "words": 2793,
+      "minutes": 13
+    },
+    {
+      "slug": "06-engineering/02-domain-model",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Domain Model and Aggregates",
+      "description": "Ubiquitous language, class diagram, aggregates, invariants and domain-event mapping.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Ubiquitous language",
+          "id": "1-ubiquitous-language"
+        },
+        {
+          "level": 2,
+          "text": "2. Core class diagram",
+          "id": "2-core-class-diagram"
+        },
+        {
+          "level": 2,
+          "text": "3. Aggregates and consistency boundaries",
+          "id": "3-aggregates-and-consistency-boundaries"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Sales order aggregate",
+          "id": "31-sales-order-aggregate"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Purchase order aggregate",
+          "id": "32-purchase-order-aggregate"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Stock move aggregate",
+          "id": "33-stock-move-aggregate"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Invoice aggregate",
+          "id": "34-invoice-aggregate"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Manufacturing aggregate",
+          "id": "35-manufacturing-aggregate"
+        },
+        {
+          "level": 2,
+          "text": "4. Cross-aggregate rules",
+          "id": "4-cross-aggregate-rules"
+        },
+        {
+          "level": 2,
+          "text": "5. Domain invariants catalogue",
+          "id": "5-domain-invariants-catalogue"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Commercial",
+          "id": "51-commercial"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Inventory",
+          "id": "52-inventory"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Accounting",
+          "id": "53-accounting"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Manufacturing",
+          "id": "54-manufacturing"
+        },
+        {
+          "level": 2,
+          "text": "6. Domain events (conceptual)",
+          "id": "6-domain-events-conceptual"
+        },
+        {
+          "level": 2,
+          "text": "7. Mapping to implementation",
+          "id": "7-mapping-to-implementation"
+        },
+        {
+          "level": 2,
+          "text": "8. Modelling rules for custom domains",
+          "id": "8-modelling-rules-for-custom-domains"
+        },
+        {
+          "level": 2,
+          "text": "9. Evidence index",
+          "id": "9-evidence-index"
+        }
+      ],
+      "words": 1749,
+      "minutes": 8
+    },
+    {
+      "slug": "06-engineering/03-sequence-diagrams",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Sequence Diagrams",
+      "description": "Method-level sequences for request handling, sales, purchase, delivery, invoicing, payments, MOs, cron and integrations.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. HTTP request lifecycle",
+          "id": "1-http-request-lifecycle"
+        },
+        {
+          "level": 2,
+          "text": "2. Sales order confirmation",
+          "id": "2-sales-order-confirmation"
+        },
+        {
+          "level": 2,
+          "text": "3. Purchase order to receipt",
+          "id": "3-purchase-order-to-receipt"
+        },
+        {
+          "level": 2,
+          "text": "4. Delivery and invoice",
+          "id": "4-delivery-and-invoice"
+        },
+        {
+          "level": 2,
+          "text": "5. Invoice posting internals",
+          "id": "5-invoice-posting-internals"
+        },
+        {
+          "level": 2,
+          "text": "6. Payment and reconciliation",
+          "id": "6-payment-and-reconciliation"
+        },
+        {
+          "level": 2,
+          "text": "7. Manufacturing order completion",
+          "id": "7-manufacturing-order-completion"
+        },
+        {
+          "level": 2,
+          "text": "8. Cron job execution",
+          "id": "8-cron-job-execution"
+        },
+        {
+          "level": 2,
+          "text": "9. External integration with retry",
+          "id": "9-external-integration-with-retry"
+        },
+        {
+          "level": 2,
+          "text": "10. Bus notification",
+          "id": "10-bus-notification"
+        },
+        {
+          "level": 2,
+          "text": "11. Failure and retry sequence",
+          "id": "11-failure-and-retry-sequence"
+        },
+        {
+          "level": 2,
+          "text": "12. Diagram conventions",
+          "id": "12-diagram-conventions"
+        },
+        {
+          "level": 2,
+          "text": "13. Evidence index",
+          "id": "13-evidence-index"
+        }
+      ],
+      "words": 1121,
+      "minutes": 5
+    },
+    {
+      "slug": "06-engineering/04-activity-diagrams",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Activity Diagrams and BPMN Mapping",
+      "description": "Decision flows for sales, purchase, delivery, posting, manufacturing, close, integration and triage, with BPMN mapping.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. BPMN mapping rules",
+          "id": "1-bpmn-mapping-rules"
+        },
+        {
+          "level": 2,
+          "text": "2. Sales order confirmation",
+          "id": "2-sales-order-confirmation"
+        },
+        {
+          "level": 3,
+          "text": "2.1 BPMN notes",
+          "id": "21-bpmn-notes"
+        },
+        {
+          "level": 2,
+          "text": "3. Purchase approval",
+          "id": "3-purchase-approval"
+        },
+        {
+          "level": 2,
+          "text": "4. Delivery validation",
+          "id": "4-delivery-validation"
+        },
+        {
+          "level": 2,
+          "text": "5. Invoice posting",
+          "id": "5-invoice-posting"
+        },
+        {
+          "level": 2,
+          "text": "6. Manufacturing completion",
+          "id": "6-manufacturing-completion"
+        },
+        {
+          "level": 2,
+          "text": "7. Month-end close",
+          "id": "7-month-end-close"
+        },
+        {
+          "level": 2,
+          "text": "8. Integration processing",
+          "id": "8-integration-processing"
+        },
+        {
+          "level": 2,
+          "text": "9. Support incident triage",
+          "id": "9-support-incident-triage"
+        },
+        {
+          "level": 2,
+          "text": "10. Activity-to-test mapping",
+          "id": "10-activity-to-test-mapping"
+        },
+        {
+          "level": 2,
+          "text": "11. BPMN export checklist",
+          "id": "11-bpmn-export-checklist"
+        },
+        {
+          "level": 2,
+          "text": "12. Evidence index",
+          "id": "12-evidence-index"
+        }
+      ],
+      "words": 1340,
+      "minutes": 6
+    },
+    {
+      "slug": "06-engineering/05-state-machines",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "State Machines Reference",
+      "description": "Legal states, transitions, triggers and guards for sales, CRM, purchase, stock, accounting, assets, MRP, modules and cron.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. State machine principles in Odoo",
+          "id": "1-state-machine-principles-in-odoo"
+        },
+        {
+          "level": 2,
+          "text": "2. Sales order",
+          "id": "2-sales-order"
+        },
+        {
+          "level": 2,
+          "text": "3. CRM lead",
+          "id": "3-crm-lead"
+        },
+        {
+          "level": 2,
+          "text": "4. Purchase order",
+          "id": "4-purchase-order"
+        },
+        {
+          "level": 2,
+          "text": "5. Stock picking",
+          "id": "5-stock-picking"
+        },
+        {
+          "level": 2,
+          "text": "6. Stock move / move line",
+          "id": "6-stock-move-move-line"
+        },
+        {
+          "level": 2,
+          "text": "7. Stock quant",
+          "id": "7-stock-quant"
+        },
+        {
+          "level": 2,
+          "text": "8. Account move (journal entry / invoice)",
+          "id": "8-account-move-journal-entry-invoice"
+        },
+        {
+          "level": 2,
+          "text": "9. Account payment",
+          "id": "9-account-payment"
+        },
+        {
+          "level": 2,
+          "text": "10. Account asset",
+          "id": "10-account-asset"
+        },
+        {
+          "level": 2,
+          "text": "11. Manufacturing order",
+          "id": "11-manufacturing-order"
+        },
+        {
+          "level": 2,
+          "text": "12. Work order",
+          "id": "12-work-order"
+        },
+        {
+          "level": 2,
+          "text": "13. Module",
+          "id": "13-module"
+        },
+        {
+          "level": 2,
+          "text": "14. Cron job (lifecycle, not a state field)",
+          "id": "14-cron-job-lifecycle-not-a-state-field"
+        },
+        {
+          "level": 2,
+          "text": "15. Transition testing matrix",
+          "id": "15-transition-testing-matrix"
+        },
+        {
+          "level": 2,
+          "text": "16. Evidence index",
+          "id": "16-evidence-index"
+        }
+      ],
+      "words": 1576,
+      "minutes": 7
+    },
+    {
+      "slug": "06-engineering/06-nfr",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Non-Functional Requirements",
+      "description": "Measurable availability, performance, security, audit, localization, backup and observability requirements.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Availability",
+          "id": "1-availability"
+        },
+        {
+          "level": 2,
+          "text": "2. Performance",
+          "id": "2-performance"
+        },
+        {
+          "level": 2,
+          "text": "3. Scalability",
+          "id": "3-scalability"
+        },
+        {
+          "level": 2,
+          "text": "4. Security",
+          "id": "4-security"
+        },
+        {
+          "level": 2,
+          "text": "5. Auditability",
+          "id": "5-auditability"
+        },
+        {
+          "level": 2,
+          "text": "6. Data quality",
+          "id": "6-data-quality"
+        },
+        {
+          "level": 2,
+          "text": "7. Localization and compliance",
+          "id": "7-localization-and-compliance"
+        },
+        {
+          "level": 2,
+          "text": "8. Maintainability",
+          "id": "8-maintainability"
+        },
+        {
+          "level": 2,
+          "text": "9. Observability",
+          "id": "9-observability"
+        },
+        {
+          "level": 2,
+          "text": "10. Backup and disaster recovery",
+          "id": "10-backup-and-disaster-recovery"
+        },
+        {
+          "level": 2,
+          "text": "11. Usability and accessibility",
+          "id": "11-usability-and-accessibility"
+        },
+        {
+          "level": 2,
+          "text": "12. Operability",
+          "id": "12-operability"
+        },
+        {
+          "level": 2,
+          "text": "13. NFR acceptance checklist",
+          "id": "13-nfr-acceptance-checklist"
+        },
+        {
+          "level": 2,
+          "text": "14. Evidence index",
+          "id": "14-evidence-index"
+        }
+      ],
+      "words": 1391,
+      "minutes": 6
+    },
+    {
+      "slug": "06-engineering/07-testing-strategy",
+      "section": "06-engineering",
+      "sectionTitle": "Software Engineering",
+      "title": "Test Strategy",
+      "description": "Test pyramid, Odoo test classes, security/performance tests, CI and UAT for customisations.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Test pyramid for Odoo",
+          "id": "1-test-pyramid-for-odoo"
+        },
+        {
+          "level": 2,
+          "text": "2. Test base classes",
+          "id": "2-test-base-classes"
+        },
+        {
+          "level": 2,
+          "text": "3. What to test",
+          "id": "3-what-to-test"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Invariants",
+          "id": "31-invariants"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Computes",
+          "id": "32-computes"
+        },
+        {
+          "level": 3,
+          "text": "3.3 State transitions",
+          "id": "33-state-transitions"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Security",
+          "id": "34-security"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Multi-company",
+          "id": "35-multi-company"
+        },
+        {
+          "level": 3,
+          "text": "3.6 Concurrency",
+          "id": "36-concurrency"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Performance",
+          "id": "37-performance"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Tours",
+          "id": "38-tours"
+        },
+        {
+          "level": 2,
+          "text": "4. Test data",
+          "id": "4-test-data"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Fixtures",
+          "id": "41-fixtures"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Factories",
+          "id": "42-factories"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Demo data",
+          "id": "43-demo-data"
+        },
+        {
+          "level": 2,
+          "text": "5. Test organisation",
+          "id": "5-test-organisation"
+        },
+        {
+          "level": 2,
+          "text": "6. CI pipeline",
+          "id": "6-ci-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Stages",
+          "id": "61-stages"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Test database strategy",
+          "id": "62-test-database-strategy"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Flakiness",
+          "id": "63-flakiness"
+        },
+        {
+          "level": 2,
+          "text": "7. Upgrade testing",
+          "id": "7-upgrade-testing"
+        },
+        {
+          "level": 2,
+          "text": "8. UAT and acceptance",
+          "id": "8-uat-and-acceptance"
+        },
+        {
+          "level": 2,
+          "text": "9. Test anti-patterns",
+          "id": "9-test-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "10. Coverage targets",
+          "id": "10-coverage-targets"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence index",
+          "id": "11-evidence-index"
+        }
+      ],
+      "words": 1218,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/01-delivery-lifecycle",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Delivery Lifecycle",
+      "description": "Phases, gates, artifacts and RACI from discovery to hypercare.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Phases and gates",
+          "id": "1-phases-and-gates"
+        },
+        {
+          "level": 2,
+          "text": "2. Discovery",
+          "id": "2-discovery"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Objectives",
+          "id": "21-objectives"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Artifacts",
+          "id": "22-artifacts"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Workshops",
+          "id": "23-workshops"
+        },
+        {
+          "level": 2,
+          "text": "3. Fit-gap and design",
+          "id": "3-fit-gap-and-design"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Fit-gap matrix",
+          "id": "31-fit-gap-matrix"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Design artifacts",
+          "id": "32-design-artifacts"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Design review checklist",
+          "id": "33-design-review-checklist"
+        },
+        {
+          "level": 2,
+          "text": "4. Build and configure",
+          "id": "4-build-and-configure"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Workstreams",
+          "id": "41-workstreams"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Sprint cadence",
+          "id": "42-sprint-cadence"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Build order",
+          "id": "43-build-order"
+        },
+        {
+          "level": 2,
+          "text": "5. Test and UAT",
+          "id": "5-test-and-uat"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Test levels",
+          "id": "51-test-levels"
+        },
+        {
+          "level": 3,
+          "text": "5.2 UAT design",
+          "id": "52-uat-design"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Exit criteria",
+          "id": "53-exit-criteria"
+        },
+        {
+          "level": 2,
+          "text": "6. Deploy and cutover",
+          "id": "6-deploy-and-cutover"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Cutover plan",
+          "id": "61-cutover-plan"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Cutover checklist",
+          "id": "62-cutover-checklist"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Go/no-go",
+          "id": "63-gono-go"
+        },
+        {
+          "level": 2,
+          "text": "7. Hypercare",
+          "id": "7-hypercare"
+        },
+        {
+          "level": 2,
+          "text": "8. RACI",
+          "id": "8-raci"
+        },
+        {
+          "level": 2,
+          "text": "9. Timeline template (mid-size, 3 domains)",
+          "id": "9-timeline-template-mid-size-3-domains"
+        },
+        {
+          "level": 2,
+          "text": "10. Common programme failures",
+          "id": "10-common-programme-failures"
+        },
+        {
+          "level": 2,
+          "text": "11. Evidence and tailoring",
+          "id": "11-evidence-and-tailoring"
+        }
+      ],
+      "words": 1602,
+      "minutes": 7
+    },
+    {
+      "slug": "07-project-management/02-estimation",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Estimation and Budgeting",
+      "description": "Person-day heuristics, complexity multipliers, data/integration drivers and a sample budget.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Estimation units",
+          "id": "1-estimation-units"
+        },
+        {
+          "level": 2,
+          "text": "2. Estimation formula",
+          "id": "2-estimation-formula"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Base effort by work type",
+          "id": "21-base-effort-by-work-type"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Complexity multipliers",
+          "id": "22-complexity-multipliers"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Risk contingency",
+          "id": "23-risk-contingency"
+        },
+        {
+          "level": 2,
+          "text": "3. Drivers that dominate",
+          "id": "3-drivers-that-dominate"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Data migration",
+          "id": "31-data-migration"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Localization",
+          "id": "32-localization"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Integration",
+          "id": "33-integration"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Testing and UAT",
+          "id": "34-testing-and-uat"
+        },
+        {
+          "level": 3,
+          "text": "3.5 Project management",
+          "id": "35-project-management"
+        },
+        {
+          "level": 2,
+          "text": "4. Sample estimate: mid-size distribution company",
+          "id": "4-sample-estimate-mid-size-distribution-company"
+        },
+        {
+          "level": 2,
+          "text": "5. Estimate by module complexity",
+          "id": "5-estimate-by-module-complexity"
+        },
+        {
+          "level": 2,
+          "text": "6. Bottom-up vs top-down",
+          "id": "6-bottom-up-vs-top-down"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Bottom-up",
+          "id": "61-bottom-up"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Top-down",
+          "id": "62-top-down"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Three-point",
+          "id": "63-three-point"
+        },
+        {
+          "level": 2,
+          "text": "7. Estimation anti-patterns",
+          "id": "7-estimation-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "8. Budget model",
+          "id": "8-budget-model"
+        },
+        {
+          "level": 2,
+          "text": "9. Tracking",
+          "id": "9-tracking"
+        },
+        {
+          "level": 2,
+          "text": "10. Evidence and calibration",
+          "id": "10-evidence-and-calibration"
+        }
+      ],
+      "words": 1330,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/03-team-and-roles",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Team Structure and Roles",
+      "description": "Roles, decision rights, team sizing and collaboration rituals.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Core roles",
+          "id": "1-core-roles"
+        },
+        {
+          "level": 2,
+          "text": "2. RACI by phase",
+          "id": "2-raci-by-phase"
+        },
+        {
+          "level": 2,
+          "text": "3. Role profiles",
+          "id": "3-role-profiles"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Solution Architect",
+          "id": "31-solution-architect"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Functional Consultant / BA",
+          "id": "32-functional-consultant-ba"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Developer",
+          "id": "33-developer"
+        },
+        {
+          "level": 3,
+          "text": "3.4 Data Engineer",
+          "id": "34-data-engineer"
+        },
+        {
+          "level": 3,
+          "text": "3.5 QA Engineer",
+          "id": "35-qa-engineer"
+        },
+        {
+          "level": 3,
+          "text": "3.6 DevOps Engineer",
+          "id": "36-devops-engineer"
+        },
+        {
+          "level": 3,
+          "text": "3.7 Change Manager",
+          "id": "37-change-manager"
+        },
+        {
+          "level": 3,
+          "text": "3.8 Key User",
+          "id": "38-key-user"
+        },
+        {
+          "level": 2,
+          "text": "4. Team size by project scale",
+          "id": "4-team-size-by-project-scale"
+        },
+        {
+          "level": 2,
+          "text": "5. Decision rights",
+          "id": "5-decision-rights"
+        },
+        {
+          "level": 2,
+          "text": "6. Anti-patterns",
+          "id": "6-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "7. Collaboration rituals",
+          "id": "7-collaboration-rituals"
+        },
+        {
+          "level": 2,
+          "text": "8. Handover checklist",
+          "id": "8-handover-checklist"
+        }
+      ],
+      "words": 1153,
+      "minutes": 5
+    },
+    {
+      "slug": "07-project-management/04-quality-gates",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Quality Gates and Definition of Done",
+      "description": "Design, code, test, UAT, go-live and closure gates with checklists and metrics.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Gate map",
+          "id": "1-gate-map"
+        },
+        {
+          "level": 2,
+          "text": "2. G1 — Design review",
+          "id": "2-g1-design-review"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Checklist",
+          "id": "21-checklist"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Reviewers",
+          "id": "22-reviewers"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Exit criteria",
+          "id": "23-exit-criteria"
+        },
+        {
+          "level": 2,
+          "text": "3. G2 — Code review",
+          "id": "3-g2-code-review"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Automatic checks",
+          "id": "31-automatic-checks"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Manual checklist",
+          "id": "32-manual-checklist"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Exit criteria",
+          "id": "33-exit-criteria"
+        },
+        {
+          "level": 2,
+          "text": "4. G3 — System test",
+          "id": "4-g3-system-test"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Test evidence",
+          "id": "41-test-evidence"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Performance gate",
+          "id": "42-performance-gate"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Security gate",
+          "id": "43-security-gate"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Data gate",
+          "id": "44-data-gate"
+        },
+        {
+          "level": 2,
+          "text": "5. G4 — UAT",
+          "id": "5-g4-uat"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Entry criteria",
+          "id": "51-entry-criteria"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Exit criteria",
+          "id": "52-exit-criteria"
+        },
+        {
+          "level": 3,
+          "text": "5.3 UAT scenarios",
+          "id": "53-uat-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "6. G5 — Go-live readiness",
+          "id": "6-g5-go-live-readiness"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Checklist",
+          "id": "61-checklist"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Rollback criteria",
+          "id": "62-rollback-criteria"
+        },
+        {
+          "level": 2,
+          "text": "7. G6 — Closure",
+          "id": "7-g6-closure"
+        },
+        {
+          "level": 2,
+          "text": "8. Definition of Done",
+          "id": "8-definition-of-done"
+        },
+        {
+          "level": 2,
+          "text": "9. Quality metrics",
+          "id": "9-quality-metrics"
+        },
+        {
+          "level": 2,
+          "text": "10. Evidence index",
+          "id": "10-evidence-index"
+        }
+      ],
+      "words": 1337,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/05-environments-ci",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Environments, CI/CD, and Operations",
+      "description": "Environment topology, database copies, neutralization, CI/CD, backup, monitoring and runbooks.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Environment topology",
+          "id": "1-environment-topology"
+        },
+        {
+          "level": 2,
+          "text": "2. Database copies",
+          "id": "2-database-copies"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Copy procedure",
+          "id": "21-copy-procedure"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Neutralization",
+          "id": "22-neutralization"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Anonymization",
+          "id": "23-anonymization"
+        },
+        {
+          "level": 2,
+          "text": "3. Local development",
+          "id": "3-local-development"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Typical layout",
+          "id": "31-typical-layout"
+        },
+        {
+          "level": 3,
+          "text": "3.2 odoo.conf essentials",
+          "id": "32-odooconf-essentials"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Docker Compose (development)",
+          "id": "33-docker-compose-development"
+        },
+        {
+          "level": 2,
+          "text": "4. CI pipeline",
+          "id": "4-ci-pipeline"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Example job",
+          "id": "41-example-job"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Test tags",
+          "id": "42-test-tags"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Upgrade job",
+          "id": "43-upgrade-job"
+        },
+        {
+          "level": 2,
+          "text": "5. Release management",
+          "id": "5-release-management"
+        },
+        {
+          "level": 3,
+          "text": "5.1 Versioning",
+          "id": "51-versioning"
+        },
+        {
+          "level": 3,
+          "text": "5.2 Release checklist",
+          "id": "52-release-checklist"
+        },
+        {
+          "level": 3,
+          "text": "5.3 Deployment steps",
+          "id": "53-deployment-steps"
+        },
+        {
+          "level": 3,
+          "text": "5.4 Rollback",
+          "id": "54-rollback"
+        },
+        {
+          "level": 2,
+          "text": "6. Backup and restore",
+          "id": "6-backup-and-restore"
+        },
+        {
+          "level": 3,
+          "text": "6.1 Restore validation",
+          "id": "61-restore-validation"
+        },
+        {
+          "level": 2,
+          "text": "7. Monitoring",
+          "id": "7-monitoring"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Infrastructure",
+          "id": "71-infrastructure"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Application",
+          "id": "72-application"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Alerts",
+          "id": "73-alerts"
+        },
+        {
+          "level": 2,
+          "text": "8. Security operations",
+          "id": "8-security-operations"
+        },
+        {
+          "level": 2,
+          "text": "9. Runbooks",
+          "id": "9-runbooks"
+        },
+        {
+          "level": 2,
+          "text": "10. Evidence index",
+          "id": "10-evidence-index"
+        }
+      ],
+      "words": 1140,
+      "minutes": 5
+    },
+    {
+      "slug": "07-project-management/06-risk-register",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Risk Register",
+      "description": "Odoo-specific risks, scoring, mitigation and contingency planning.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Scoring",
+          "id": "1-scoring"
+        },
+        {
+          "level": 2,
+          "text": "2. Risk register",
+          "id": "2-risk-register"
+        },
+        {
+          "level": 2,
+          "text": "3. Top risks in detail",
+          "id": "3-top-risks-in-detail"
+        },
+        {
+          "level": 3,
+          "text": "R-01 Scope creep",
+          "id": "r-01-scope-creep"
+        },
+        {
+          "level": 3,
+          "text": "R-02 Poor master data",
+          "id": "r-02-poor-master-data"
+        },
+        {
+          "level": 3,
+          "text": "R-03 Localization gaps",
+          "id": "r-03-localization-gaps"
+        },
+        {
+          "level": 3,
+          "text": "R-04 Integration underestimation",
+          "id": "r-04-integration-underestimation"
+        },
+        {
+          "level": 3,
+          "text": "R-05 Performance at volume",
+          "id": "r-05-performance-at-volume"
+        },
+        {
+          "level": 3,
+          "text": "R-07 Upgrade breaks custom",
+          "id": "r-07-upgrade-breaks-custom"
+        },
+        {
+          "level": 3,
+          "text": "R-10 Low adoption",
+          "id": "r-10-low-adoption"
+        },
+        {
+          "level": 3,
+          "text": "R-15 Duplicate processing",
+          "id": "r-15-duplicate-processing"
+        },
+        {
+          "level": 2,
+          "text": "4. Risk review process",
+          "id": "4-risk-review-process"
+        },
+        {
+          "level": 2,
+          "text": "5. Issue vs risk",
+          "id": "5-issue-vs-risk"
+        },
+        {
+          "level": 2,
+          "text": "6. Contingency planning",
+          "id": "6-contingency-planning"
+        },
+        {
+          "level": 2,
+          "text": "7. Risk register template",
+          "id": "7-risk-register-template"
+        },
+        {
+          "level": 2,
+          "text": "8. Evidence and tailoring",
+          "id": "8-evidence-and-tailoring"
+        }
+      ],
+      "words": 1281,
+      "minutes": 6
+    },
+    {
+      "slug": "07-project-management/07-implementation-playbook",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Implementation Playbook",
+      "description": "A phase-by-phase implementation guide from kickoff to handover, including a 90-day plan.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Kickoff (week 0)",
+          "id": "1-kickoff-week-0"
+        },
+        {
+          "level": 3,
+          "text": "1.1 Inputs",
+          "id": "11-inputs"
+        },
+        {
+          "level": 3,
+          "text": "1.2 Activities",
+          "id": "12-activities"
+        },
+        {
+          "level": 3,
+          "text": "1.3 Outputs",
+          "id": "13-outputs"
+        },
+        {
+          "level": 2,
+          "text": "2. Discovery (weeks 1–4)",
+          "id": "2-discovery-weeks-14"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Workshops",
+          "id": "21-workshops"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Data audit",
+          "id": "22-data-audit"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Outputs",
+          "id": "23-outputs"
+        },
+        {
+          "level": 2,
+          "text": "3. Design (weeks 3–8)",
+          "id": "3-design-weeks-38"
+        },
+        {
+          "level": 3,
+          "text": "3.1 Solution design",
+          "id": "31-solution-design"
+        },
+        {
+          "level": 3,
+          "text": "3.2 Design authority",
+          "id": "32-design-authority"
+        },
+        {
+          "level": 3,
+          "text": "3.3 Outputs",
+          "id": "33-outputs"
+        },
+        {
+          "level": 2,
+          "text": "4. Build (weeks 6–20)",
+          "id": "4-build-weeks-620"
+        },
+        {
+          "level": 3,
+          "text": "4.1 Foundation",
+          "id": "41-foundation"
+        },
+        {
+          "level": 3,
+          "text": "4.2 Master data",
+          "id": "42-master-data"
+        },
+        {
+          "level": 3,
+          "text": "4.3 Core flows",
+          "id": "43-core-flows"
+        },
+        {
+          "level": 3,
+          "text": "4.4 Custom development",
+          "id": "44-custom-development"
+        },
+        {
+          "level": 3,
+          "text": "4.5 Data migration",
+          "id": "45-data-migration"
+        },
+        {
+          "level": 3,
+          "text": "4.6 Integrations",
+          "id": "46-integrations"
+        },
+        {
+          "level": 2,
+          "text": "5. Test (weeks 16–24)",
+          "id": "5-test-weeks-1624"
+        },
+        {
+          "level": 2,
+          "text": "6. Cutover (weeks 24–26)",
+          "id": "6-cutover-weeks-2426"
+        },
+        {
+          "level": 3,
+          "text": "6.1 T-minus plan",
+          "id": "61-t-minus-plan"
+        },
+        {
+          "level": 3,
+          "text": "6.2 Cutover runbook",
+          "id": "62-cutover-runbook"
+        },
+        {
+          "level": 3,
+          "text": "6.3 Go/no-go",
+          "id": "63-gono-go"
+        },
+        {
+          "level": 2,
+          "text": "7. Hypercare (weeks 26–32)",
+          "id": "7-hypercare-weeks-2632"
+        },
+        {
+          "level": 3,
+          "text": "7.1 Cadence",
+          "id": "71-cadence"
+        },
+        {
+          "level": 3,
+          "text": "7.2 Focus",
+          "id": "72-focus"
+        },
+        {
+          "level": 3,
+          "text": "7.3 Exit criteria",
+          "id": "73-exit-criteria"
+        },
+        {
+          "level": 2,
+          "text": "8. Handover",
+          "id": "8-handover"
+        },
+        {
+          "level": 2,
+          "text": "9. 90-day quick plan (small rollout)",
+          "id": "9-90-day-quick-plan-small-rollout"
+        },
+        {
+          "level": 2,
+          "text": "10. Playbook anti-patterns",
+          "id": "10-playbook-anti-patterns"
+        },
+        {
+          "level": 2,
+          "text": "11. Artefact checklist",
+          "id": "11-artefact-checklist"
+        }
+      ],
+      "words": 1071,
+      "minutes": 5
+    },
+    {
+      "slug": "07-project-management/08-templates",
+      "section": "07-project-management",
+      "sectionTitle": "Project Management",
+      "title": "Document Templates",
+      "description": "ADR, specification, test plan, cutover, RAID, change request, data mapping, runbook and handover templates.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Architecture Decision Record (ADR)",
+          "id": "1-architecture-decision-record-adr"
+        },
+        {
+          "level": 2,
+          "text": "Context",
+          "id": "context"
+        },
+        {
+          "level": 2,
+          "text": "Options",
+          "id": "options"
+        },
+        {
+          "level": 3,
+          "text": "Option A —",
+          "id": "option-a"
+        },
+        {
+          "level": 3,
+          "text": "Option B —",
+          "id": "option-b"
+        },
+        {
+          "level": 2,
+          "text": "Decision",
+          "id": "decision"
+        },
+        {
+          "level": 2,
+          "text": "Consequences",
+          "id": "consequences"
+        },
+        {
+          "level": 2,
+          "text": "Evidence",
+          "id": "evidence"
+        },
+        {
+          "level": 2,
+          "text": "2. Solution specification",
+          "id": "2-solution-specification"
+        },
+        {
+          "level": 2,
+          "text": "1. Summary",
+          "id": "1-summary"
+        },
+        {
+          "level": 2,
+          "text": "2. Business context",
+          "id": "2-business-context"
+        },
+        {
+          "level": 2,
+          "text": "3. Requirements",
+          "id": "3-requirements"
+        },
+        {
+          "level": 2,
+          "text": "4. Scope",
+          "id": "4-scope"
+        },
+        {
+          "level": 2,
+          "text": "5. Odoo design",
+          "id": "5-odoo-design"
+        },
+        {
+          "level": 2,
+          "text": "6. Data model",
+          "id": "6-data-model"
+        },
+        {
+          "level": 2,
+          "text": "7. Flows",
+          "id": "7-flows"
+        },
+        {
+          "level": 2,
+          "text": "8. Integration",
+          "id": "8-integration"
+        },
+        {
+          "level": 2,
+          "text": "9. Migration",
+          "id": "9-migration"
+        },
+        {
+          "level": 2,
+          "text": "10. Performance",
+          "id": "10-performance"
+        },
+        {
+          "level": 2,
+          "text": "11. Tests",
+          "id": "11-tests"
+        },
+        {
+          "level": 2,
+          "text": "12. Risks",
+          "id": "12-risks"
+        },
+        {
+          "level": 2,
+          "text": "13. Open questions",
+          "id": "13-open-questions"
+        },
+        {
+          "level": 2,
+          "text": "3. Test plan",
+          "id": "3-test-plan"
+        },
+        {
+          "level": 2,
+          "text": "1. Scope",
+          "id": "1-scope"
+        },
+        {
+          "level": 2,
+          "text": "2. Environments",
+          "id": "2-environments"
+        },
+        {
+          "level": 2,
+          "text": "3. Roles",
+          "id": "3-roles"
+        },
+        {
+          "level": 2,
+          "text": "4. Scenarios",
+          "id": "4-scenarios"
+        },
+        {
+          "level": 2,
+          "text": "5. Non-functional",
+          "id": "5-non-functional"
+        },
+        {
+          "level": 2,
+          "text": "6. Defects",
+          "id": "6-defects"
+        },
+        {
+          "level": 2,
+          "text": "7. Exit criteria",
+          "id": "7-exit-criteria"
+        },
+        {
+          "level": 2,
+          "text": "8. Sign-off",
+          "id": "8-sign-off"
+        },
+        {
+          "level": 2,
+          "text": "4. Cutover checklist",
+          "id": "4-cutover-checklist"
+        },
+        {
+          "level": 2,
+          "text": "Timeline",
+          "id": "timeline"
+        },
+        {
+          "level": 2,
+          "text": "Pre-requisites",
+          "id": "pre-requisites"
+        },
+        {
+          "level": 2,
+          "text": "Go/No-Go",
+          "id": "gono-go"
+        },
+        {
+          "level": 2,
+          "text": "Communication",
+          "id": "communication"
+        },
+        {
+          "level": 2,
+          "text": "Post-cutover",
+          "id": "post-cutover"
+        },
+        {
+          "level": 2,
+          "text": "5. RAID log",
+          "id": "5-raid-log"
+        },
+        {
+          "level": 2,
+          "text": "Risks",
+          "id": "risks"
+        },
+        {
+          "level": 2,
+          "text": "Assumptions",
+          "id": "assumptions"
+        },
+        {
+          "level": 2,
+          "text": "Issues",
+          "id": "issues"
+        },
+        {
+          "level": 2,
+          "text": "Dependencies",
+          "id": "dependencies"
+        },
+        {
+          "level": 2,
+          "text": "6. Change request",
+          "id": "6-change-request"
+        },
+        {
+          "level": 2,
+          "text": "Description",
+          "id": "description"
+        },
+        {
+          "level": 2,
+          "text": "Impact",
+          "id": "impact"
+        },
+        {
+          "level": 2,
+          "text": "Options",
+          "id": "options-2"
+        },
+        {
+          "level": 2,
+          "text": "Decision",
+          "id": "decision-2"
+        },
+        {
+          "level": 2,
+          "text": "Implementation",
+          "id": "implementation"
+        },
+        {
+          "level": 2,
+          "text": "7. Data mapping specification",
+          "id": "7-data-mapping-specification"
+        },
+        {
+          "level": 2,
+          "text": "Source profile",
+          "id": "source-profile"
+        },
+        {
+          "level": 2,
+          "text": "Mapping",
+          "id": "mapping"
+        },
+        {
+          "level": 2,
+          "text": "Keys",
+          "id": "keys"
+        },
+        {
+          "level": 2,
+          "text": "Reconciliation",
+          "id": "reconciliation"
+        },
+        {
+          "level": 2,
+          "text": "Cutover",
+          "id": "cutover"
+        },
+        {
+          "level": 2,
+          "text": "8. Code review checklist",
+          "id": "8-code-review-checklist"
+        },
+        {
+          "level": 2,
+          "text": "Correctness",
+          "id": "correctness"
+        },
+        {
+          "level": 2,
+          "text": "Odoo",
+          "id": "odoo"
+        },
+        {
+          "level": 2,
+          "text": "Schema",
+          "id": "schema"
+        },
+        {
+          "level": 2,
+          "text": "Security",
+          "id": "security"
+        },
+        {
+          "level": 2,
+          "text": "Tests",
+          "id": "tests"
+        },
+        {
+          "level": 2,
+          "text": "Docs",
+          "id": "docs"
+        },
+        {
+          "level": 2,
+          "text": "9. Runbook",
+          "id": "9-runbook"
+        },
+        {
+          "level": 2,
+          "text": "Trigger",
+          "id": "trigger"
+        },
+        {
+          "level": 2,
+          "text": "Impact",
+          "id": "impact-2"
+        },
+        {
+          "level": 2,
+          "text": "Pre-checks",
+          "id": "pre-checks"
+        },
+        {
+          "level": 2,
+          "text": "Steps",
+          "id": "steps"
+        },
+        {
+          "level": 2,
+          "text": "Verification",
+          "id": "verification"
+        },
+        {
+          "level": 2,
+          "text": "Rollback",
+          "id": "rollback"
+        },
+        {
+          "level": 2,
+          "text": "Escalation",
+          "id": "escalation"
+        },
+        {
+          "level": 2,
+          "text": "10. Handover",
+          "id": "10-handover"
+        },
+        {
+          "level": 2,
+          "text": "Scope delivered",
+          "id": "scope-delivered"
+        },
+        {
+          "level": 2,
+          "text": "Architecture",
+          "id": "architecture"
+        },
+        {
+          "level": 2,
+          "text": "Environments",
+          "id": "environments"
+        },
+        {
+          "level": 2,
+          "text": "Access/credentials (secure transfer)",
+          "id": "accesscredentials-secure-transfer"
+        },
+        {
+          "level": 2,
+          "text": "Runbooks",
+          "id": "runbooks"
+        },
+        {
+          "level": 2,
+          "text": "Monitoring/alerts",
+          "id": "monitoringalerts"
+        },
+        {
+          "level": 2,
+          "text": "Open issues/backlog",
+          "id": "open-issuesbacklog"
+        },
+        {
+          "level": 2,
+          "text": "Support model/SLA",
+          "id": "support-modelsla"
+        },
+        {
+          "level": 2,
+          "text": "Training records",
+          "id": "training-records"
+        },
+        {
+          "level": 2,
+          "text": "Warranty",
+          "id": "warranty"
+        },
+        {
+          "level": 2,
+          "text": "Sign-off",
+          "id": "sign-off"
+        },
+        {
+          "level": 2,
+          "text": "11. Document conventions",
+          "id": "11-document-conventions"
+        }
+      ],
+      "words": 977,
+      "minutes": 4
+    },
+    {
+      "slug": "08-appendix/01-code-map",
+      "section": "08-appendix",
+      "sectionTitle": "Appendix",
+      "title": "Source Code Map",
+      "description": "A file-by-file map of the ORM, runtime, modules, tools and key business modules.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Top-level",
+          "id": "1-top-level"
+        },
+        {
+          "level": 2,
+          "text": "2. ORM kernel",
+          "id": "2-orm-kernel"
+        },
+        {
+          "level": 2,
+          "text": "3. HTTP and services",
+          "id": "3-http-and-services"
+        },
+        {
+          "level": 2,
+          "text": "4. Modules",
+          "id": "4-modules"
+        },
+        {
+          "level": 2,
+          "text": "5. Tools",
+          "id": "5-tools"
+        },
+        {
+          "level": 2,
+          "text": "6. Business modules (key files)",
+          "id": "6-business-modules-key-files"
+        },
+        {
+          "level": 2,
+          "text": "7. Finding a behaviour",
+          "id": "7-finding-a-behaviour"
+        },
+        {
+          "level": 2,
+          "text": "8. Reading a traceback",
+          "id": "8-reading-a-traceback"
+        },
+        {
+          "level": 2,
+          "text": "9. Version pinning",
+          "id": "9-version-pinning"
+        }
+      ],
+      "words": 956,
+      "minutes": 4
+    },
+    {
+      "slug": "08-appendix/02-sql-cookbook",
+      "section": "08-appendix",
+      "sectionTitle": "Appendix",
+      "title": "SQL Cookbook",
+      "description": "Read-only diagnostic queries for schema, modules, sales, purchase, stock, accounting, performance and security.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Schema inspection",
+          "id": "1-schema-inspection"
+        },
+        {
+          "level": 2,
+          "text": "2. Module and model metadata",
+          "id": "2-module-and-model-metadata"
+        },
+        {
+          "level": 2,
+          "text": "3. Sales",
+          "id": "3-sales"
+        },
+        {
+          "level": 2,
+          "text": "4. Purchase",
+          "id": "4-purchase"
+        },
+        {
+          "level": 2,
+          "text": "5. Inventory",
+          "id": "5-inventory"
+        },
+        {
+          "level": 2,
+          "text": "6. Accounting",
+          "id": "6-accounting"
+        },
+        {
+          "level": 2,
+          "text": "7. Manufacturing",
+          "id": "7-manufacturing"
+        },
+        {
+          "level": 2,
+          "text": "8. Performance diagnostics",
+          "id": "8-performance-diagnostics"
+        },
+        {
+          "level": 2,
+          "text": "9. Security and audit",
+          "id": "9-security-and-audit"
+        },
+        {
+          "level": 2,
+          "text": "10. Data quality",
+          "id": "10-data-quality"
+        },
+        {
+          "level": 2,
+          "text": "11. Safety rules",
+          "id": "11-safety-rules"
+        }
+      ],
+      "words": 1487,
+      "minutes": 7
+    },
+    {
+      "slug": "08-appendix/03-debug-playbook",
+      "section": "08-appendix",
+      "sectionTitle": "Appendix",
+      "title": "Debugging and Incident Playbook",
+      "description": "First response, common errors, ORM/stock/accounting/MRP debugging, performance profiling and postmortems.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. First 10 minutes",
+          "id": "1-first-10-minutes"
+        },
+        {
+          "level": 2,
+          "text": "2. Logs",
+          "id": "2-logs"
+        },
+        {
+          "level": 3,
+          "text": "2.1 Levels",
+          "id": "21-levels"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Useful greps",
+          "id": "22-useful-greps"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Request correlation",
+          "id": "23-request-correlation"
+        },
+        {
+          "level": 2,
+          "text": "3. Odoo shell",
+          "id": "3-odoo-shell"
+        },
+        {
+          "level": 2,
+          "text": "4. Common errors",
+          "id": "4-common-errors"
+        },
+        {
+          "level": 3,
+          "text": "4.1 UserError",
+          "id": "41-usererror"
+        },
+        {
+          "level": 3,
+          "text": "4.2 AccessError",
+          "id": "42-accesserror"
+        },
+        {
+          "level": 3,
+          "text": "4.3 MissingError",
+          "id": "43-missingerror"
+        },
+        {
+          "level": 3,
+          "text": "4.4 ValidationError from IntegrityError",
+          "id": "44-validationerror-from-integrityerror"
+        },
+        {
+          "level": 3,
+          "text": "4.5 psycopg2.errors.SerializationFailure",
+          "id": "45-psycopg2errorsserializationfailure"
+        },
+        {
+          "level": 3,
+          "text": "4.6 psycopg2.errors.DeadlockDetected",
+          "id": "46-psycopg2errorsdeadlockdetected"
+        },
+        {
+          "level": 3,
+          "text": "4.7 psycopg2.errors.LockNotAvailable",
+          "id": "47-psycopg2errorslocknotavailable"
+        },
+        {
+          "level": 3,
+          "text": "4.8 KeyError: 'model.name'",
+          "id": "48-keyerror-modelname"
+        },
+        {
+          "level": 3,
+          "text": "4.9 ValueError: Invalid field ...",
+          "id": "49-valueerror-invalid-field"
+        },
+        {
+          "level": 3,
+          "text": "4.10 ParseError / view validation",
+          "id": "410-parseerror-view-validation"
+        },
+        {
+          "level": 3,
+          "text": "4.11 RegistryError: Cannot get registry",
+          "id": "411-registryerror-cannot-get-registry"
+        },
+        {
+          "level": 3,
+          "text": "4.12 Worker killed / 502",
+          "id": "412-worker-killed-502"
+        },
+        {
+          "level": 2,
+          "text": "5. Performance debugging",
+          "id": "5-performance-debugging"
+        },
+        {
+          "level": 2,
+          "text": "6. Accounting debugging",
+          "id": "6-accounting-debugging"
+        },
+        {
+          "level": 2,
+          "text": "7. Stock debugging",
+          "id": "7-stock-debugging"
+        },
+        {
+          "level": 2,
+          "text": "8. Manufacturing debugging",
+          "id": "8-manufacturing-debugging"
+        },
+        {
+          "level": 2,
+          "text": "9. Module install/upgrade debugging",
+          "id": "9-module-installupgrade-debugging"
+        },
+        {
+          "level": 2,
+          "text": "10. Frontend debugging",
+          "id": "10-frontend-debugging"
+        },
+        {
+          "level": 2,
+          "text": "11. Integration debugging",
+          "id": "11-integration-debugging"
+        },
+        {
+          "level": 2,
+          "text": "12. Incident severity",
+          "id": "12-incident-severity"
+        },
+        {
+          "level": 2,
+          "text": "13. Postmortem template",
+          "id": "13-postmortem-template"
+        },
+        {
+          "level": 2,
+          "text": "Summary",
+          "id": "summary"
+        },
+        {
+          "level": 2,
+          "text": "Impact",
+          "id": "impact"
+        },
+        {
+          "level": 2,
+          "text": "Timeline (UTC)",
+          "id": "timeline-utc"
+        },
+        {
+          "level": 2,
+          "text": "Root cause",
+          "id": "root-cause"
+        },
+        {
+          "level": 2,
+          "text": "Detection",
+          "id": "detection"
+        },
+        {
+          "level": 2,
+          "text": "Resolution",
+          "id": "resolution"
+        },
+        {
+          "level": 2,
+          "text": "What went well",
+          "id": "what-went-well"
+        },
+        {
+          "level": 2,
+          "text": "What went wrong",
+          "id": "what-went-wrong"
+        },
+        {
+          "level": 2,
+          "text": "Action items",
+          "id": "action-items"
+        },
+        {
+          "level": 2,
+          "text": "14. Evidence index",
+          "id": "14-evidence-index"
+        }
+      ],
+      "words": 1324,
+      "minutes": 6
+    },
+    {
+      "slug": "08-appendix/04-checklists",
+      "section": "08-appendix",
+      "sectionTitle": "Appendix",
+      "title": "Checklists",
+      "description": "Architecture, code, security, performance, migration, upgrade, go-live and support checklists.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Architecture review",
+          "id": "1-architecture-review"
+        },
+        {
+          "level": 2,
+          "text": "2. Code review",
+          "id": "2-code-review"
+        },
+        {
+          "level": 3,
+          "text": "ORM",
+          "id": "orm"
+        },
+        {
+          "level": 3,
+          "text": "Schema",
+          "id": "schema"
+        },
+        {
+          "level": 3,
+          "text": "Security",
+          "id": "security"
+        },
+        {
+          "level": 3,
+          "text": "Views/UI",
+          "id": "viewsui"
+        },
+        {
+          "level": 3,
+          "text": "Operations",
+          "id": "operations"
+        },
+        {
+          "level": 2,
+          "text": "3. Security review",
+          "id": "3-security-review"
+        },
+        {
+          "level": 2,
+          "text": "4. Performance review",
+          "id": "4-performance-review"
+        },
+        {
+          "level": 2,
+          "text": "5. Data migration",
+          "id": "5-data-migration"
+        },
+        {
+          "level": 2,
+          "text": "6. Upgrade",
+          "id": "6-upgrade"
+        },
+        {
+          "level": 2,
+          "text": "7. Go-live",
+          "id": "7-go-live"
+        },
+        {
+          "level": 2,
+          "text": "8. Hypercare",
+          "id": "8-hypercare"
+        },
+        {
+          "level": 2,
+          "text": "9. Support readiness",
+          "id": "9-support-readiness"
+        },
+        {
+          "level": 2,
+          "text": "10. Sign-off template",
+          "id": "10-sign-off-template"
+        }
+      ],
+      "words": 1032,
+      "minutes": 5
+    },
+    {
+      "slug": "08-appendix/05-sources",
+      "section": "08-appendix",
+      "sectionTitle": "Appendix",
+      "title": "Sources and Version Matrix",
+      "description": "Version matrix, evidence index, official docs coverage, limitations and verification commands.",
+      "headings": [
+        {
+          "level": 2,
+          "text": "1. Version matrix",
+          "id": "1-version-matrix"
+        },
+        {
+          "level": 2,
+          "text": "2. Primary source references",
+          "id": "2-primary-source-references"
+        },
+        {
+          "level": 3,
+          "text": "2.1 ORM kernel",
+          "id": "21-orm-kernel"
+        },
+        {
+          "level": 3,
+          "text": "2.2 Runtime",
+          "id": "22-runtime"
+        },
+        {
+          "level": 3,
+          "text": "2.3 Modules",
+          "id": "23-modules"
+        },
+        {
+          "level": 3,
+          "text": "2.4 Business modules",
+          "id": "24-business-modules"
+        },
+        {
+          "level": 2,
+          "text": "3. Official documentation structure",
+          "id": "3-official-documentation-structure"
+        },
+        {
+          "level": 3,
+          "text": "3.1 What we cross-checked",
+          "id": "31-what-we-cross-checked"
+        },
+        {
+          "level": 3,
+          "text": "3.2 What the docs do not cover",
+          "id": "32-what-the-docs-do-not-cover"
+        },
+        {
+          "level": 2,
+          "text": "4. Community sources (corroboration only)",
+          "id": "4-community-sources-corroboration-only"
+        },
+        {
+          "level": 2,
+          "text": "5. Static analysis methodology",
+          "id": "5-static-analysis-methodology"
+        },
+        {
+          "level": 2,
+          "text": "6. How to verify a claim",
+          "id": "6-how-to-verify-a-claim"
+        },
+        {
+          "level": 2,
+          "text": "7. Known limitations of this manual",
+          "id": "7-known-limitations-of-this-manual"
+        },
+        {
+          "level": 2,
+          "text": "8. Suggested reading order for new team members",
+          "id": "8-suggested-reading-order-for-new-team-members"
+        },
+        {
+          "level": 2,
+          "text": "9. Maintenance",
+          "id": "9-maintenance"
+        },
+        {
+          "level": 2,
+          "text": "10. Attribution",
+          "id": "10-attribution"
+        }
+      ],
+      "words": 1030,
+      "minutes": 5
+    }
+  ]
+}
